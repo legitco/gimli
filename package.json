@@ -4,7 +4,7 @@
   "description": "GitHub Issue Messenger",
   "main": "scr/app.js",
   "scripts": {
-    "start": "node dist/gimli.js",
+    "start": "node dist/gimli.min.js",
     "test": "grunt test"
   },
   "repository": {
