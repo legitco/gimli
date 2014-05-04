@@ -1,0 +1,34 @@
+{
+  "name": "gimli",
+  "version": "0.0.0",
+  "description": "GitHub Issue Messenger",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:legitco/gimli.git"
+  },
+  "keywords": [
+    "github",
+    "messenger",
+    "chat"
+  ],
+  "author": "LegitCo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/legitco/gimli/issues"
+  },
+  "homepage": "https://github.com/legitco/gimli",
+  "dependencies": {
+    "passport": "^0.2.0",
+    "express": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "grunt": "^0.4.4",
+    "mocha": "^1.18.2",
+    "testem": "^0.6.15"
+  }
+}
