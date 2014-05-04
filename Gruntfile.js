@@ -37,6 +37,11 @@ module.exports = function(grunt) {
       options: {
         expand: true
       },
+      views: {
+        files: [
+          { expand: true, cwd: 'src/', src: ['views/**'], dest: 'dist' }
+        ]
+      },
       images: {
         files: [
           { expand: true, cwd: 'src/public', src: ['images/**'], dest: 'dist/public' }
@@ -49,8 +54,8 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint']
+      files: ['src/**'],
+      tasks: ['jshint', 'build']
     }
   });
 
