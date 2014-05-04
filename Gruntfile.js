@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['src/**/*.js'],
+        src: ['src/**/*.js', '!src/public/**'],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
@@ -33,6 +33,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy : {
+      main: {
+        files: [
+          { expand: true, src: ['vendor/**'], dest: 'dist' }
+        ]
+      }
+    },
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint']
@@ -43,6 +50,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.registerTask('test', ['jshint']);
 
