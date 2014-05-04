@@ -6,7 +6,7 @@ module.exports = function(grunt) {
       options: {
         separator: ';'
       },
-      dist: {
+      server: {
         src: ['src/**/*.js', '!src/public/**'],
         dest: 'dist/<%= pkg.name %>.js'
       }
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
-      dist: {
+      server: {
         files: {
           'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
@@ -33,10 +33,18 @@ module.exports = function(grunt) {
         }
       }
     },
-    copy : {
-      main: {
+    copy: {
+      options: {
+        expand: true
+      },
+      images: {
         files: [
-          { expand: true, src: ['vendor/**'], dest: 'dist' }
+          { expand: true, cwd: 'src/public', src: ['images/**'], dest: 'dist/public' }
+        ]
+      },
+      vendor: {
+        files: [
+          { expand: true, src: ['vendor/**'], dest: 'dist/public' }
         ]
       }
     },
@@ -54,7 +62,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jshint']);
 
-  grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
+  grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'copy']);
 
   grunt.registerTask('heroku', ['build']);
   grunt.registerTask('default', ['build']);
