@@ -5,8 +5,7 @@
   "main": "scr/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "postinstall": "./node_modules/grunt-cli/bin/grunt",
-    "test": "./node_modules/grunt-cli/bin/grunt test"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -28,12 +27,11 @@
   "homepage": "https://github.com/legitco/gimli",
   "dependencies": {
     "express": "^4.1.1",
-    "grunt": "^0.4.4",
-    "grunt-cli": "^0.1.13",
     "jade": "^1.3.1",
     "passport": "^0.2.0"
   },
   "devDependencies": {
+    "grunt": "^0.4.4",
     "chai": "^1.9.1",
     "mocha": "^1.18.2",
     "testem": "^0.6.15",
