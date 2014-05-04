@@ -45,9 +45,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
 
   grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
-  grunt.registerTask('heroku', ['jshint']);
 
+  grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
+
+  grunt.registerTask('heroku', ['build']);
   grunt.registerTask('default', ['build']);
 
 };
