@@ -65,11 +65,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
-  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('test',   ['jshint']);
+  grunt.registerTask('build',  ['jshint', 'concat', 'uglify', 'copy']);
+  grunt.registerTask('dev',    ['build', 'watch']);
+  grunt.registerTask('heroku', ['build']);  
 
-  grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'copy']);
-
-  grunt.registerTask('heroku', ['build']);
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('default', ['dev']);
 
 };
