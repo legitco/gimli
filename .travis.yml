@@ -7,8 +7,4 @@ before_script: grunt build
 services:
   - redis-server
 env:
-  - GITHUB_CLIENT_ID=githubClientId
-  - GITHUB_CLISENT_SECRET=githubClientSecret
-  - REDISCLOUD_URL="redis://localhost:6379"
-  - COOKIE_SECRET=cookieSecret
-  - GIMLI_REDIRECT_URL=http://localhost:3000/auth/github/callback
+  - GITHUB_CLIENT_ID=githubClientId GITHUB_CLISENT_SECRET=githubClientSecret REDISCLOUD_URL="redis://localhost:6379" COOKIE_SECRET=cookieSecret GIMLI_REDIRECT_URL=http://localhost:3000/auth/github/callback
