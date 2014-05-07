@@ -19,12 +19,9 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-
-passport.use(new GitHubStrategy({
-  clientID: github.client.id,
-  clientSecret: github.client.secret,
-  callbackURL: "https://gim-legit.herokuapp.com/auth/github/callback"
-},
+passport.use(new GitHubStrategy({ clientID: github.client.id,
+                                  clientSecret: github.client.secret,
+                                  callbackURL: process.env.GIMLI_REDIRECT_URL},
                                 function(accessToken, refreshToken, profile, done) {
                                   // asynchronous verification, for effect...
                                   process.nextTick(function () {
@@ -33,9 +30,7 @@ passport.use(new GitHubStrategy({
                                     // to associate the GitHub account with a user record in your database,
                                     // and return that user instead.
                                     return done(null, profile);
-                                  });
-                                }
-                               ));
+                                  }); } ));
 
 var app = express();
 
