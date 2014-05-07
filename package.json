@@ -2,7 +2,7 @@
   "name": "gimli",
   "version": "0.0.0",
   "description": "GitHub Issue Messenger",
-  "main": "scr/app.js",
+  "main": "src/app.js",
   "scripts": {
     "start": "node dist/gimli.min.js",
     "test": "grunt test"
