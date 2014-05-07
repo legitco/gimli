@@ -4,7 +4,7 @@
   "description": "GitHub Issue Messenger",
   "main": "src/app.js",
   "scripts": {
-    "start": "node dist/gimli.min.js",
+    "start": "node node_modules/nodemon/bin/nodemon.js dist/gimli.min.js",
     "test": "grunt test"
   },
   "repository": {
@@ -45,6 +45,7 @@
   "devDependencies": {
     "chai": "^1.9.1",
     "mocha": "^1.18.2",
+    "nodemon": "^1.0.17",
     "testem": "^0.6.15"
   }
 }
