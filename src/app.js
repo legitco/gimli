@@ -6,10 +6,10 @@ var cookieParser = require('cookie-parser');
 
 
 var github = {
-	client: {
-		id: process.env.GITHUB_CLIENT_ID,
-		secret: process.env.GITHUB_CLIENT_SECRET
-	}
+  client: {
+    id: process.env.GITHUB_CLIENT_ID,
+    secret: process.env.GITHUB_CLIENT_SECRET
+  }
 };
 
 passport.serializeUser(function(user, done) {
@@ -21,22 +21,21 @@ passport.deserializeUser(function(obj, done) {
 
 
 passport.use(new GitHubStrategy({
-    clientID: github.client.id,
-    clientSecret: github.client.secret,
-    callbackURL: "https://gim-legit.herokuapp.com/auth/github/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      
-      // To keep the example simple, the user's GitHub profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the GitHub account with a user record in your database,
-      // and return that user instead.
-      return done(null, profile);
-    });
-  }
-));
+  clientID: github.client.id,
+  clientSecret: github.client.secret,
+  callbackURL: "https://gim-legit.herokuapp.com/auth/github/callback"
+},
+                                function(accessToken, refreshToken, profile, done) {
+                                  // asynchronous verification, for effect...
+                                  process.nextTick(function () {
+                                    // To keep the example simple, the user's GitHub profile is returned to
+                                    // represent the logged-in user.  In a typical application, you would want
+                                    // to associate the GitHub account with a user record in your database,
+                                    // and return that user instead.
+                                    return done(null, profile);
+                                  });
+                                }
+                               ));
 
 var app = express();
 
@@ -53,10 +52,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
-	res.render('index', {
-		title : 'Home',
-		user: req.user
-	});
+  res.render('index', {
+    title : 'Home',
+    user: req.user
+  });
 });
 
 // GET /auth/github
@@ -71,11 +70,11 @@ app.get('/auth/github', passport.authenticate('github'));
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-app.get('/auth/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
+app.get('/auth/github/callback',
+        passport.authenticate('github', { failureRedirect: '/failure' }),
+        function(req, res) {
+          res.redirect('/');
+        });
 
 // GET /lgout
 app.get('/logout', function(req, res){
@@ -84,5 +83,5 @@ app.get('/logout', function(req, res){
 });
 
 var server = app.listen(process.env.PORT, function() {
-	console.log('Listening on port %d', server.address().port);
+  console.log('Listening on port %d', server.address().port);
 });

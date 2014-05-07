@@ -5,14 +5,13 @@ html
     //- link(rel='stylesheet', href='/stylesheets/style.css')
   body
     header
-      if user
-        h1 My Site - #{user.id} 
-      else 
-        h1 My Site
+      H1 My Site
     .container
       .main-content
         block content
       .sidebar
+        - user
+          #{JSON.stringify(user)}
         block sidebar
     footer
       p Running on node with Express, Jade and Stylus
