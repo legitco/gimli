@@ -94,13 +94,13 @@ module.exports = function(grunt) {
     },
     coveralls: {
       options: {
-        // LCOV coverage file relevant to every target
-        src: 'coverage/coverage.lcov',
-
         // When true, grunt-coveralls will only print a warning rather than
         // an error, to prevent CI builds from failing unnecessarily (e.g. if
         // coveralls.io is down). Optional, defaults to false.
-        force: false
+        force: true
+      },
+      gimli: {
+        src: 'coverage/coverage.lcov'
       }
     }
   });
