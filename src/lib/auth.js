@@ -16,19 +16,20 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-passport.use(new GitHubStrategy({ clientID: github.client.id,
-                                  clientSecret: github.client.secret,
-                                  callbackURL: process.env.GIMLI_REDIRECT_URL},
-                                function(accessToken, refreshToken, profile, done) {
-                                  // asynchronous verification, for effect...
-                                  process.nextTick(function () {
-                                    // To keep the example simple, the user's GitHub profile is returned to
-                                    // represent the logged-in user.  In a typical application, you would want
-                                    // to associate the GitHub account with a user record in your database,
-                                    // and return that user instead.
-                                    return done(null, profile);
-                                  }); } ));
-
+passport.use(new GitHubStrategy({
+  clientID: github.client.id,
+  clientSecret: github.client.secret,
+  callbackURL: process.env.GIMLI_REDIRECT_URL
+}, function(accessToken, refreshToken, profile, done) {
+  // asynchronous verification, for effect...
+  process.nextTick(function () {
+    // To keep the example simple, the user's GitHub profile is returned to
+    // represent the logged-in user.  In a typical application, you would want
+    // to associate the GitHub account with a user record in your database,
+    // and return that user instead.
+    return done(null, profile);
+  });
+}));
 
 module.exports.logout = function(req, res) {
   req.logout();
