@@ -24,7 +24,17 @@ module.exports = function(grunt) {
     jshint: {
       files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
       options: {
-        // options here to override JSHint defaults
+        curly: true,
+        eqeqeq: true,
+        eqnull: true,
+        expr: true,
+        latedef: true,
+        onevar: true,
+        noarg: true,
+        node: true,
+        trailing: true,
+        //undef: true,
+        //unused: true,
         globals: {
           jQuery: true,
           console: true,
@@ -56,6 +66,42 @@ module.exports = function(grunt) {
     watch: {
       files: ['src/**'],
       tasks: ['jshint', 'build']
+    },
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec',
+          require: 'coverage/blanket'
+        },
+        src: ['test/**/*.js']
+      },
+      coverage: {
+        options: {
+          reporter: 'mocha-lcov-reporter',
+          quiet: true,
+          captureFile: 'coverage/coverage.lcov'
+        },
+        src: ['test/**/*.js']
+      },
+      coverageHtml: {
+        options: {
+          reporter: 'html-cov',
+          quiet: true,
+          captureFile: 'coverage/coverage.html'
+        },
+        src: ['test/**/*.js']
+      }
+    },
+    coveralls: {
+      options: {
+        // When true, grunt-coveralls will only print a warning rather than
+        // an error, to prevent CI builds from failing unnecessarily (e.g. if
+        // coveralls.io is down). Optional, defaults to false.
+        force: true
+      },
+      gimli: {
+        src: 'coverage/coverage.lcov'
+      }
     }
   });
 
@@ -64,12 +110,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-coveralls');
 
-  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('test',   ['jshint', 'mochaTest', 'coveralls']);
 
-  grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'copy']);
-
+  grunt.registerTask('build',  ['jshint', 'concat', 'uglify', 'copy']);
+  grunt.registerTask('dev',    ['build', 'watch']);
   grunt.registerTask('heroku', ['build']);
-  grunt.registerTask('default', ['build']);
 
+  grunt.registerTask('default', ['dev']);
 };

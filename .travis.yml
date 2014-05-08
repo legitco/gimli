@@ -1,4 +1,9 @@
 language: node_js
+node_js:
+  - "0.10"
 before_install: npm install -g grunt-cli
 install: npm install
 before_script: grunt build
+services:
+  - redis-server
+env: GITHUB_CLIENT_ID=githubClientId GITHUB_CLIENT_SECRET=githubClientSecret REDISCLOUD_URL="redis://localhost:6379" COOKIE_SECRET=cookieSecret GIMLI_REDIRECT_URL=http://localhost:3000/auth/github/callback
