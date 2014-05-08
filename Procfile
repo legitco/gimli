@@ -1,1 +1,1 @@
-web: node dist/gimli.min.js
+web: node src/app.js
