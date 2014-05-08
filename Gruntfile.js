@@ -33,13 +33,20 @@ module.exports = function(grunt) {
         noarg: true,
         node: true,
         trailing: true,
-        //undef: true,
-        //unused: true,
+        undef: true,
+        unused: true,
         globals: {
           jQuery: true,
           console: true,
           module: true,
-          document: true
+          document: true,
+          /* MOCHA */
+          describe: false,
+          it: false,
+          before: false,
+          beforeEach: false,
+          after: false,
+          afterEach: false
         }
       }
     },
