@@ -7,6 +7,10 @@ before_script: grunt build
 services:
   - redis-server
 env: GITHUB_CLIENT_ID=githubClientId GITHUB_CLIENT_SECRET=githubClientSecret REDISCLOUD_URL="redis://localhost:6379" COOKIE_SECRET=cookieSecret GIMLI_REDIRECT_URL=http://localhost:3000/auth/github/callback
+notifications:
+  irc:
+    channels:
+      - "chat.freenode.net#legitco"
 deploy:
   provider: heroku
   strategy: git
@@ -15,5 +19,3 @@ deploy:
   app: gim-legit
   on:
     repo: legitco/gimli
-notifications:
-  irc: "chat.freenode.net#legitco"
