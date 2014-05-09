@@ -1,4 +1,4 @@
-var app = require('../../src/app.js');
+var app = require('../../server.js');
 
 var chai = require('chai');
 var supertestChai = require('supertest-chai');
