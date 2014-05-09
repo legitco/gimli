@@ -2,7 +2,8 @@
 ##### Github Issues Messenger
 
 Gimli is currently a work in progress.
-![Under Construction](http://png-3.findicons.com/files/icons/990/vistaico_toolbar/256/under_construction.png =100px)
+
+![Under Construction](http://png-3.findicons.com/files/icons/990/vistaico_toolbar/256/under_construction.png)
 
 ## Build Status
 
