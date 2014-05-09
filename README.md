@@ -28,6 +28,7 @@ cloud hosting providers.
     GITHUB_CLIENT_ID:     OAuth client id from Github
     GITHUB_CLIENT_SECRET: OAuth client secret from Github
     REDISCLOUD_URL:       Redis connection string: ie redis://localhost:6379
+    PORT:                 Port to run the server on (We use 3000)
 
 ### Running
 
