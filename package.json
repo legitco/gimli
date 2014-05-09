@@ -2,9 +2,9 @@
   "name": "gimli",
   "version": "0.0.0",
   "description": "GitHub Issue Messenger",
-  "main": "src/app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node node_modules/nodemon/bin/nodemon.js src/app.js",
+    "start": "node node_modules/nodemon/bin/nodemon.js server.js",
     "test": "grunt test"
   },
   "repository": {
