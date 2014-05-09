@@ -11,3 +11,17 @@ Gimli is currently a work in progress.
 [![Coverage Status](https://coveralls.io/repos/legitco/gimli/badge.png)](https://coveralls.io/r/legitco/gimli)
 [![Code Climate](https://codeclimate.com/github/legitco/gimli.png)](https://codeclimate.com/github/legitco/gimli)
 [![Dependency Status](https://david-dm.org/legitco/gimli.svg)](https://david-dm.org/legitco/gimli)
+
+## Usage
+
+* Install [Node.js](http://nodejs.org/)
+* Clone this repo
+* Run `npm install` from the project folder to install all required packages.
+
+### Running
+
+    npm start
+
+### Tests
+
+    npm test
