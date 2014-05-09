@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var passport = require('passport');
 var session = require('express-session');
@@ -12,11 +13,11 @@ app.use(session({ secret: process.env.COOKIE_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'jade');
 
 // Routes
-require('./routes')(app);
+require('./src/routes')(app);
 
 // Serve
 var server = app.listen(process.env.PORT, function() {
