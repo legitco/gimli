@@ -18,9 +18,22 @@ Gimli is currently a work in progress.
 * Clone this repo
 * Run `npm install` from the project folder to install all required packages.
 
+### Required Environmental Variables
+
+We use environment variables for configuration since this is an easy method for
+cloud hosting providers.
+
+    COOKIE_SECRET:        Can be anything, string used to encrypt session cookies
+    GIMLI_REDIRECT_URL:   OAuth redirect url: ie http://localhost:3000/auth/github/callback
+    GITHUB_CLIENT_ID:     OAuth client id from Github
+    GITHUB_CLIENT_SECRET: OAuth client secret from Github
+    REDISCLOUD_URL:       Redis connection string: ie redis://localhost:6379
+
 ### Running
 
     npm start
+
+## Development
 
 ### Tests
 
