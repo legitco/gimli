@@ -1,3 +1,9 @@
 {
-    "framework": "mocha"
+  "framework": "mocha",
+  "launchers": {
+    "Mocha": {
+      "command": "mocha test/**/*.js -R tap",
+      "protocol": "tap"
+    }
+  }
 }

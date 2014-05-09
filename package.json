@@ -56,6 +56,8 @@
     "mocha": "^1.18.2",
     "mocha-lcov-reporter": "0.0.1",
     "nodemon": "^1.0.17",
+    "sinon": "^1.9.1",
+    "sinon-chai": "^2.5.0",
     "supertest": "^0.12.0",
     "supertest-chai": "0.0.8",
     "testem": "^0.6.15"
