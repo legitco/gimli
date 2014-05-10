@@ -1,3 +1,5 @@
 extend ../layout
 block content
-  p Hello, friends
+  ul 
+    li(ng-repeat="issues as issue")
+    	{{issue.title}}
