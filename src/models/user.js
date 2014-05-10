@@ -20,21 +20,10 @@ Model.prototype.load = function(id, callback) {
 };
 
 Model.prototype.save = function(user) {
-  db.set('gimli:user:' + user.id + ':displayName',
-         user.displayName,
-         function(err){
-           if (err !== null) {
-             console.log("Error saving user " + user.id + ": " + err);
-           }
-         });
-
-  db.set('gimli:user:' + user.id + ':username',
-         user.username,
-         function(err){
-           if (err !== null) {
-             console.log("Error saving user " + user.id + ": " + err);
-           }
-         });
+  db.multi()
+    .set('gimli:user:' + user.id + ':displayName', user.displayName)
+    .set('gimli:user:' + user.id + ':username', user.username)
+    .exec();
 };
 
 module.exports = new Model();
