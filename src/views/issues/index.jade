@@ -1,5 +1,5 @@
 extend ../layout
 block content
   ul 
-    li(ng-repeat="issues as issue")
-    	{{issue.title}}
+    li(ng-repeat="issue in issues")
+      {{issue.title}}
