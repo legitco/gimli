@@ -1,5 +1,6 @@
 var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
+var user = require('../models/user.js');
 
 // Github Config
 var github = {
@@ -9,11 +10,15 @@ var github = {
   }
 };
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
+passport.serializeUser(function(githubUser, done) {
+  user.save(githubUser);
+  done(null, githubUser.id);
 });
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+
+passport.deserializeUser(function(id, done) {
+  user.load(id, function(user) {
+    done(null, user);
+  });
 });
 
 passport.use(new GitHubStrategy({
@@ -23,10 +28,6 @@ passport.use(new GitHubStrategy({
 }, function(accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
   process.nextTick(function () {
-    // To keep the example simple, the user's GitHub profile is returned to
-    // represent the logged-in user.  In a typical application, you would want
-    // to associate the GitHub account with a user record in your database,
-    // and return that user instead.
     return done(null, profile);
   });
 }));
@@ -48,7 +49,7 @@ module.exports.githubLogin = passport.authenticate('github');
 // If authentication fails, the user will be redirected back to the login page.
 // Otherwise, the primary route function function will be called, which, in this
 // example, will redirect the user to the home page.
-module.exports.githubCallback = passport.authenticate('github', { failureRedirect: '/' });
+module.exports.githubCallback = passport.authenticate('github', { failureRedirect: '/failure' });
 module.exports.githubSuccess = function(req, res) {
   res.redirect('/');
 };
