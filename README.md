@@ -15,8 +15,10 @@ Gimli is currently a work in progress.
 ## Usage
 
 * Install [Node.js](http://nodejs.org/)
+* Install [Bower](http://bower.io/)
 * Clone this repo
-* Run `npm install` from the project folder to install all required packages.
+* Run `npm install` from the project folder to install server dependencies
+* Run `npm install -g bower` from the project folder to install clident depencencies
 
 ### Required Environmental Variables
 
