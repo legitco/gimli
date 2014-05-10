@@ -2,6 +2,13 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    bower: {
+      install: {
+        options: {
+          targetDir: './vendor'
+        }
+      }
+    },
     concat: {
       options: {
         separator: ';'
@@ -116,10 +123,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-coveralls');
+  grunt.loadNpmTasks('grunt-bower-task');
 
   grunt.registerTask('test',   ['jshint', 'mochaTest', 'coveralls']);
 
-  grunt.registerTask('build',  ['jshint', 'concat', 'copy']);
+  grunt.registerTask('build',  ['jshint', 'bower::install', 'concat', 'copy']);
   grunt.registerTask('dev',    ['build', 'watch']);
   grunt.registerTask('heroku', ['build']);
 
