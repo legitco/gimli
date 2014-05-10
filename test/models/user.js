@@ -5,38 +5,42 @@ chai.should();
 describe('user', function() {
   var user = require('../../src/models/user');
 
+  var githubProfile = {
+    _json: {
+      id: 5,
+      name: "Test User",
+      login: "testuser"
+    }
+  };
+
   // Clear db on each run
   beforeEach(function(done) {
     db.flushdb(done);
   });
 
-  var githubProfile = {
-    id: 5,
-    displayName: "Test User",
-    username: "testuser"
-  };
-
   describe('.save()', function() {
-    beforeEach(function() {
-      user.save(githubProfile);
+    beforeEach(function(done) {
+      user.save(githubProfile, done);
     });
 
-    it("should save displayName to redis", function() {
-      db.get('gimli:user:5:displayName', function(err, reply) {
+    it("should save name to redis", function() {
+      db.get('gimli:user:5:name', function(err, reply) {
+        (reply === null).should.be.false;
         reply.should.equal("Test User");
       });
     });
 
-    it("should save username to redis", function() {
-      db.get('gimli:user:5:username', function(err, reply) {
+    it("should save login to redis", function() {
+      db.get('gimli:user:5:login', function(err, reply) {
+        (reply === null).should.be.false;
         reply.should.equal("testuser");
       });
     });
   });
 
   describe('.load()', function() {
-    beforeEach(function() {
-      user.save(githubProfile);
+    beforeEach(function(done) {
+      user.save(githubProfile, done);
     });
 
     it("should return null if asked to load null", function(done) {
@@ -56,8 +60,8 @@ describe('user', function() {
     it("should retrieve all data on load", function(done) {
       user.load(5, function(loadedUser) {
         loadedUser.id.should.equal(5);
-        loadedUser.displayName.should.equal("Test User");
-        loadedUser.username.should.equal("testuser");
+        loadedUser.name.should.equal("Test User");
+        loadedUser.login.should.equal("testuser");
         done();
       });
     });

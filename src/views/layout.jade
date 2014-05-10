@@ -14,12 +14,21 @@ html(ng-app="gimli")
         if user
           dt ID
           dd= user.id
-          dt Display Name
-          dd= user.displayName
-          dt User Name
-          dd= user.username
+          dt Login
+          dd= user.login
+          dt Name
+          dd= user.name
+          dt Email
+          dd: a(href=("mailto:" + user.email))= user.email
+          dt Profile
+          dd: a(href=user.html_url)= user.html_url
+          dt Location
+          dd= user.location
+          dt Image
+          dd: img(src=user.avatar_url width=100)
+          a(href="/logout") Logout
         else
-          a(href="/auth/github") Login
+          a(href="/login") Login
         block sidebar
     footer
       p Running on node with Express, Jade and Stylus

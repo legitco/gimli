@@ -11,7 +11,7 @@ module.exports = function(app) {
 
   // Auth
   app.get('/logout', auth.logout);
-  app.get('/auth/github', auth.githubLogin);
+  app.get('/login', auth.githubLogin);
   app.get('/auth/github/callback', auth.githubCallback, auth.githubSuccess);
 
   // Resources
