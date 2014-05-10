@@ -82,7 +82,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           reporter: 'spec',
-          require: 'coverage/blanket'
+          require: 'test/coverage/blanket'
         },
         src: ['test/**/*.js']
       },
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'mocha-lcov-reporter',
           quiet: true,
-          captureFile: 'coverage/coverage.lcov'
+          captureFile: 'test/coverage/coverage.lcov'
         },
         src: ['test/**/*.js']
       },
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'html-cov',
           quiet: true,
-          captureFile: 'coverage/coverage.html'
+          captureFile: 'test/coverage/coverage.html'
         },
         src: ['test/**/*.js']
       }
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
         force: true
       },
       gimli: {
-        src: 'coverage/coverage.lcov'
+        src: 'test/coverage/coverage.lcov'
       }
     }
   });
