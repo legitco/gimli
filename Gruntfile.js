@@ -127,7 +127,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test',   ['jshint', 'mochaTest', 'coveralls']);
 
-  grunt.registerTask('build',  ['jshint', 'bower::install', 'concat', 'copy']);
+  grunt.registerTask('build',  ['jshint', 'bower', 'concat', 'copy']);
   grunt.registerTask('dev',    ['build', 'watch']);
   grunt.registerTask('heroku', ['build']);
 
