@@ -1,4 +1,9 @@
-var redis = require('redis');
+if (process.env.NODE_ENV === "test") {
+  var redis = require('fakeredis');
+} else {
+  var redis = require('redis');
+}
+
 var url = require('url');
 
 var redisURL = url.parse(process.env.REDISCLOUD_URL);

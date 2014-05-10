@@ -10,8 +10,15 @@ html
       .main-content
         block content
       .sidebar
-        - user
-          #{JSON.stringify(user)}
+        if user
+          dt ID
+          dd= user.id
+          dt Display Name
+          dd= user.displayName
+          dt User Name
+          dd= user.username
+        else
+          a(href="/auth/github") Login
         block sidebar
     footer
       p Running on node with Express, Jade and Stylus
