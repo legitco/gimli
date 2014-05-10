@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 
 // Middleware
-app.use('/static', express.static(__dirname + '/public'));
+app.use('/static', express.static(path.join(__dirname, 'dist', 'public')));
 app.use(cookieParser());
 app.use(session({ secret: process.env.COOKIE_SECRET }));
 app.use(passport.initialize());
