@@ -11,8 +11,9 @@ var github = {
 };
 
 passport.serializeUser(function(githubUser, done) {
-  user.save(githubUser);
-  done(null, githubUser.id);
+  user.save(githubUser, function() {
+    done(null, githubUser._json.id);
+  });
 });
 
 passport.deserializeUser(function(id, done) {
