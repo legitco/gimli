@@ -25,8 +25,9 @@ module.exports = function(grunt) {
         node: true,
         trailing: true,
         undef: true,
-        unused: true,
+        unused: false,
         globals: {
+          angular: true,
           jQuery: true,
           console: true,
           module: true,
@@ -53,6 +54,11 @@ module.exports = function(grunt) {
       images: {
         files: [
           { expand: true, cwd: 'src/public', src: ['images/**'], dest: 'dist/public' }
+        ]
+      },
+      clientScripts: {
+        files: [
+          { expand: true, cwd: 'src/public', src: ['scripts/**'], dest: 'dist/public' }
         ]
       },
       vendor: {
