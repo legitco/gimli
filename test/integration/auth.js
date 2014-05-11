@@ -1,6 +1,3 @@
-process.env.GITHUB_CLIENT_ID = "github-client-id";
-process.env.GITHUB_CLIENT_SECRET = "github-client-secret";
-
 var app = require('../../server.js');
 
 var chai = require('chai');

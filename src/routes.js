@@ -16,4 +16,9 @@ module.exports = function(app) {
 
   // Resources
   resources.resource('/issues', issues);
+
+  // Test Error
+  app.get('/error', function(req, res, next) {
+    next(new Error('Test Error'));
+  });
 };
