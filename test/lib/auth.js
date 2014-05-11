@@ -5,7 +5,7 @@ chai.should();
 chai.use(sinonChai);
 
 describe('auth', function() {
-  var auth = require('../../src/lib/auth');
+  var auth = require('../../server/lib/auth');
 
   describe('.githubSuccess()', function() {
     it("should redirect to '/'", function() {

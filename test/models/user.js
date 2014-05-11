@@ -1,9 +1,9 @@
 var chai = require('chai');
-var db = require('../../src/lib/db');
+var db = require('../../server/lib/db');
 chai.should();
 
 describe('user', function() {
-  var user = require('../../src/models/user');
+  var user = require('../../server/models/user');
 
   var githubProfile = {
     _json: {
