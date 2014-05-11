@@ -15,10 +15,11 @@ Gimli is currently a work in progress.
 ## Usage
 
 * Install [Node.js](http://nodejs.org/)
-* Clone this repo
 * Run `npm install -g grunt-cli` to be able to run tasks
 * Run `npm install -g bower` to be able to install client dependencies
+* Clone this repo
 * Run `npm install` from the project folder to install server dependencies
+* Run `bower install` from the project folder to install client dependencies
 
 ### Required Environmental Variables
 

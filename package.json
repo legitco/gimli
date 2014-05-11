@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "grunt start",
-    "test": "grunt test",
-    "postinstall": "bower install"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
