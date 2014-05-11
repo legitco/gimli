@@ -32,7 +32,7 @@ describe('auth', function() {
 
   describe('.deserialize', function() {
     before(function(done) {
-      var db = require('../../src/lib/db');
+      var db = require('../../server/lib/db');
       db.set('gimli:user:6:name', 'Kelsin', done);
     });
 
