@@ -7,20 +7,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-coveralls');
-  grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-env');
   grunt.loadNpmTasks('grunt-nodemon');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    bower: {
-      install: {
-        options: {
-          targetDir: './vendor',
-          cleanup: true
-        }
-      }
-    },
     concat: {
       options: {
         separator: ';'
@@ -167,7 +158,7 @@ module.exports = function(grunt) {
   grunt.registerTask('travis',  ['test', 'coveralls']);
 
   // How to build
-  grunt.registerTask('build',   ['bower', 'jshint', 'concat', 'copy']);
+  grunt.registerTask('build',   ['jshint', 'concat', 'copy']);
 
   // How to run
   grunt.registerTask('start',   ['env:dev', 'nodemon']);
