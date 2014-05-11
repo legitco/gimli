@@ -7,35 +7,51 @@ Gimli is currently a work in progress.
 
 ## Build Status
 
-[![Build Status](https://travis-ci.org/legitco/gimli.svg?branch=master)](https://travis-ci.org/legitco/gimli)
-[![Coverage Status](https://coveralls.io/repos/legitco/gimli/badge.png)](https://coveralls.io/r/legitco/gimli)
+[![Build Status](https://travis-ci.org/legitco/gimli.png?branch=develop)](https://travis-ci.org/legitco/gimli)
+[![Coverage Status](https://coveralls.io/repos/legitco/gimli/badge.png?branch=develop)](https://coveralls.io/r/legitco/gimli?branch=develop)
 [![Code Climate](https://codeclimate.com/github/legitco/gimli.png)](https://codeclimate.com/github/legitco/gimli)
-[![Dependency Status](https://david-dm.org/legitco/gimli.svg)](https://david-dm.org/legitco/gimli)
+[![Dependency Status](https://david-dm.org/legitco/gimli.png)](https://david-dm.org/legitco/gimli)
 
 ## Usage
 
 * Install [Node.js](http://nodejs.org/)
 * Clone this repo
-* Run `npm install` from the project folder to install all required packages.
+* Run `npm install -g grunt-cli` to be able to run tasks
+* Run `npm install -g bower` to be able to install client dependencies
+* Run `npm install` from the project folder to install server dependencies
 
 ### Required Environmental Variables
 
-We use environment variables for configuration since this is an easy method for
-cloud hosting providers.
+All required environmental variables except two will be setup by our
+`gruntfile.js` tasks. To hook up to github authentication you'll need to
+[create an application](https://github.com/settings/applications) and then setup
+two environment variables. You can do this by creating a `~/.env` file with the
+following content:
 
-    COOKIE_SECRET:        Can be anything, string used to encrypt session cookies
-    GIMLI_REDIRECT_URL:   OAuth redirect url: ie http://localhost:3000/auth/github/callback
-    GITHUB_CLIENT_ID:     OAuth client id from Github
-    GITHUB_CLIENT_SECRET: OAuth client secret from Github
-    REDISCLOUD_URL:       Redis connection string: ie redis://localhost:6379
-    PORT:                 Port to run the server on (We use 3000)
+    GITHUB_CLIENT_ID=<client id for your github application>
+    GITHUB_CLIENT_SECRET=<client secret for your github application>
+
+You can look at our `gruntfile.js` to see what other environment variables you
+can override.
+
+### Building
+
+To build the project (process client side assets into the `/dist` folder) run:
+
+    grunt build
 
 ### Running
 
-    npm start
+This will start up the node server under [nodemon](http://nodemon.io/) to
+automatically reload when files get edited:
+
+    grunt start
 
 ## Development
 
+If you edit the `bower.json` file you'll need to run `bower install` to fetch
+any new dependencies.
+
 ### Tests
 
-    npm test
+    grunt test

@@ -1,5 +1,15 @@
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-coveralls');
+  grunt.loadNpmTasks('grunt-env');
+  grunt.loadNpmTasks('grunt-nodemon');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
@@ -13,7 +23,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      files: ['Gruntfile.js', 'server.js', 'src/**/*.js', 'test/**/*.js'],
+      files: ['Gruntfile.js', 'server.js', '{server,client}/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -25,8 +35,9 @@ module.exports = function(grunt) {
         node: true,
         trailing: true,
         undef: true,
-        unused: true,
+        unused: false,
         globals: {
+          angular: true,
           jQuery: true,
           console: true,
           module: true,
@@ -47,17 +58,22 @@ module.exports = function(grunt) {
       },
       views: {
         files: [
-          { expand: true, cwd: 'src/', src: ['views/**'], dest: 'dist' }
+          { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist' }
         ]
       },
       images: {
         files: [
-          { expand: true, cwd: 'src/public', src: ['images/**'], dest: 'dist/public' }
+          { expand: true, cwd: 'client', src: ['images/**'], dest: 'dist/static' }
+        ]
+      },
+      clientScripts: {
+        files: [
+          { expand: true, cwd: 'client', src: ['scripts/**'], dest: 'dist/static' }
         ]
       },
       vendor: {
         files: [
-          { expand: true, src: ['vendor/**'], dest: 'dist/public' }
+          { expand: true, src: ['vendor/**'], dest: 'dist/static' }
         ]
       }
     },
@@ -65,11 +81,21 @@ module.exports = function(grunt) {
       files: ['src/**'],
       tasks: ['jshint', 'build']
     },
+    nodemon: {
+      dev: {
+        script: 'server.js',
+        options: {
+          ignore: ['node_modules/'],
+          verbose: true,
+          ext: 'js'
+        }
+      }
+    },
     mochaTest: {
       test: {
         options: {
           reporter: 'spec',
-          require: 'coverage/blanket'
+          require: 'test/coverage/blanket'
         },
         src: ['test/**/*.js']
       },
@@ -77,7 +103,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'mocha-lcov-reporter',
           quiet: true,
-          captureFile: 'coverage/coverage.lcov'
+          captureFile: 'test/coverage/coverage.lcov'
         },
         src: ['test/**/*.js']
       },
@@ -85,7 +111,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'html-cov',
           quiet: true,
-          captureFile: 'coverage/coverage.html'
+          captureFile: 'test/coverage/coverage.html'
         },
         src: ['test/**/*.js']
       }
@@ -98,24 +124,46 @@ module.exports = function(grunt) {
         force: true
       },
       gimli: {
-        src: 'coverage/coverage.lcov'
+        src: 'test/coverage/coverage.lcov'
+      }
+    },
+    env: {
+      options : {
+        //Shared Options Hash
+      },
+      dev: {
+        NODE_ENV: 'development',
+        PORT: 3000,
+        COOKIE_SECRET: 'gimli-cookie',
+        GITHUB_CLIENT_ID: 'github-client-id',
+        GITHUB_CLIENT_SECRET: 'github-client-secret',
+        REDISCLOUD_URL: 'redis://localhost:6379',
+        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
+        src: '.env'
+      },
+      test: {
+        NODE_ENV : 'test',
+        PORT: 3000,
+        COOKIE_SECRET: 'gimli-cookie-test',
+        GITHUB_CLIENT_ID: 'github-client-id',
+        GITHUB_CLIENT_SECRET: 'github-client-secret',
+        REDISCLOUD_URL: 'redis://localhost:6379',
+        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback'
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-coveralls');
+  // Run tests
+  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest']);
+  grunt.registerTask('travis',  ['test', 'coveralls']);
 
-  grunt.registerTask('test',   ['jshint', 'mochaTest', 'coveralls']);
+  // How to build
+  grunt.registerTask('build',   ['jshint', 'concat', 'copy']);
 
-  grunt.registerTask('build',  ['jshint', 'concat', 'copy']);
-  grunt.registerTask('dev',    ['build', 'watch']);
-  grunt.registerTask('heroku', ['build']);
+  // How to run
+  grunt.registerTask('start',   ['env:dev', 'nodemon']);
 
+  // Build and watch
+  grunt.registerTask('dev',     ['build', 'watch']);
   grunt.registerTask('default', ['dev']);
 };
