@@ -4,7 +4,9 @@ node_js:
 before_install:
   - npm install -g grunt-cli
   - npm install -g bower
-before_script: grunt build
+before_script:
+  - bower install
+  - grunt build
 script: grunt travis
 env: NODE_ENV=test GITHUB_CLIENT_ID=githubClientId GITHUB_CLIENT_SECRET=githubClientSecret REDISCLOUD_URL="redis://localhost:6379" COOKIE_SECRET=cookieSecret GIMLI_REDIRECT_URL=http://localhost:3000/auth/github/callback
 services:
