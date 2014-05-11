@@ -23,7 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Normal Routes
-require('./src/routes')(app);
+require('./server/routes')(app);
 
 // Error Handling
 app.use(errors.notFound);
