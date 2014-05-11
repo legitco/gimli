@@ -44,10 +44,6 @@ To build the project (minify, concat, etc) run:
 
     grunt start
 
-or
-
-    npm start
-
 ## Development
 
 If you edit the `bower.json` file you'll need to run `bower install` to fetch
@@ -56,7 +52,3 @@ any new dependencies.
 ### Tests
 
     grunt test
-
-or
-
-    npm test
