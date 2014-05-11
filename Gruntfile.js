@@ -23,7 +23,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      files: ['Gruntfile.js', 'server.js', 'src/**/*.js', 'test/**/*.js'],
+      files: ['Gruntfile.js', 'server.js', '{server,client}/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -58,22 +58,22 @@ module.exports = function(grunt) {
       },
       views: {
         files: [
-          { expand: true, cwd: 'src/', src: ['views/**'], dest: 'dist' }
+          { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist' }
         ]
       },
       images: {
         files: [
-          { expand: true, cwd: 'src/public', src: ['images/**'], dest: 'dist/public' }
+          { expand: true, cwd: 'client', src: ['images/**'], dest: 'dist/static' }
         ]
       },
       clientScripts: {
         files: [
-          { expand: true, cwd: 'src/public', src: ['scripts/**'], dest: 'dist/public' }
+          { expand: true, cwd: 'client', src: ['scripts/**'], dest: 'dist/static' }
         ]
       },
       vendor: {
         files: [
-          { expand: true, src: ['vendor/**'], dest: 'dist/public' }
+          { expand: true, src: ['vendor/**'], dest: 'dist/static' }
         ]
       }
     },

@@ -3,16 +3,16 @@ var express = require('express');
 var passport = require('passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-var errors = require('./src/controllers/errors');
+var errors = require('./server/controllers/errors');
 
 var app = express();
 
 // Config
-app.set('views', path.join(__dirname, 'src', 'views'));
+app.set('views', path.join(__dirname, 'client', 'views'));
 app.set('view engine', 'jade');
 
 // Static Content
-app.use('/static', express.static(path.join(__dirname, 'dist', 'public')));
+app.use('/static', express.static(path.join(__dirname, 'dist', 'static')));
 
 // Parse cookies and sessions
 app.use(cookieParser());
@@ -23,7 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Normal Routes
-require('./src/routes')(app);
+require('./server/routes')(app);
 
 // Error Handling
 app.use(errors.notFound);

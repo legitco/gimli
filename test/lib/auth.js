@@ -5,7 +5,7 @@ chai.should();
 chai.use(sinonChai);
 
 describe('auth', function() {
-  var auth = require('../../src/lib/auth');
+  var auth = require('../../server/lib/auth');
 
   describe('.githubSuccess()', function() {
     it("should redirect to '/'", function() {
@@ -32,7 +32,7 @@ describe('auth', function() {
 
   describe('.deserialize', function() {
     before(function(done) {
-      var db = require('../../src/lib/db');
+      var db = require('../../server/lib/db');
       db.set('gimli:user:6:name', 'Kelsin', done);
     });
 
