@@ -36,11 +36,14 @@ can override.
 
 ### Building
 
-To build the project (minify, concat, etc) run:
+To build the project (process client side assets into the `/dist` folder) run:
 
     grunt build
 
 ### Running
+
+This will start up the node server under [nodemon](http://nodemon.io/) to
+automatically reload when files get edited:
 
     grunt start
 
