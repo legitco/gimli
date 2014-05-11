@@ -8,9 +8,7 @@ env: NODE_ENV=test GITHUB_CLIENT_ID=githubClientId GITHUB_CLIENT_SECRET=githubCl
 services:
   - redis-server
 notifications:
-  irc:
-    channels:
-      - "chat.freenode.net#legitco"
+  webhooks: http://legitbot.herokuapp.com/hubot/travis?room=legitco
 deploy:
   provider: heroku
   api_key:
