@@ -125,7 +125,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-coveralls');
   grunt.loadNpmTasks('grunt-bower-task');
 
-  grunt.registerTask('test',   ['jshint', 'mochaTest', 'coveralls']);
+  // Test Jobs
+  grunt.registerTask('test',   ['jshint', 'mochaTest']);
+  grunt.registerTask('travis', ['test', 'coveralls']);
 
   grunt.registerTask('build',  ['jshint', 'bower', 'concat', 'copy']);
   grunt.registerTask('dev',    ['build', 'watch']);
