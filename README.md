@@ -16,9 +16,9 @@ Gimli is currently a work in progress.
 
 * Install [Node.js](http://nodejs.org/)
 * Clone this repo
-* Run `npm install` from the project folder to install server dependencies
-* Run `npm install -g bower` to be able to install client dependencies
 * Run `npm install -g grunt-cli` to be able to run tasks
+* Run `npm install -g bower` to be able to install client dependencies
+* Run `npm install` from the project folder to install server dependencies
 
 ### Required Environmental Variables
 
@@ -36,10 +36,12 @@ can override.
 
 ### Building
 
-**You don't need to run bower install!** Our bower settings are contained in
-`gruntfile.js` and bower will be run as part of our build task.
+To build the project (minify, concat, etc) run:
 
     grunt build
+
+`bower install` will run when you run npm install. If you edit the `bower.json`
+file you'll need to run `bower install` again to fetch any new dependencies.
 
 ### Running
 
