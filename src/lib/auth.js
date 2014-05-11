@@ -10,28 +10,32 @@ var github = {
   }
 };
 
-passport.serializeUser(function(githubUser, done) {
-  user.save(githubUser, function() {
-    done(null, githubUser._json.id);
-  });
-});
+module.exports.serialize = function(user, done) {
+  done(null, user.id);
+};
 
-passport.deserializeUser(function(id, done) {
+module.exports.deserialize = function(id, done) {
   user.load(id, function(user) {
     done(null, user);
   });
-});
+};
+
+passport.serializeUser(module.exports.serialize);
+passport.deserializeUser(module.exports.deserialize);
+
+module.exports.handleAuthResponse = function(access, refresh, profile, done) {
+  user.save(profile, function() {
+    user.load(profile._json.id, function(user) {
+      done(null, user);
+    });
+  });
+};
 
 passport.use(new GitHubStrategy({
   clientID: github.client.id,
   clientSecret: github.client.secret,
   callbackURL: process.env.GIMLI_REDIRECT_URL
-}, function(accessToken, refreshToken, profile, done) {
-  // asynchronous verification, for effect...
-  process.nextTick(function () {
-    return done(null, profile);
-  });
-}));
+}, module.exports.handleAuthResponse));
 
 module.exports.logout = function(req, res) {
   req.logout();
