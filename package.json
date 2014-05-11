@@ -4,8 +4,8 @@
   "description": "GitHub Issue Messenger",
   "main": "server.js",
   "scripts": {
-    "start": "node node_modules/nodemon/bin/nodemon.js server.js",
-    "test": "NODE_ENV=test grunt test"
+    "start": "grunt start",
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -55,6 +55,8 @@
     "chai": "^1.9.1",
     "fakeredis": "^0.2.0",
     "grunt-bower-task": "^0.3.4",
+    "grunt-env": "^0.4.1",
+    "grunt-nodemon": "^0.2.1",
     "mocha": "^1.18.2",
     "mocha-lcov-reporter": "0.0.1",
     "nodemon": "^1.0.17",

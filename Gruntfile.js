@@ -1,11 +1,23 @@
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-coveralls');
+  grunt.loadNpmTasks('grunt-bower-task');
+  grunt.loadNpmTasks('grunt-env');
+  grunt.loadNpmTasks('grunt-nodemon');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     bower: {
       install: {
         options: {
-          targetDir: './vendor'
+          targetDir: './vendor',
+          cleanup: true
         }
       }
     },
@@ -78,6 +90,16 @@ module.exports = function(grunt) {
       files: ['src/**'],
       tasks: ['jshint', 'build']
     },
+    nodemon: {
+      dev: {
+        script: 'server.js',
+        options: {
+          ignore: ['node_modules/'],
+          verbose: true,
+          ext: 'js'
+        }
+      }
+    },
     mochaTest: {
       test: {
         options: {
@@ -113,25 +135,44 @@ module.exports = function(grunt) {
       gimli: {
         src: 'test/coverage/coverage.lcov'
       }
+    },
+    env: {
+      options : {
+        //Shared Options Hash
+      },
+      dev: {
+        NODE_ENV: 'development',
+        PORT: 3000,
+        COOKIE_SECRET: 'gimli-cookie',
+        GITHUB_CLIENT_ID: 'githubClientId',
+        GITHUB_CLIENT_SECRET: 'githubClientSecret',
+        REDISCLOUD_URL: 'redis://localhost:6379',
+        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
+        src: '.env'
+      },
+      test: {
+        NODE_ENV : 'test',
+        PORT: 3000,
+        COOKIE_SECRET: 'gimli-cookie-test',
+        GITHUB_CLIENT_ID: 'githubClientId',
+        GITHUB_CLIENT_SECRET: 'githubClientSecret',
+        REDISCLOUD_URL: 'redis://localhost:6379',
+        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback'
+      }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-coveralls');
-  grunt.loadNpmTasks('grunt-bower-task');
+  // Run tests
+  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest']);
+  grunt.registerTask('travis',  ['test', 'coveralls']);
 
-  // Test Jobs
-  grunt.registerTask('test',   ['jshint', 'mochaTest']);
-  grunt.registerTask('travis', ['test', 'coveralls']);
+  // How to build
+  grunt.registerTask('build',   ['bower', 'jshint', 'concat', 'copy']);
 
-  grunt.registerTask('build',  ['jshint', 'bower', 'concat', 'copy']);
-  grunt.registerTask('dev',    ['build', 'watch']);
-  grunt.registerTask('heroku', ['build']);
+  // How to run
+  grunt.registerTask('start',   ['env:dev', 'nodemon']);
 
+  // Build and watch
+  grunt.registerTask('dev',     ['build', 'watch']);
   grunt.registerTask('default', ['dev']);
 };

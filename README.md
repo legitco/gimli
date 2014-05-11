@@ -15,29 +15,44 @@ Gimli is currently a work in progress.
 ## Usage
 
 * Install [Node.js](http://nodejs.org/)
-* Install [Bower](http://bower.io/)
 * Clone this repo
 * Run `npm install` from the project folder to install server dependencies
-* Run `npm install -g bower` from the project folder to install clident depencencies
+* Run `npm install -g bower` to be able to install client dependencies
+* Run `npm install -g grunt-cli` to be able to run tasks
 
 ### Required Environmental Variables
 
-We use environment variables for configuration since this is an easy method for
-cloud hosting providers.
+All required environmental variables except two will be setup by our
+`gruntfile.js` tasks. To hook up to github authentication you'll need to
+[create an application](https://github.com/settings/applications) and then setup
+two environment variables. You can do this by creating a `~/.env` file with the
+following content:
 
-    COOKIE_SECRET:        Can be anything, string used to encrypt session cookies
-    GIMLI_REDIRECT_URL:   OAuth redirect url: ie http://localhost:3000/auth/github/callback
-    GITHUB_CLIENT_ID:     OAuth client id from Github
-    GITHUB_CLIENT_SECRET: OAuth client secret from Github
-    REDISCLOUD_URL:       Redis connection string: ie redis://localhost:6379
-    PORT:                 Port to run the server on (We use 3000)
+    GITHUB_CLIENT_ID=<client id for your github application>
+    GITHUB_CLIENT_SECRET=<client secret for your github application>
+
+You can look at our `gruntfile.js` to see what other environment variables you
+can override.
+
+### Building
+
+**You don't need to run bower install!** Our bower settings are contained in
+`gruntfile.js` and bower will be run as part of our build task.
+
+    grunt build
 
 ### Running
 
+    grunt start
+
+or
+
     npm start
 
-## Development
-
 ### Tests
+
+    grunt test
+
+or
 
     npm test
