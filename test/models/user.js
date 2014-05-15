@@ -20,7 +20,7 @@ describe('user', function() {
 
   describe('.save()', function() {
     beforeEach(function(done) {
-      user.save(githubProfile, done);
+      user.save(githubProfile, 'token', done);
     });
 
     it("should save name to redis", function() {
@@ -36,11 +36,18 @@ describe('user', function() {
         reply.should.equal("testuser");
       });
     });
+
+    it("should save the access token to redis", function() {
+      db.get('gimli:user:5:access', function(err, reply) {
+        (reply === null).should.be.false;
+        reply.should.equal("token");
+      });
+    });
   });
 
   describe('.load()', function() {
     beforeEach(function(done) {
-      user.save(githubProfile, done);
+      user.save(githubProfile, 'token', done);
     });
 
     it("should return null if asked to load null", function(done) {
@@ -62,6 +69,7 @@ describe('user', function() {
         loadedUser.id.should.equal(5);
         loadedUser.name.should.equal("Test User");
         loadedUser.login.should.equal("testuser");
+        loadedUser.access.should.equal("token");
         done();
       });
     });

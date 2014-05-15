@@ -11,7 +11,7 @@ describe('/login', function() {
   it('should return 302', function(done) {
     request(app).get('/login').end(function (res) {
       res.should.have.status(302);
-      res.should.have.header('Location', 'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgithub%2Fcallback&client_id=github-client-id');
+      res.should.have.header('Location', 'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgithub%2Fcallback&scope=repo%2Cadmin%3Arepo_hook&client_id=github-client-id');
       done();
     });
   });
@@ -21,7 +21,7 @@ describe('/auth/github/callback', function() {
   it('should return 302', function(done) {
     request(app).get('/login').end(function (res) {
       res.should.have.status(302);
-      res.should.have.header('Location', 'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgithub%2Fcallback&client_id=github-client-id');
+      res.should.have.header('Location', 'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgithub%2Fcallback&scope=repo%2Cadmin%3Arepo_hook&client_id=github-client-id');
       done();
     });
   });

@@ -3,6 +3,7 @@ var auth = require('./lib/auth');
 
 var page = require('./controllers/page');
 var issues = require('./controllers/issues');
+var repos = require('./controllers/repos');
 
 module.exports = function(app) {
   resources.init(app);
@@ -14,8 +15,14 @@ module.exports = function(app) {
   app.get('/login', auth.githubLogin);
   app.get('/auth/github/callback', auth.githubCallback, auth.githubSuccess);
 
-  // Resources
-  resources.resource('/issues', issues);
+  // Repos
+  app.get('/repos', repos);
+  app.get('/repos/:page', repos);
+
+  // Issues
+  app.get('/subscribe/:owner/:repo', issues.subscribe);
+  app.post('/notice/issue', issues.notifications.issue);
+  app.post('/notice/issue/comment', issues.notifications.comment);
 
   // Test Error
   app.get('/error', function(req, res, next) {

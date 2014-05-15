@@ -14,7 +14,8 @@ Model.prototype.load = function(id, callback) {
       .get(key(id, "avatar_url"))
       .get(key(id, "email"))
       .get(key(id, "location"))
-     .exec(function(err, replies) {
+      .get(key(id, "access"))
+      .exec(function(err, replies) {
         callback({
           id: id,
           name: replies[0],
@@ -22,7 +23,8 @@ Model.prototype.load = function(id, callback) {
           html_url: replies[2],
           avatar_url: replies[3],
           email: replies[4],
-          location: replies[5]
+          location: replies[5],
+          access: replies[6]
         });
       });
   } else {
@@ -30,7 +32,7 @@ Model.prototype.load = function(id, callback) {
   }
 };
 
-Model.prototype.save = function(user, done) {
+Model.prototype.save = function(user, access, done) {
   var id = user._json.id;
   db.multi()
     .set(key(id, 'name'), user._json.name)
@@ -39,6 +41,7 @@ Model.prototype.save = function(user, done) {
     .set(key(id, 'avatar_url'), user._json.avatar_url)
     .set(key(id, 'email'), user._json.email)
     .set(key(id, 'location'), user._json.location)
+    .set(key(id, 'access'), access)
     .exec(function(err, replies) {
       done();
     });

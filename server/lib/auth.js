@@ -24,7 +24,7 @@ passport.serializeUser(module.exports.serialize);
 passport.deserializeUser(module.exports.deserialize);
 
 module.exports.handleAuthResponse = function(access, refresh, profile, done) {
-  user.save(profile, function() {
+  user.save(profile, access, function() {
     user.load(profile._json.id, function(user) {
       done(null, user);
     });
@@ -34,6 +34,7 @@ module.exports.handleAuthResponse = function(access, refresh, profile, done) {
 passport.use(new GitHubStrategy({
   clientID: github.client.id,
   clientSecret: github.client.secret,
+  scope: ['repo', 'admin:repo_hook'],
   callbackURL: process.env.GIMLI_REDIRECT_URL
 }, module.exports.handleAuthResponse));
 
