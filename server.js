@@ -3,6 +3,7 @@ var express = require('express');
 var passport = require('passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var errors = require('./server/controllers/errors');
 
 var app = express();
@@ -17,6 +18,9 @@ app.use('/static', express.static(path.join(__dirname, 'dist', 'static')));
 // Parse cookies and sessions
 app.use(cookieParser());
 app.use(session({ secret: process.env.COOKIE_SECRET }));
+
+// Body Parsing
+app.use(bodyParser());
 
 // Authentication
 app.use(passport.initialize());
