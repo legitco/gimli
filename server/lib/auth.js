@@ -24,7 +24,7 @@ passport.serializeUser(module.exports.serialize);
 passport.deserializeUser(module.exports.deserialize);
 
 module.exports.handleAuthResponse = function(access, refresh, profile, done) {
-  user.save(profile, function() {
+  user.save(profile, access, function() {
     user.load(profile._json.id, function(user) {
       done(null, user);
     });

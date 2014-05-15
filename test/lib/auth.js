@@ -52,7 +52,7 @@ describe('auth', function() {
     };
 
     it("should return the user object", function() {
-      auth.handleAuthResponse(1, 2, profile, function(err, user) {
+      auth.handleAuthResponse("token", null, profile, function(err, user) {
         user.id.should.equal(7);
       });
     });
