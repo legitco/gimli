@@ -34,6 +34,7 @@ module.exports.handleAuthResponse = function(access, refresh, profile, done) {
 passport.use(new GitHubStrategy({
   clientID: github.client.id,
   clientSecret: github.client.secret,
+  scope: ['repo', 'admin:repo_hook'],
   callbackURL: process.env.GIMLI_REDIRECT_URL
 }, module.exports.handleAuthResponse));
 
