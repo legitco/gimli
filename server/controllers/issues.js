@@ -1,12 +1,4 @@
-// var client = require('../lib/db.js');
 var needle = require('needle');
-
-module.exports.index = function(req, res) {
-  res.render('issues/index', {
-    title : 'Issues',
-    user: req.user
-  });
-};
 
 function sub(user, topic, callback) {
   var options = {
