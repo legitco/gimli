@@ -7,3 +7,9 @@ gimli.controller('IssuesController', ['$scope', function($scope){
     {id:2, title: "I have an issue"}
   ];
 }]);
+
+// Document ready
+var client = null;
+$(function() {
+  client = new Faye.Client('http://localhost:3000/faye');
+});

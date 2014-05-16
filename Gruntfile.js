@@ -78,8 +78,14 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['src/**'],
-      tasks: ['jshint', 'build']
+      dev: {
+        files: ['client/**', 'server/**', 'server.js'],
+        tasks: ['jshint', 'build']
+      },
+      test: {
+        files: ['client/**', 'server/**', 'server.js', 'test/**'],
+        tasks: ['test']
+      }
     },
     nodemon: {
       dev: {
@@ -95,6 +101,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           reporter: 'spec',
+          clearRequireCache: true,
           require: 'test/coverage/blanket'
         },
         src: ['test/**/*.js']
@@ -155,6 +162,7 @@ module.exports = function(grunt) {
 
   // Run tests
   grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest']);
+  grunt.registerTask('ci',      ['watch::test']);
   grunt.registerTask('travis',  ['test', 'coveralls']);
 
   // How to build
@@ -164,6 +172,6 @@ module.exports = function(grunt) {
   grunt.registerTask('start',   ['env:dev', 'nodemon']);
 
   // Build and watch
-  grunt.registerTask('dev',     ['build', 'watch']);
+  grunt.registerTask('dev',     ['build', 'watch::dev']);
   grunt.registerTask('default', ['dev']);
 };

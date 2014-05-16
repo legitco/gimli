@@ -3,7 +3,9 @@ html(ng-app="gimli")
   head
     title #{title} - My Site
     //- link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type='text/javascript' src="/static/vendor/jquery/dist/jquery.min.js")
     script(type='text/javascript' src="/static/vendor/angular/angular.js")
+    script(type='text/javascript' src="//localhost:3000/faye/client.js")
   body
     header
       H1 My Site
