@@ -37,6 +37,34 @@ describe('issues', function() {
     });
   });
 
+  describe('.show()', function() {
+    it("should return errors via the next callback", function(done) {
+      var mock = sinon.mock(github);
+      mock.expects("issue").callsArgWith(4, "ERROR", null);
+
+      issues.show(req, null, function(err) {
+        err.should.equal("ERROR");
+        mock.verify();
+        mock.restore();
+        done();
+      });
+    });
+  });
+
+  describe('.comments()', function() {
+    it("should return errors via the next callback", function(done) {
+      var mock = sinon.mock(github);
+      mock.expects("comments").callsArgWith(4, "ERROR", null);
+
+      issues.comments(req, null, function(err) {
+        err.should.equal("ERROR");
+        mock.verify();
+        mock.restore();
+        done();
+      });
+    });
+  });
+
   describe('.notice()', function() {
     it("should return the request body", function(done) {
       var mock = sinon.mock(res);

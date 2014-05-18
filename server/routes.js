@@ -21,6 +21,8 @@ module.exports = function(app) {
 
   // Issues
   app.get('/api/:owner/:repo/issues', issues.index);
+  app.get('/api/:owner/:repo/issue/:number', issues.show);
+  app.get('/api/:owner/:repo/issue/:number/comments', issues.comments);
 
   // Github Notifications
   app.post('/notice/issue', issues.notice);
