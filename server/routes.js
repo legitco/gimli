@@ -2,8 +2,7 @@ var resources = require('./lib/resources');
 var auth = require('./lib/auth');
 
 var page = require('./controllers/page');
-var issues = require('./controllers/issues');
-var repos = require('./controllers/repos');
+var github = require('./controllers/github');
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -11,14 +10,6 @@ function ensureAuthenticated(req, res, next) {
   } else {
     req.session.redirect_url = req.url;
     res.redirect('/login');
-  }
-}
-
-function apiEnsureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    next(new Error("Not logged in"));
   }
 }
 
@@ -35,17 +26,20 @@ module.exports = function(app) {
   // Make sure we're logged in first
   app.use(ensureAuthenticated);
 
+  // For any api request, load the client
+  app.use('/api', github.client);
+
   // Repos
-  app.get('/api/repos', apiEnsureAuthenticated, repos.index);
-  app.post('/api/repos/:owner/:repo/subscribe', apiEnsureAuthenticated, repos.subscribe);
+  app.get('/api/repos', github.repos);
+  app.post('/api/repos/:owner/:repo/subscribe', github.subscribe);
 
   // Issues
-  app.get('/api/:owner/:repo/issues', apiEnsureAuthenticated, issues.index);
-  app.get('/api/:owner/:repo/issue/:number', apiEnsureAuthenticated, issues.show);
-  app.get('/api/:owner/:repo/issue/:number/comments', apiEnsureAuthenticated, issues.comments);
+  app.get('/api/:owner/:repo/issues', github.issues);
+  app.get('/api/:owner/:repo/issue/:number', github.issue);
+  app.get('/api/:owner/:repo/issue/:number/comments', github.comments);
 
   // Github Notifications
-  app.post('/notice/issue', issues.notice);
+  app.post('/notice/issue', github.notice);
 
   // Test Error
   app.get('/error', function(req, res, next) {

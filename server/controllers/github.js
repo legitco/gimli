@@ -1,9 +1,14 @@
 var github = require('octonode');
 var filter = require('../lib/filter');
 
-exports.subscribe = function(user, owner, repo, callback) {
-  var client = github.client(user.access);
-  var ghrepo = client.repo(owner + '/' + repo);
+// Middleware to load the client
+exports.client = function(req, res, next) {
+  req.session.client = github.client(req.user.access);
+  next();
+};
+
+exports.subscribe = function(req, res, next) {
+  var ghrepo = req.session.client.repo(req.params.owner + '/' + req.params.repo);
   ghrepo.hook({
     "name": "web",
     "active": true,
@@ -12,13 +17,24 @@ exports.subscribe = function(user, owner, repo, callback) {
       "url": "https://gim-legit.herokuapp.com/notice/issue",
       "content_type": "json"
     }
-  }, callback);
+  }, function(err, data) {
+    if(err) {
+      next(err);
+    } else {
+      res.json(data);
+    }
+  });
 };
 
-exports.repos = function(user, page, callback) {
-  var client = github.client(user.access);
-  var ghme = client.me();
-  ghme.repos(page, callback);
+exports.repos = function(req, res, next) {
+  var ghme = req.session.client.me();
+  ghme.repos(req.params.page, function(err, data) {
+    if (err) {
+      next(err);
+    } else {
+      res.json(data);
+    }
+  });
 };
 
 var ISSUES_FILTER = {
@@ -41,14 +57,13 @@ var ISSUES_FILTER = {
   updated_at: true
 };
 
-exports.issues = function(user, owner, repo, page, callback) {
-  var client = github.client(user.access);
-  var ghrepo = client.repo(owner + '/' + repo);
-  ghrepo.issues(page, function(err, data) {
+exports.issues = function(req, res, next) {
+  var ghrepo = req.session.client.repo(req.params.owner + '/' + req.params.repo);
+  ghrepo.issues(req.params.page, function(err, data) {
     if(err) {
-      callback(err, null);
+      next(err);
     } else {
-      callback(null, filter(data, ISSUES_FILTER));
+      res.json(filter(data, ISSUES_FILTER));
     }
   });
 };
@@ -83,14 +98,13 @@ var ISSUE_FILTER = {
   updated_at: true
 };
 
-exports.issue = function(user, owner, repo, number, callback) {
-  var client = github.client(user.access);
-  var ghissue = client.issue(owner + '/' + repo, number);
+exports.issue = function(req, res, next) {
+  var ghissue = req.session.client.issue(req.params.owner + '/' + req.params.repo, req.params.number);
   ghissue.info(function(err, data) {
     if(err) {
-      callback(err, null);
+      next(err);
     } else {
-      callback(null, filter(data, ISSUE_FILTER));
+      res.json(filter(data, ISSUE_FILTER));
     }
   });
 };
@@ -106,14 +120,18 @@ var COMMENT_FILTER = {
   updated_at: true
 };
 
-exports.comments = function(user, owner, repo, number, callback) {
-  var client = github.client(user.access);
-  var ghissue = client.issue(owner + '/' + repo, number);
+exports.comments = function(req, res, next) {
+  var ghissue = req.session.client.issue(req.params.owner + '/' + req.params.repo, req.params.number);
   ghissue.comments(function(err, data) {
     if(err) {
-      callback(err, null);
+      next(err);
     } else {
-      callback(null, filter(data, COMMENT_FILTER));
+      res.json(filter(data, COMMENT_FILTER));
     }
   });
+};
+
+exports.notice = function(req, res, next) {
+  console.log("Notice: " + JSON.stringify(req.body, null, 2));
+  res.json(req.body);
 };

@@ -1,2 +1,0 @@
-var github = require('octonode');
-
