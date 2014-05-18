@@ -30,8 +30,10 @@ app.use(passport.session());
 require('./server/routes')(app);
 
 // Error Handling
+app.use('/api', errors.apiNotFound);
 app.use(errors.notFound);
 app.use(errors.log);
+app.use('/api', errors.apiError);
 app.use(errors.error);
 
 // Serve
