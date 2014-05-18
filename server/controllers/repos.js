@@ -1,19 +1,34 @@
-var github = require('octonode');
+var github = require('../lib/github');
 
-function forUser(user, page, callback) {
-  var client = github.client(user.access);
-  var ghme = client.me();
-  ghme.repos(page, callback);
+function page(req) {
+  var p = req.query.page;
+
+  if (typeof p === "undefined") {
+    return 1;
+  } else {
+    return p;
+  }
+}
+
+function respond(err, data, res, next) {
+  if (err) {
+    next(err);
+  } else {
+    res.json(data);
+  }
+}
+
+exports.index = function(req, res, next) {
+  github.repos(req.user, page(req), function(err, repos) {
+    respond(err, repos, res, next);
+  });
 };
 
-module.exports = function(req, res, next) {
-  var page = req.params.page;
+exports.subscribe = function(req, res, next) {
+  var owner = req.params.owner;
+  var repo = req.params.repo;
 
-  if (typeof page === "undefined") {
-    page = 1;
-  }
-
-  forUser(req.user, page, function(err, repos) {
-    res.json(repos);
+  github.subscribe(req.user, owner, repo, function(err, reply) {
+    respond(err, reply, res, next);
   });
 };

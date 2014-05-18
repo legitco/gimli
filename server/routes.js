@@ -16,13 +16,8 @@ module.exports = function(app) {
   app.get('/auth/github/callback', auth.githubCallback, auth.githubSuccess);
 
   // Repos
-  app.get('/repos', repos);
-  app.get('/repos/:page', repos);
-
-  // Issues
-  app.get('/subscribe/:owner/:repo', issues.subscribe);
-  app.post('/notice/issue', issues.notifications.issue);
-  app.post('/notice/issue/comment', issues.notifications.comment);
+  app.get('/api/repos', repos.index);
+  app.post('/api/repos/:owner/:repo/subscribe', repos.subscribe);
 
   // Test Error
   app.get('/error', function(req, res, next) {
