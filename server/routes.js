@@ -19,6 +19,12 @@ module.exports = function(app) {
   app.get('/api/repos', repos.index);
   app.post('/api/repos/:owner/:repo/subscribe', repos.subscribe);
 
+  // Issues
+  app.get('/api/:owner/:repo/issues', issues.index);
+
+  // Github Notifications
+  app.post('/notice/issue', issues.notice);
+
   // Test Error
   app.get('/error', function(req, res, next) {
     next(new Error('Test Error'));

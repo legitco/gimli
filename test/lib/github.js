@@ -55,12 +55,44 @@ describe('github', function() {
   });
 
   describe('.issues()', function() {
-    it('should call the issues github api command', function() {
-      sinon.mock(ghrepo).expects("issues");
+    it('should call the issues github api command', function(done) {
+      var mock = sinon.mock(ghrepo);
+      mock.expects("issues").callsArgWith(1, null, "result");
       github.issues(user, "legitco", "gimli", 1, function(err, reply) {
-        reply.should.equal("issues");
-        ghrepo.issues.verify();
-        ghrepo.issues.restore();
+        reply.should.equal("result");
+        mock.verify();
+        mock.restore();
+        done();
+      });
+    });
+
+    it('should filter the response down', function(done) {
+      var mock = sinon.mock(ghrepo);
+      mock.expects("issues").callsArgWith(1, null, {
+        html_url: 'test',
+        test: true
+      });
+
+      github.issues(user, "legitco", "gimli", 1, function(err, reply) {
+        reply.should.deep.equal({
+          url: 'test'
+        });
+
+        mock.verify();
+        mock.restore();
+        done();
+      });
+    });
+
+    it('should return any errors recieved', function(done) {
+      var mock = sinon.mock(ghrepo);
+      mock.expects("issues").callsArgWith(1, "ERROR", null);
+
+      github.issues(user, "legitco", "gimli", 1, function(err, reply) {
+        err.should.equal("ERROR");
+        mock.verify();
+        mock.restore();
+        done();
       });
     });
   });
