@@ -39,4 +39,8 @@ var server = app.listen(process.env.PORT, function() {
   console.log('Listening on port %d', server.address().port);
 });
 
+var faye = require('faye');
+var bayeux = new faye.NodeAdapter({mount: '/faye'});
+bayeux.attach(server);
+
 module.exports = app;
