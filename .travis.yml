@@ -16,7 +16,6 @@ deploy:
   provider: heroku
   api_key:
     secure: Yv80lG15Z24u1rEzboeUad6qlHFrrhA91XTwzKdOjO7fjbsW160tGTwy0BHe4sZzE8Y0+3bgHaCqSuz9kUPTNbPcRsVYG5oU6ptTiAryrAwa/uj3whH3+dopkBDQi6pAj8KTWN0c68lPDyQgnsgSJd4oQ101SdAXBwNe3N3UpZE=
-  skip_cleanup: true
   app: gim-legit
   on:
     branch: master
