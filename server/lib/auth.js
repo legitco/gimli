@@ -24,7 +24,7 @@ passport.serializeUser(module.exports.serialize);
 passport.deserializeUser(module.exports.deserialize);
 
 module.exports.handleAuthResponse = function(access, refresh, profile, done) {
-  user.save(profile, function() {
+  user.save(profile, access, function() {
     user.load(profile._json.id, function(user) {
       done(null, user);
     });
@@ -34,6 +34,7 @@ module.exports.handleAuthResponse = function(access, refresh, profile, done) {
 passport.use(new GitHubStrategy({
   clientID: github.client.id,
   clientSecret: github.client.secret,
+  scope: ['repo', 'admin:repo_hook'],
   callbackURL: process.env.GIMLI_REDIRECT_URL
 }, module.exports.handleAuthResponse));
 
@@ -56,5 +57,7 @@ module.exports.githubLogin = passport.authenticate('github');
 // example, will redirect the user to the home page.
 module.exports.githubCallback = passport.authenticate('github', { failureRedirect: '/failure' });
 module.exports.githubSuccess = function(req, res) {
-  res.redirect('/');
+  var redirect_url = req.session.redirect_url ? req.session.redirect_url : '/';
+  delete req.session.redirect_url;
+  res.redirect(redirect_url);
 };
