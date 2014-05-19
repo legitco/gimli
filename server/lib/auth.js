@@ -57,5 +57,7 @@ module.exports.githubLogin = passport.authenticate('github');
 // example, will redirect the user to the home page.
 module.exports.githubCallback = passport.authenticate('github', { failureRedirect: '/failure' });
 module.exports.githubSuccess = function(req, res) {
-  res.redirect('/');
+  var redirect_url = req.session.redirect_url ? req.session.redirect_url : '/';
+  delete req.session.redirect_url;
+  res.redirect(redirect_url);
 };
