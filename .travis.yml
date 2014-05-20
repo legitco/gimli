@@ -14,6 +14,7 @@ notifications:
   webhooks: http://legitbot.herokuapp.com/hubot/travis?room=#legitco
 deploy:
   provider: heroku
+  buildpack: https://github.com/legitco/heroku-buildpack-nodejs#legitco
   api_key:
     secure: Yv80lG15Z24u1rEzboeUad6qlHFrrhA91XTwzKdOjO7fjbsW160tGTwy0BHe4sZzE8Y0+3bgHaCqSuz9kUPTNbPcRsVYG5oU6ptTiAryrAwa/uj3whH3+dopkBDQi6pAj8KTWN0c68lPDyQgnsgSJd4oQ101SdAXBwNe3N3UpZE=
   app: gim-legit

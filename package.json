@@ -21,7 +21,7 @@
   },
   "config": {
     "blanket": {
-      "pattern": "src",
+      "pattern": "server",
       "data-cover-never": "node_modules"
     }
   },
