@@ -1,6 +1,14 @@
 var github = require('octonode');
 var filter = require('../lib/filter');
 
+function getRepo(client, owner, repo) {
+  return client.repo(owner + '/' + repo);
+}
+
+function getIssue(client, owner, repo, number) {
+  return client.issue(owner + '/' + repo, number);
+}
+
 // Middleware to load the client
 exports.client = function(req, res, next) {
   req.session.client = github.client(req.user.access);
@@ -8,7 +16,7 @@ exports.client = function(req, res, next) {
 };
 
 exports.subscribe = function(req, res, next) {
-  var ghrepo = req.session.client.repo(req.params.owner + '/' + req.params.repo);
+  var ghrepo = getRepo(req.session.client, req.params.owner, req.params.repo);
   ghrepo.hook({
     "name": "web",
     "active": true,
@@ -58,7 +66,7 @@ var ISSUES_FILTER = {
 };
 
 exports.issues = function(req, res, next) {
-  var ghrepo = req.session.client.repo(req.params.owner + '/' + req.params.repo);
+  var ghrepo = getRepo(req.session.client, req.params.owner, req.params.repo);
   ghrepo.issues(req.params.page, function(err, data) {
     if(err) {
       next(err);
@@ -99,7 +107,7 @@ var ISSUE_FILTER = {
 };
 
 exports.issue = function(req, res, next) {
-  var ghissue = req.session.client.issue(req.params.owner + '/' + req.params.repo, req.params.number);
+  var ghissue = getIssue(req.session.client, req.params.owner, req.params.repo, req.params.number);
   ghissue.info(function(err, data) {
     if(err) {
       next(err);
@@ -121,7 +129,7 @@ var COMMENT_FILTER = {
 };
 
 exports.comments = function(req, res, next) {
-  var ghissue = req.session.client.issue(req.params.owner + '/' + req.params.repo, req.params.number);
+  var ghissue = getIssue(req.session.client, req.params.owner, req.params.repo, req.params.number);
   ghissue.comments(function(err, data) {
     if(err) {
       next(err);
@@ -131,7 +139,7 @@ exports.comments = function(req, res, next) {
   });
 };
 
-exports.notice = function(req, res, next) {
+exports.notice = function(req, res) {
   console.log("Notice: " + JSON.stringify(req.body, null, 2));
   res.json(req.body);
 };
