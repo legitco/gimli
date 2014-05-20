@@ -167,6 +167,7 @@ module.exports = function(grunt) {
 
   // How to build
   grunt.registerTask('build',   ['jshint', 'concat', 'copy']);
+  grunt.registerTask('heroku:production', ['build']);
 
   // How to run
   grunt.registerTask('start',   ['env:dev', 'nodemon']);
