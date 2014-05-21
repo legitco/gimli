@@ -6,7 +6,7 @@ var sinonChai = require('sinon-chai');
 chai.should();
 chai.use(sinonChai);
 
-var markdown = require('../../server/lib/markdown');
+var markdown = require('../../../server/lib/markdown');
 
 describe('markdown', function() {
   describe('.rawBodyParser()', function() {

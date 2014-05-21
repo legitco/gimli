@@ -6,7 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-stylus');
-  
+
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-coveralls');
   grunt.loadNpmTasks('grunt-env');
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
       }
     },
     stylus: {
-	    options: {
+      options: {
         paths: ['client/styles']
       },
       compile: {
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
           clearRequireCache: true,
           require: 'test/coverage/blanket'
         },
-        src: ['test/**/*.js']
+        src: ['test/server/**/*.js']
       },
       coverage: {
         options: {
@@ -124,7 +124,7 @@ module.exports = function(grunt) {
           quiet: true,
           captureFile: 'test/coverage/coverage.lcov'
         },
-        src: ['test/**/*.js']
+        src: ['test/server/**/*.js']
       },
       coverageHtml: {
         options: {
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
           quiet: true,
           captureFile: 'test/coverage/coverage.html'
         },
-        src: ['test/**/*.js']
+        src: ['test/server/**/*.js']
       }
     },
     coveralls: {

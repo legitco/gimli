@@ -16,7 +16,7 @@ describe('Resources', function() {
     post: sinon.spy()
   };
 
-  var resources = require('../../server/lib/resources');
+  var resources = require('../../../server/lib/resources');
   resources.init(app);
 
   describe("resource", function() {

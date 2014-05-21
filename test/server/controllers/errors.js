@@ -4,7 +4,7 @@ var sinonChai = require('sinon-chai');
 chai.should();
 chai.use(sinonChai);
 
-var errors = require('../../server/controllers/errors');
+var errors = require('../../../server/controllers/errors');
 
 var res = {
   status: function(number){},
