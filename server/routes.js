@@ -4,6 +4,8 @@ var auth = require('./lib/auth');
 var page = require('./controllers/page');
 var github = require('./controllers/github');
 
+var markdown = require('./lib/markdown');
+
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     next();
@@ -37,6 +39,9 @@ module.exports = function(app) {
   app.get('/api/:owner/:repo/issues', github.issues);
   app.get('/api/:owner/:repo/issue/:number', github.issue);
   app.get('/api/:owner/:repo/issue/:number/comments', github.comments);
+
+  // Markdown
+  app.post('/api/:owner/:repo/markdown', markdown.render);
 
   // Github Notifications
   app.post('/notice/issue', github.notice);
