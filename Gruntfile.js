@@ -191,9 +191,11 @@ module.exports = function(grunt) {
   });
 
   // Run tests
-  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest', 'karma:test']);
+  grunt.registerTask('test:server',    ['mochaTest']);
+  grunt.registerTask('test:client',    ['karma:test']);
+  grunt.registerTask('test',    ['env:test', 'jshint', 'test:server', 'test:client']);
+  grunt.registerTask('travis',  ['env:test', 'jshint', 'test:server', 'karma:travis', 'coveralls']);
   grunt.registerTask('ci',      ['watch::test']);
-  grunt.registerTask('travis',  ['test', 'karma:travis', 'coveralls']);
 
   // How to build
   grunt.registerTask('build',   ['jshint', 'concat', 'copy', 'stylus']);
