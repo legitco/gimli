@@ -14,9 +14,10 @@ Gimli is currently a work in progress.
 
 ## Usage
 
-* Install [Node.js](http://nodejs.org/)
+* Install [Node.js](http://nodejs.org/): `brew install nodejs`
 * Run `npm install -g grunt-cli` to be able to run tasks
 * Run `npm install -g bower` to be able to install client dependencies
+* Install [Redis](http://redis.io/): `brew install redis`
 * Clone this repo
 * Run `npm install` from the project folder to install server dependencies
 * Run `bower install` from the project folder to install client dependencies
@@ -55,4 +56,5 @@ any new dependencies.
 
 ### Tests
 
+    brew install phantomjs
     grunt test

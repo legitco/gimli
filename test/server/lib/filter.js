@@ -4,7 +4,7 @@ var sinonChai = require('sinon-chai');
 chai.should();
 chai.use(sinonChai);
 
-var filter = require('../../server/lib/filter');
+var filter = require('../../../server/lib/filter');
 
 describe('filter()', function() {
   var data = {

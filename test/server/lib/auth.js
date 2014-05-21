@@ -5,7 +5,7 @@ chai.should();
 chai.use(sinonChai);
 
 describe('auth', function() {
-  var auth = require('../../server/lib/auth');
+  var auth = require('../../../server/lib/auth');
 
   describe('.logout()', function() {
     it("should logout and redirect to '/'", function() {
@@ -57,7 +57,7 @@ describe('auth', function() {
     });
   });
 
-  describe('.serialize', function() {
+  describe('.serialize()', function() {
     var user = {
       id: 6
     };
@@ -69,9 +69,9 @@ describe('auth', function() {
     });
   });
 
-  describe('.deserialize', function() {
+  describe('.deserialize()', function() {
     before(function(done) {
-      var db = require('../../server/lib/db');
+      var db = require('../../../server/lib/db');
       db.set('gimli:user:6:name', 'Kelsin', done);
     });
 
@@ -83,7 +83,7 @@ describe('auth', function() {
     });
   });
 
-  describe('.handleAuthResponse', function() {
+  describe('.handleAuthResponse()', function() {
     var profile = {
       _json: {
         id: 7

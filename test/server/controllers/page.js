@@ -4,7 +4,7 @@ var sinonChai = require('sinon-chai');
 chai.should();
 chai.use(sinonChai);
 
-var page = require('../../server/controllers/page');
+var page = require('../../../server/controllers/page');
 
 describe('page', function() {
   describe('.index()', function() {
