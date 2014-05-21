@@ -5,6 +5,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var errors = require('./server/controllers/errors');
+var markdown = require('./server/lib/markdown');
 
 var app = express();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(session({ secret: process.env.COOKIE_SECRET }));
 
 // Body Parsing
+app.use(markdown.rawBodyParser);
 app.use(bodyParser());
 
 // Authentication
