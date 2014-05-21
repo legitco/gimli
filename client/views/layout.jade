@@ -4,7 +4,6 @@ html(ng-app="gimli")
     title #{title} - Gimli
     link(rel='stylesheet', href='/static/styles/global.css')
     script(type='text/javascript' src="/static/vendor/jquery/dist/jquery.min.js")
-    script(type='text/javascript' src="/static/vendor/angular/angular.js")
     script(type='text/javascript' src="//localhost:3000/faye/client.js")
   body
     header
@@ -35,4 +34,5 @@ html(ng-app="gimli")
     footer
       p Running on node with Express, Jade and Stylus
 
+    script(type='text/javascript' src="/static/vendor/angular/angular.js")
     script(type='text/javascript' src="/static/scripts/app.js")
