@@ -56,4 +56,5 @@ any new dependencies.
 
 ### Tests
 
+    brew install phantomjs
     grunt test
