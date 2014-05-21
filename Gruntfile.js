@@ -1,16 +1,18 @@
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-stylus');
 
+  grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-coveralls');
+
   grunt.loadNpmTasks('grunt-env');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -96,7 +98,7 @@ module.exports = function(grunt) {
       },
       test: {
         files: ['client/**', 'server/**', 'server.js', 'test/**'],
-        tasks: ['test']
+        tasks: ['test', 'karma:test']
       }
     },
     nodemon: {
@@ -146,6 +148,22 @@ module.exports = function(grunt) {
         src: 'test/coverage/coverage.lcov'
       }
     },
+    karma: {
+      options: {
+        configFile: 'karma.conf.js',
+        singleRun: true
+      },
+      continuous: {
+        singleRun: false,
+        browsers: ['PhantomJS']
+      },
+      test: {
+        browsers: ['Chrome', 'PhantomJS']
+      },
+      travis: {
+        browsers: ['Firefox', 'PhantomJS']
+      }
+    },
     env: {
       options : {
         //Shared Options Hash
@@ -173,9 +191,9 @@ module.exports = function(grunt) {
   });
 
   // Run tests
-  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest']);
+  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest', 'karma:test']);
   grunt.registerTask('ci',      ['watch::test']);
-  grunt.registerTask('travis',  ['test', 'coveralls']);
+  grunt.registerTask('travis',  ['test', 'karma:travis', 'coveralls']);
 
   // How to build
   grunt.registerTask('build',   ['jshint', 'concat', 'copy', 'stylus']);
