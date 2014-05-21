@@ -12,20 +12,20 @@ describe('db', function() {
       var origRedisCloud = null;
 
       before(function(done) {
-        delete require.cache[require.resolve('../../server/lib/db')];
+        delete require.cache[require.resolve('../../../server/lib/db')];
         origRedisCloud = process.env.REDISCLOUD_URL;
         process.env.REDISCLOUD_URL = "redis://fake:pass@localhost:6379";
         done();
       });
 
       after(function(done) {
-        delete require.cache[require.resolve('../../server/lib/db')];
+        delete require.cache[require.resolve('../../../server/lib/db')];
         process.env.REDISCLOUD_URL = origRedisCloud;
         done();
       });
 
       it('should attemp to connect', function() {
-        var db = require('../../server/lib/db');
+        var db = require('../../../server/lib/db');
         (db !== null).should.be.true;
       });
     });
@@ -35,20 +35,20 @@ describe('db', function() {
     var origNodeEnv = null;
 
     before(function(done) {
-      delete require.cache[require.resolve('../../server/lib/db')];
+      delete require.cache[require.resolve('../../../server/lib/db')];
       origNodeEnv = process.env.NODE_ENV;
       process.env.NODE_ENV = "development";
       done();
     });
 
     after(function(done) {
-      delete require.cache[require.resolve('../../server/lib/db')];
+      delete require.cache[require.resolve('../../../server/lib/db')];
       process.env.NODE_END = origNodeEnv;
       done();
     });
 
     it("should be able to load the redis client", function() {
-      var db = require('../../server/lib/db');
+      var db = require('../../../server/lib/db');
       (db !== null).should.be.true;
     });
   });

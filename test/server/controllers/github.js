@@ -4,7 +4,7 @@ var sinonChai = require('sinon-chai');
 chai.should();
 chai.use(sinonChai);
 
-var github = require('../../server/controllers/github');
+var github = require('../../../server/controllers/github');
 var octonode = require('octonode');
 
 describe('github', function() {
