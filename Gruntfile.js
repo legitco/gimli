@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-stylus');
+  
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-coveralls');
   grunt.loadNpmTasks('grunt-env');
@@ -75,6 +77,16 @@ module.exports = function(grunt) {
         files: [
           { expand: true, src: ['vendor/**'], dest: 'dist/static' }
         ]
+      }
+    },
+    stylus: {
+	    options: {
+        paths: ['client/styles']
+      },
+      compile: {
+        files: {
+          'dist/static/styles/global.css': 'client/styles/global.styl'
+        }
       }
     },
     watch: {
@@ -166,7 +178,7 @@ module.exports = function(grunt) {
   grunt.registerTask('travis',  ['test', 'coveralls']);
 
   // How to build
-  grunt.registerTask('build',   ['jshint', 'concat', 'copy']);
+  grunt.registerTask('build',   ['jshint', 'concat', 'copy', 'stylus']);
   grunt.registerTask('heroku:production', ['build']);
 
   // How to run
