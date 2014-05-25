@@ -193,7 +193,7 @@ module.exports = function(grunt) {
   // Run tests
   grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest', 'karma:test']);
   grunt.registerTask('travis',  ['env:test', 'jshint', 'mochaTest', 'karma:travis', 'coveralls']);
-  grunt.registerTask('ci',      ['watch::test']);
+  grunt.registerTask('ci',      ['watch:test']);
 
   // How to build
   grunt.registerTask('build',   ['jshint', 'concat', 'copy', 'stylus']);
@@ -203,6 +203,6 @@ module.exports = function(grunt) {
   grunt.registerTask('start',   ['env:dev', 'nodemon']);
 
   // Build and watch
-  grunt.registerTask('dev',     ['build', 'watch::dev']);
+  grunt.registerTask('dev',     ['build', 'watch:dev']);
   grunt.registerTask('default', ['dev']);
 };
