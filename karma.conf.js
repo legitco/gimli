@@ -17,6 +17,7 @@ module.exports = function(config) {
       'node_modules/chai/chai.js',
       'vendor/jquery/dist/jquery.min.js',
       'vendor/angular/angular.js',
+      'vendor/angular-route/angular-route.js',
       'vendor/angular-mocks/angular-mocks.js',
       'client/scripts/**/*.js',
       'test/client/**/*Spec.js'

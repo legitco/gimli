@@ -18,8 +18,6 @@ function ensureAuthenticated(req, res, next) {
 module.exports = function(app) {
   resources.init(app);
 
-  app.get('/', page.index);
-
   // Auth
   app.get('/logout', auth.logout);
   app.get('/login', auth.githubLogin);
@@ -50,4 +48,7 @@ module.exports = function(app) {
   app.get('/error', function(req, res, next) {
     next(new Error('Test Error'));
   });
+
+  // Serve root index page for all other routes
+  app.use(page.index);
 };

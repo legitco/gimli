@@ -65,6 +65,11 @@ module.exports = function(grunt) {
           { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist' }
         ]
       },
+      templates: {
+        files: [
+          { expand: true, cwd: 'client', src: ['templates/**'], dest: 'dist/static' }
+        ]
+      },
       images: {
         files: [
           { expand: true, cwd: 'client', src: ['images/**'], dest: 'dist/static' }
@@ -89,16 +94,6 @@ module.exports = function(grunt) {
         files: {
           'dist/static/styles/global.css': 'client/styles/global.styl'
         }
-      }
-    },
-    watch: {
-      dev: {
-        files: ['client/**', 'server/**', 'server.js'],
-        tasks: ['jshint', 'build']
-      },
-      test: {
-        files: ['client/**', 'server/**', 'server.js', 'test/**'],
-        tasks: ['test', 'karma:test']
       }
     },
     nodemon: {
@@ -187,13 +182,23 @@ module.exports = function(grunt) {
         REDISCLOUD_URL: 'redis://localhost:6379',
         GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback'
       }
+    },
+    watch: {
+      dev: {
+        files: ['client/**', 'server/**', 'server.js'],
+        tasks: ['jshint', 'build']
+      },
+      test: {
+        files: ['client/**', 'server/**', 'server.js', 'test/**'],
+        tasks: ['test', 'karma:test']
+      }
     }
   });
 
   // Run tests
   grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest', 'karma:test']);
   grunt.registerTask('travis',  ['env:test', 'jshint', 'mochaTest', 'karma:travis', 'coveralls']);
-  grunt.registerTask('ci',      ['watch::test']);
+  grunt.registerTask('ci',      ['watch:test']);
 
   // How to build
   grunt.registerTask('build',   ['jshint', 'concat', 'copy', 'stylus']);
@@ -203,6 +208,6 @@ module.exports = function(grunt) {
   grunt.registerTask('start',   ['env:dev', 'nodemon']);
 
   // Build and watch
-  grunt.registerTask('dev',     ['build', 'watch::dev']);
+  grunt.registerTask('dev',     ['build', 'watch:dev']);
   grunt.registerTask('default', ['dev']);
 };
