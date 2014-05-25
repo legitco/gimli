@@ -5,7 +5,6 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var errors = require('./server/controllers/errors');
 var markdown = require('./server/lib/markdown');
 
 var app = express();
@@ -36,13 +35,6 @@ app.use(passport.session());
 
 // Normal Routes
 require('./server/routes')(app);
-
-// Error Handling
-app.use('/api', errors.apiNotFound);
-app.use(errors.notFound);
-app.use(errors.log);
-app.use('/api', errors.apiError);
-app.use(errors.error);
 
 // Serve
 var server = app.listen(process.env.PORT, function() {

@@ -65,6 +65,11 @@ module.exports = function(grunt) {
           { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist' }
         ]
       },
+      templates: {
+        files: [
+          { expand: true, cwd: 'client', src: ['templates/**'], dest: 'dist/static' }
+        ]
+      },
       images: {
         files: [
           { expand: true, cwd: 'client', src: ['images/**'], dest: 'dist/static' }
@@ -89,16 +94,6 @@ module.exports = function(grunt) {
         files: {
           'dist/static/styles/global.css': 'client/styles/global.styl'
         }
-      }
-    },
-    watch: {
-      dev: {
-        files: ['client/**', 'server/**', 'server.js'],
-        tasks: ['jshint', 'build']
-      },
-      test: {
-        files: ['client/**', 'server/**', 'server.js', 'test/**'],
-        tasks: ['test', 'karma:test']
       }
     },
     nodemon: {
@@ -186,6 +181,16 @@ module.exports = function(grunt) {
         GITHUB_CLIENT_SECRET: 'github-client-secret',
         REDISCLOUD_URL: 'redis://localhost:6379',
         GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback'
+      }
+    },
+    watch: {
+      dev: {
+        files: ['client/**', 'server/**', 'server.js'],
+        tasks: ['jshint', 'build']
+      },
+      test: {
+        files: ['client/**', 'server/**', 'server.js', 'test/**'],
+        tasks: ['test', 'karma:test']
       }
     }
   });

@@ -35,19 +35,6 @@ describe('errors', function() {
     });
   });
 
-  describe('.notFound()', function() {
-    it("should return a 404 with view '404'", function() {
-      var mock = sinon.mock(res);
-      mock.expects("status").withArgs(404);
-      mock.expects("render").withArgs('404');
-
-      errors.notFound(null, res, null);
-
-      mock.verify();
-      mock.restore();
-    });
-  });
-
   describe('.log()', function() {
     it("should log the error", function() {
       var mock = sinon.mock(console);
