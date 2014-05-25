@@ -2,9 +2,9 @@ var path = require('path');
 var express = require('express');
 var passport = require('passport');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var errors = require('./server/controllers/errors');
 var markdown = require('./server/lib/markdown');
 
 var app = express();
@@ -18,7 +18,12 @@ app.use('/static', express.static(path.join(__dirname, 'dist', 'static')));
 
 // Parse cookies and sessions
 app.use(cookieParser());
-app.use(session({ secret: process.env.COOKIE_SECRET }));
+app.use(session({
+  store: new RedisStore({
+    url: process.env.REDISCLOUD_URL
+  }),
+  secret: process.env.COOKIE_SECRET
+}));
 
 // Body Parsing
 app.use(markdown.rawBodyParser);
@@ -30,13 +35,6 @@ app.use(passport.session());
 
 // Normal Routes
 require('./server/routes')(app);
-
-// Error Handling
-app.use('/api', errors.apiNotFound);
-app.use(errors.notFound);
-app.use(errors.log);
-app.use('/api', errors.apiError);
-app.use(errors.error);
 
 // Serve
 var server = app.listen(process.env.PORT, function() {
