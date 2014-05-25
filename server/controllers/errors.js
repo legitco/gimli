@@ -3,11 +3,6 @@ exports.apiNotFound = function(req, res, next) {
   res.json({ status: 404, error: 'Not Found' });
 };
 
-exports.notFound = function(req, res, next) {
-  res.status(404);
-  res.render('404');
-};
-
 exports.log = function(err, req, res, next) {
   console.error(err.stack);
   next(err);
