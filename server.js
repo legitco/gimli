@@ -2,6 +2,7 @@ var path = require('path');
 var express = require('express');
 var passport = require('passport');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var errors = require('./server/controllers/errors');
@@ -18,7 +19,12 @@ app.use('/static', express.static(path.join(__dirname, 'dist', 'static')));
 
 // Parse cookies and sessions
 app.use(cookieParser());
-app.use(session({ secret: process.env.COOKIE_SECRET }));
+app.use(session({
+  store: new RedisStore({
+    url: process.env.REDISCLOUD_URL
+  }),
+  secret: process.env.COOKIE_SECRET
+}));
 
 // Body Parsing
 app.use(markdown.rawBodyParser);
