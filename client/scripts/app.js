@@ -11,7 +11,7 @@ gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
   }
 
   this.getIssue = function(opts, onSuccess) {
-    $http({ method: 'GET', url: '/api/' + params.owner + '/' + params.repo + '/issue/' + params.id })
+    $http({ method: 'GET', url: '/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id })
       .success(onSuccess);
   }
 }]);
@@ -47,7 +47,8 @@ gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService
     gimliApi.getIssues({
         owner: params.owner,
         repo: params.repo
-      }, function(data, status, headers, config) {
+      },
+      function(data, status, headers, config) {
         $scope.issues = data;
       }
     );
@@ -61,7 +62,8 @@ gimli.controller('IssueController', ['$scope', '$routeParams', 'GimliApiService'
 
     gimliApi.getIssue({
         owner: params.owner,
-        repo: params.repo
+        repo: params.repo,
+        id: params.id
       },
       function(data, status, headers, config) {
         $scope.issue = data;
