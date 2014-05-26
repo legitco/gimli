@@ -1,5 +1,21 @@
 var gimli = angular.module('gimli', ['ngRoute']);
 
+gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
+  // var opts = {
+  //   owner: 'name of the user/org that owns the repo',
+  //   repo: 'name of the repository'
+  // }
+  this.getIssues = function(opts, onSuccess) {
+    $http({ method: 'GET', url: '/api/' + opts.owner + '/' + opts.repo + '/issues' })
+      .success(onSuccess);
+  }
+
+  this.getIssue = function(opts, onSuccess) {
+    $http({ method: 'GET', url: '/api/' + params.owner + '/' + params.repo + '/issue/' + params.id })
+      .success(onSuccess);
+  }
+}]);
+
 gimli.config(function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
   $routeProvider
@@ -20,29 +36,34 @@ gimli.config(function($routeProvider, $locationProvider) {
     })
 });
 
-gimli.controller('IssuesController', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http) {
+gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService',
+  function($scope, $routeParams, gimliApi) {
     $scope.issues = [];
     params = $routeParams;
 
     $scope.owner = $routeParams.owner;
     $scope.repo  = $routeParams.repo;
 
-    $http({ method: 'GET', url: '/api/' + params.owner + '/' + params.repo + '/issues' })
-      .success(function(data, status, headers, config) {
+    gimliApi.getIssues({
+        owner: params.owner,
+        repo: params.repo
+      }, function(data, status, headers, config) {
         $scope.issues = data;
       }
     );
   }
 ]);
 
-gimli.controller('IssueController', ['$scope', '$http', '$routeParams',
-  function($scope, $http, $routeParams){
+gimli.controller('IssueController', ['$scope', '$routeParams', 'GimliApiService',
+  function($scope, $routeParams, gimliApi){
     $scope.issue = {};
     params = $routeParams;
 
-    $http({ method: 'GET', url: '/api/' + params.owner + '/' + params.repo + '/issue/' + params.id })
-      .success(function(data, status, headers, config) {
+    gimliApi.getIssue({
+        owner: params.owner,
+        repo: params.repo
+      },
+      function(data, status, headers, config) {
         $scope.issue = data;
       }
     );
