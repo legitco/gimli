@@ -19,7 +19,9 @@ gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
 gimli.config(function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
   $routeProvider
-    .when('/', {})
+    .when('/', {
+      templateUrl: '/static/templates/index.html'
+    })
     .when('/:owner/:repo/issues', {
       templateUrl: '/static/templates/issues.html',
       controller: 'IssuesController'
