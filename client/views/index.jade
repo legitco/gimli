@@ -30,9 +30,9 @@ html(ng-app="gimli")
           dd= user.location
           dt Image
           dd: img(src=user.avatar_url width=100)
-          a(href="/logout") Logout
+          a(href="/logout" target="_self") Logout
         else
-          a(href="/login") Login
+          a(href="/login" target="_self") Login
         block sidebar
     footer
       p Running on node with Express, Jade and Stylus
