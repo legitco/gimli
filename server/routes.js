@@ -19,6 +19,9 @@ function ensureAuthenticated(req, res, next) {
 module.exports = function(app) {
   resources.init(app);
 
+  // Index
+  app.get('/', page.index);
+
   // Auth
   app.get('/logout', auth.logout);
   app.get('/login', auth.githubLogin);
