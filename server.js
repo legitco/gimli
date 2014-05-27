@@ -6,6 +6,7 @@ var RedisStore = require('connect-redis')(session);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var markdown = require('./server/lib/markdown');
+var fs = require('fs');
 
 var app = express();
 
@@ -37,9 +38,21 @@ app.use(passport.session());
 require('./server/routes')(app);
 
 // Serve
-var server = app.listen(process.env.PORT, function() {
-  console.log('Listening on port %d', server.address().port);
-});
+var socket = process.env.GIMLI_SOCKET;
+var server;
+if (socket) {
+  // Make sure the socket is gone before trying to create another
+  fs.unlink(socket, function (err) {
+    server = app.listen(socket, function() {
+      console.log('Listening on socket %s', socket);
+    });
+    fs.chmod(socket, '0660');
+  });
+} else {
+  server = app.listen(process.env.PORT, function() {
+    console.log('Listening on port %d', server.address().port);
+  });
+}
 
 var faye = require('faye');
 var bayeux = new faye.NodeAdapter({mount: '/faye'});
