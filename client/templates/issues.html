@@ -4,6 +4,22 @@
   <ul>
     <li ng-repeat="issue in issues">
       <a href="issue/{{issue.id}}">{{issue.title}}</a>
+      <ul>
+        <li><img ng-src="{{issue.author.avatar_url}}" alt="{{issue.author.login}}" height="36" width="36"></li>
+        <li><strong>Comments</strong> {{issue.comments}}</li>
+        <li><strong>Created</strong> {{issue.created_at | date:'short'}}</li>
+        <li><strong>Updated</strong> {{issue.updated_at | date:'short'}}</li>
+        <li><strong>State</strong> {{issue.state}}</li>
+        <li ng-show="issue.milestone"><strong>Milestone</strong> #{{issue.milestone.number}} {{issue.milestone.title}} ({{issue.milestone.state}})</li>
+        <li ng-show="issue.labels"><strong>Labels</strong>
+          <ul>
+            <li ng-repeat="label in issue.labels" ng-alert="issue.labels" style="color: #{{label.color}}">{{label.name}}</li>
+          </ul>
+        </li>
+        <li style="display:none;">
+          <pre ng-bind="issue | json" style="font-size:8px;"></pre>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
