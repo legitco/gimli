@@ -2,40 +2,41 @@ doctype html
 html(ng-app="gimli")
   head
     title #{title} - Gimli
+    link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap-theme.css')
     link(rel='stylesheet', href='/static/styles/global.css')
     script(type='text/javascript' src="/static/vendor/jquery/dist/jquery.min.js")
+    script(type='text/javascript' src="/static/vendor/bootstrap/dist/js/bootstrap.js")
     script(type='text/javascript' src="/faye/client.js")
     script(type='text/javascript' src="/static/vendor/angular/angular.js")
     script(type='text/javascript' src="/static/vendor/angular-route/angular-route.js")
   body
-    header
-      h1 Gimli
-    .container
-      .main-content
-        a(ng-href="/legitco/gimli/issues") gimli issues
-        div(ng-view)
-      .sidebar
-        if user
-          dt ID
-          dd= user.id
-          dt Login
-          dd= user.login
-          dt Name
-          dd= user.name
-          dt Email
-          dd: a(href=("mailto:" + user.email))= user.email
-          dt Profile
-          dd: a(href=user.html_url)= user.html_url
-          dt Location
-          dd= user.location
-          dt Image
-          dd: img(src=user.avatar_url width=100)
-          a(href="/logout" target="_self") Logout
-        else
-          a(href="/login" target="_self") Login
-        block sidebar
+    nav.collapse.navbar-collapse.bs-navbar-collapse(role="navigation")
+      .container-fluid
+        //- Brand and toggle get grouped for better mobile display
+        button.navbar-toggle(type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/") Gimli
+        //- Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(ng-href="/legitco/gimli/issues") Issues
+          ul.nav.navbar-nav.navbar-right
+            li
+              if user
+                a(href="/logout" target="_self") Logout
+              else
+                a(href="/login" target="_self") Login
+    div(ng-view)
+
     footer
-      p Running on node with Express, Jade and Stylus
+      .jumbotron-sm
+        .container
+          | Running on node with Express, Jade and Stylus
 
     script(type='text/javascript' src="/static/scripts/app.js")
 
