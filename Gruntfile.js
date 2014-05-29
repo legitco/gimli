@@ -168,8 +168,6 @@ module.exports = function(grunt) {
         NODE_ENV: 'development',
         PORT: 3000,
         COOKIE_SECRET: 'gimli-cookie',
-        GITHUB_CLIENT_ID: 'github-client-id',
-        GITHUB_CLIENT_SECRET: 'github-client-secret',
         REDISCLOUD_URL: 'redis://localhost:6379',
         GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
         src: '.env'
@@ -178,8 +176,6 @@ module.exports = function(grunt) {
         NODE_ENV : 'test',
         PORT: 3000,
         COOKIE_SECRET: 'gimli-cookie-test',
-        GITHUB_CLIENT_ID: 'github-client-id',
-        GITHUB_CLIENT_SECRET: 'github-client-secret',
         REDISCLOUD_URL: 'redis://localhost:6379',
         GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback'
       }
