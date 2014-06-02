@@ -27,7 +27,7 @@ describe('Unit: Gimli client app', function() {
 
         it('should exist', function () {
           expect(ctrl).to.exist;
-          expect(ctrl).to.not.be.undefied;
+          expect(ctrl).to.not.be.undefined;
         });
 
         it('should have a scope', function() {
