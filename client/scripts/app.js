@@ -16,6 +16,15 @@ gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
       })
       .success(onSuccess);
   }
+
+  this.getRenderedBody = function(opts, onSuccess) {
+    $http.post(
+        '/api/' + opts.owner + '/' + opts.repo + '/markdown',
+        opts.data,
+        { headers: { 'content-type': 'application/x-markdown' } }
+      )
+      .success(onSuccess);
+  }
 }]);
 
 gimli.config(function($routeProvider, $locationProvider) {
@@ -59,8 +68,8 @@ gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService
   }
 ]);
 
-gimli.controller('IssueController', ['$scope', '$routeParams', 'GimliApiService',
-  function($scope, $routeParams, gimliApi){
+gimli.controller('IssueController', ['$scope', '$routeParams', '$sce', 'GimliApiService',
+  function($scope, $routeParams, $sce, gimliApi){
     $scope.issue = {};
     params = $routeParams;
 
@@ -71,6 +80,15 @@ gimli.controller('IssueController', ['$scope', '$routeParams', 'GimliApiService'
       },
       function(data, status, headers, config) {
         $scope.issue = data;
+
+        // TODO (svincent): Refactor to avoid the uneccessary callback pyramid.
+        gimliApi.getRenderedBody({
+          owner: params.owner,
+          repo: params.repo,
+          data: $scope.issue.body
+        }, function(data, status, headers, config) {
+          $scope.issue.renderedBody = $sce.trustAsHtml(data);
+        });
       }
     );
   }
