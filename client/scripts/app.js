@@ -2,18 +2,17 @@ var gimli = angular.module('gimli', ['ngRoute']);
 
 gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
   this.getIssues = function(opts, onSuccess) {
-    $http({
-        method: 'GET',
-        url: '/api/' + opts.owner + '/' + opts.repo + '/issues'
-      })
+    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issues')
       .success(onSuccess);
   }
 
   this.getIssue = function(opts, onSuccess) {
-    $http({
-        method: 'GET',
-        url: '/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id
-      })
+    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id)
+      .success(onSuccess);
+  }
+
+  this.getIssueComments = function(opts, onSuccess) {
+    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id + '/comments')
       .success(onSuccess);
   }
 
@@ -80,6 +79,16 @@ gimli.controller('IssueController', ['$scope', '$routeParams', '$sce', 'GimliApi
       },
       function(data, status, headers, config) {
         $scope.issue = data;
+
+        if (data.comments) {
+          gimliApi.getIssueComments({
+            owner: params.owner,
+            repo: params.repo,
+            id: params.id
+          }, function(data, status, headers, config) {
+            $scope.comments = data;
+          });
+        }
 
         // TODO (svincent): Refactor to avoid the uneccessary callback pyramid.
         gimliApi.getRenderedBody({

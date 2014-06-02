@@ -1,24 +1,11 @@
-ul
-  li
-    img(ng-src="{{issue.author.avatar_url}}", alt="{{issue.author.login}}", height="36", width="36")
-  li
-    strong Comments
-    | {{issue.comments}}
-  li
-    strong Created
-    | {{issue.created_at | date:'short'}}
-  li
-    strong Updated
-    | {{issue.updated_at | date:'short'}}
-  li 
-    strong State
-    | {{issue.state}}
-  li(ng-show="issue.milestone")
-    strong Milestone
-    | \#{{issue.milestone.number}} {{issue.milestone.title}} ({{issue.milestone.state}})
-  li(ng-show="issue.labels")
-    strong Labels
-    ul
-      li(ng-repeat="label in issue.labels", ng-alert="issue.labels", style="color: \#{{label.color}}")
-        | {{label.name}}
-pre(ng-bind="issue | json", style="font-size:8px;")
+.container
+  p {{issue.title}}
+  .body(data-ng-bind-html="issue.renderedBody")
+  ol.comments
+    li(data-ng-repeat="comment in comments")
+      p
+        a(href="{{comment.author.url}}") {{comment.author.login}}
+        | @ {{comment.created_at | date:'short'}}
+      .comment
+        | {{comment.body}}
+  pre(data-ng-bind="comments | json" style="font-size:8px;")
