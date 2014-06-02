@@ -1,17 +1,19 @@
 var gimli = angular.module('gimli', ['ngRoute']);
 
 gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
-  // var opts = {
-  //   owner: 'name of the user/org that owns the repo',
-  //   repo: 'name of the repository'
-  // }
   this.getIssues = function(opts, onSuccess) {
-    $http({ method: 'GET', url: '/api/' + opts.owner + '/' + opts.repo + '/issues' })
+    $http({
+        method: 'GET',
+        url: '/api/' + opts.owner + '/' + opts.repo + '/issues'
+      })
       .success(onSuccess);
   }
 
   this.getIssue = function(opts, onSuccess) {
-    $http({ method: 'GET', url: '/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id })
+    $http({
+        method: 'GET',
+        url: '/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id
+      })
       .success(onSuccess);
   }
 }]);
