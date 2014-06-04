@@ -29,10 +29,8 @@ exports.subscribe = function(req, res, next) {
   }, function(err, data) {
     if(err) {
       next(err);
-    } else if(req.query.callback) {
-      res.jsonp(data);
     } else {
-      res.json(data);
+      res.jsonp(data);
     }
   });
 };
@@ -42,10 +40,8 @@ exports.repos = function(req, res, next) {
   ghme.repos(req.params.page, function(err, data) {
     if (err) {
       next(err);
-    } else if(req.query.callback) {
-      res.jsonp(data);
     } else {
-      res.json(data);
+      res.jsonp(data);
     }
   });
 };
@@ -75,10 +71,8 @@ exports.issues = function(req, res, next) {
   ghrepo.issues(req.params.page, function(err, data) {
     if(err) {
       next(err);
-    } else if(req.query.callback) {
-      res.jsonp(filter(data, ISSUES_FILTER));
     } else {
-      res.json(filter(data, ISSUES_FILTER));
+      res.jsonp(filter(data, ISSUES_FILTER));
     }
   });
 };
@@ -118,10 +112,8 @@ exports.issue = function(req, res, next) {
   ghissue.info(function(err, data) {
     if(err) {
       next(err);
-    } else if(filter(data, ISSUE_FILTER)) {
-      res.jsonp(data);
     } else {
-      res.json(filter(data, ISSUE_FILTER));
+      res.jsonp(filter(data, ISSUE_FILTER));
     }
   });
 };
@@ -142,15 +134,13 @@ exports.comments = function(req, res, next) {
   ghissue.comments(function(err, data) {
     if(err) {
       next(err);
-    } else if(req.query.callback) {
-      res.jsonp(filter(data, COMMENT_FILTER));
     } else {
-      res.json(filter(data, COMMENT_FILTER));
+      res.jsonp(filter(data, COMMENT_FILTER));
     }
   });
 };
 
 exports.notice = function(req, res) {
   console.log("Notice: " + JSON.stringify(req.body, null, 2));
-  res.json(req.body);
+  res.jsonp(req.body);
 };
