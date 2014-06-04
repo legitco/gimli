@@ -26,6 +26,9 @@ module.exports = function(app) {
   app.get('/logout', auth.logout);
   app.get('/login', auth.githubLogin);
   app.get('/auth/github/callback', auth.githubCallback, auth.githubSuccess);
+  app.get('/views/*', function(req, res) {
+    res.render(req.path.substr(7)); 
+  });
 
   // Make sure we're logged in first
   app.use(ensureAuthenticated);

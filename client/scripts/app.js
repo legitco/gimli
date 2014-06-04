@@ -20,18 +20,18 @@ gimli.config(function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
   $routeProvider
     .when('/', {
-      templateUrl: '/static/templates/index.html'
+      templateUrl: '/views/home'
     })
     .when('/:owner/:repo/issues', {
-      templateUrl: '/static/templates/issues.html',
+      templateUrl: '/views/issues',
       controller: 'IssuesController'
     })
     .when('/:owner/:repo/issue/:id', {
-      templateUrl: '/static/templates/issue.html',
+      templateUrl: '/views/issue',
       controller: 'IssueController'
     })
     .when('/404', {
-      templateUrl: 'static/templates/404.html'
+      templateUrl: '/views/404'
     })
     .otherwise({
       redirectTo: '404'
