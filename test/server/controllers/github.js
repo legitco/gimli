@@ -48,7 +48,7 @@ describe('github', function() {
   };
 
   var res = {
-    json: function(){}
+    jsonp: function(){}
   };
 
   describe('.client()', function() {
@@ -71,7 +71,7 @@ describe('github', function() {
       ghrepoMock.expects("hook").callsArgWith(1, null, "result");
 
       var resMock = sinon.mock(res);
-      resMock.expects("json").withArgs("result");
+      resMock.expects("jsonp").withArgs("result");
 
       github.subscribe(req, res, function(){});
 
@@ -104,7 +104,7 @@ describe('github', function() {
       ghmeMock.expects("repos").callsArgWith(1, null, "result");
 
       var resMock = sinon.mock(res);
-      resMock.expects("json").withArgs("result");
+      resMock.expects("jsonp").withArgs("result");
 
       github.repos(req, res, function(){});
 
@@ -137,7 +137,7 @@ describe('github', function() {
       mock.expects("issues").callsArgWith(1, null, {html_url: "url"});
 
       var resMock = sinon.mock(res);
-      resMock.expects("json").withArgs({url: "url"});
+      resMock.expects("jsonp").withArgs({url: "url"});
 
       github.issues(req, res, function(){});
 
@@ -169,7 +169,7 @@ describe('github', function() {
       mock.expects("info").callsArgWith(0, null, {html_url: "url"});
 
       var resMock = sinon.mock(res);
-      resMock.expects("json").withArgs({url: "url"});
+      resMock.expects("jsonp").withArgs({url: "url"});
 
       github.issue(req, res, function(){});
 
@@ -201,7 +201,7 @@ describe('github', function() {
       mock.expects("comments").callsArgWith(0, null, {html_url: "url"});
 
       var resMock = sinon.mock(res);
-      resMock.expects("json").withArgs({url: "url"});
+      resMock.expects("jsonp").withArgs({url: "url"});
 
       github.comments(req, res, function(){});
 
@@ -233,7 +233,7 @@ describe('github', function() {
       mock.expects("log");
 
       var resMock = sinon.mock(res);
-      resMock.expects("json").withArgs("body");
+      resMock.expects("jsonp").withArgs("body");
 
       github.notice({body: "body"}, res, function(){});
 
