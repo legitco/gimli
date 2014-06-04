@@ -11,7 +11,7 @@ var fs = require('fs');
 var app = express();
 
 // Config
-app.set('views', path.join(__dirname, 'client', 'views'));
+app.set('views', path.join(__dirname, 'server', 'views'));
 app.set('view engine', 'jade');
 
 // Static Content

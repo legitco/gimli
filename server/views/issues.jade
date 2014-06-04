@@ -1,0 +1,7 @@
+.container
+  | Owner: {{owner}}
+  | Repo: {{repo}}
+  ul
+    li(ng-repeat="issue in issues")
+      a(href="issue/{{issue.id}}") {{issue.title}}
+      include issue

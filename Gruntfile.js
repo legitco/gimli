@@ -62,12 +62,7 @@ module.exports = function(grunt) {
       },
       views: {
         files: [
-          { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist' }
-        ]
-      },
-      templates: {
-        files: [
-          { expand: true, cwd: 'client', src: ['templates/**'], dest: 'dist/static' }
+          { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist/static' }
         ]
       },
       images: {
