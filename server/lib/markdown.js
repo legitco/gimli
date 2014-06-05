@@ -54,6 +54,6 @@ exports.render = function(req, res) {
   var apiRequest = http.request(options, postCallback);
 
   //This is the data we are posting, it needs to be a string or a buffer
-  apiRequest.write(JSON.stringify(req));
+  apiRequest.write(JSON.stringify(body));
   apiRequest.end();
 };
