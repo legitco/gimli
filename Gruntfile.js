@@ -184,13 +184,13 @@ module.exports = function(grunt) {
       },
       test: {
         files: ['client/**', 'server/**', 'server.js', 'test/**'],
-        tasks: ['test', 'karma:test']
+        tasks: ['test']
       }
     }
   });
 
   // Run tests
-  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest', 'karma:test']);
+  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest']);
   grunt.registerTask('travis',  ['env:test', 'jshint', 'mochaTest', 'karma:travis', 'coveralls']);
   grunt.registerTask('ci',      ['watch:test']);
 
