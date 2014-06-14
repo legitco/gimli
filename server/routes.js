@@ -1,4 +1,3 @@
-var resources = require('./lib/resources');
 var auth = require('./lib/auth');
 
 var page = require('./controllers/page');
@@ -17,8 +16,6 @@ function ensureAuthenticated(req, res, next) {
 }
 
 module.exports = function(app) {
-  resources.init(app);
-
   // Index
   app.get('/', page.index);
 
@@ -27,7 +24,7 @@ module.exports = function(app) {
   app.get('/login', auth.githubLogin);
   app.get('/auth/github/callback', auth.githubCallback, auth.githubSuccess);
   app.get('/views/*', function(req, res) {
-    res.render(req.path.substr(7)); 
+    res.render(req.path.substr(7));
   });
 
   // Make sure we're logged in first
