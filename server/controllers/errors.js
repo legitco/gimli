@@ -1,11 +1,11 @@
 exports.apiNotFound = function(req, res) {
   res.status(404);
-  res.json({ status: 404, error: 'Not Found' });
+  res.jsonp({ status: 404, error: 'Not Found' });
 };
 
 exports.apiNotLoggedIn = function(req, res) {
   res.status(403);
-  res.json({ status: 403, error: 'Not Logged In' });
+  res.jsonp({ status: 403, error: 'Not Logged In' });
 };
 
 exports.log = function(err, req, res, next) {
