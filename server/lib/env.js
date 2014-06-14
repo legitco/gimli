@@ -14,7 +14,7 @@ checkEnvVars.prototype.validateInput = function(varList) {
   if (varList == null || !(varList instanceof Array) || varList.length == 0) {
     argumentError();
   } else {
-    for(var i = 0, max = varList.length; i < max; i++) {
+    for (var i = 0, max = varList.length; i < max; i++) {
       if (typeof varList[i] !== 'string') {
         argumentError();
       }

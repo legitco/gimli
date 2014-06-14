@@ -34,9 +34,6 @@ describe('Env', function() {
     it('should match "PORT"', function(){
       expect(method("PORT")).to.be.true;
     });
-
-    // it('', function(){});
-
   });
 
   describe('.validateInput()', function(){
@@ -51,11 +48,9 @@ describe('Env', function() {
     it('should throw if not provided an array of strings', function(){
       expect(method).to.throw(Error);
       expect(method.bind(method, [])).to.throw(Error);
-      expect(method.bind(method, ['test'])).to.not.throw(Error);
+      expect(method.bind(method, ['test', 1])).to.throw(Error);
+      expect(method.bind(method, ['test', 'again'])).to.not.throw(Error);
     });
-
-    // it('', function(){});
-
   });
 
   // it('', function(){});
