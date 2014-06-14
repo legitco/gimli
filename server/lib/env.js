@@ -1,29 +1,26 @@
-var checkEnvVars = function(varList) {
-  this.varList = varList;
-};
+var _ = require('lodash');
 
-checkEnvVars.prototype.isEnvVarDefined = function(key) {
-  return !!process.env[key];
-}
-
-checkEnvVars.prototype.validateInput = function(varList) {
-  var argumentError = function() {
-    throw new Error('expectVars(): First argument must be an array of strings');
+var validateEnvVarExists = function(key) {
+  if (!!process.env[key]) {
+    throw new Error('envVarDefined(): ');
   }
-
-  if (varList == null || !(varList instanceof Array) || varList.length == 0) {
-    argumentError();
-  } else {
-    for (var i = 0, max = varList.length; i < max; i++) {
-      if (typeof varList[i] !== 'string') {
-        argumentError();
-      }
-    } // for
-  } // if
-
-  this.varList = varList;
-
-  return true
 }
 
-module.exports = checkEnvVars;
+var validateArray = function(varList) {
+  if (varList == null || !(varList instanceof Array) || varList.length == 0) {
+    throw new Error('validateInput(): First argument must be an array of strings');
+  }
+}
+
+// Validate a single variable
+var validateVar = function(envVar) {
+  if (typeof envVar !== 'string') {
+    throw new Error('validateVar(): ');
+  }
+}
+
+exports.validate = function(varList) {
+  validateArray(varList);
+  _.map(varList, validateVar);
+  _.map(varList, validateEnvVarExists);
+}
