@@ -103,7 +103,7 @@ module.exports = function(grunt) {
       }
     },
     mochaTest: {
-      test: {
+      server: {
         options: {
           reporter: 'spec',
           clearRequireCache: true,
@@ -185,23 +185,28 @@ module.exports = function(grunt) {
       test: {
         files: ['client/**', 'server/**', 'server.js', 'test/**'],
         tasks: ['test']
+      },
+      server: {
+        files: ['server/**', 'server.js', 'test/server/**'],
+        tasks: ['mochaTest']
       }
     }
   });
 
   // Run tests
-  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest']);
-  grunt.registerTask('travis',  ['env:test', 'jshint', 'mochaTest', 'karma:travis', 'coveralls']);
-  grunt.registerTask('ci',      ['watch:test']);
+  grunt.registerTask('test-server',       ['env:test', 'watch:server']);
+  grunt.registerTask('test',              ['env:test', 'jshint', 'mochaTest', 'karma:test']);
+  grunt.registerTask('travis',            ['env:test', 'jshint', 'mochaTest', 'karma:travis', 'coveralls']);
+  grunt.registerTask('ci',                ['watch:test']);
 
   // How to build
-  grunt.registerTask('build',   ['jshint', 'concat', 'copy', 'stylus']);
+  grunt.registerTask('build',             ['jshint', 'concat', 'copy', 'stylus']);
   grunt.registerTask('heroku:production', ['build']);
 
   // How to run
-  grunt.registerTask('start',   ['env:dev', 'nodemon']);
+  grunt.registerTask('start',             ['env:dev', 'nodemon']);
 
   // Build and watch
-  grunt.registerTask('dev',     ['build', 'watch:dev']);
-  grunt.registerTask('default', ['dev']);
+  grunt.registerTask('dev',               ['build', 'watch:dev']);
+  grunt.registerTask('default',           ['dev']);
 };
