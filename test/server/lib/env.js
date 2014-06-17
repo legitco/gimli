@@ -23,14 +23,20 @@ describe('Env', function() {
 
     it('should throw an error if called with no param, a Number, a string, or an object', function(){
       expect(method).to.throw(Error);
-      expect(method.bind( 1 ) ).to.throw(Error);
-      expect(method.bind( "String test" )).to.throw(Error);
-      expect(method.bind( {biz: "baz"} )).to.throw(Error);
+      expect(method.bind(1)).to.throw(Error);
+      expect(method.bind("String test")).to.throw(Error);
+      expect(method.bind({biz: "baz"})).to.throw(Error);
+    });
+
+    it('should throw an error when called with an invalid array', function(){
+      expect(method.bind([1])).to.throw(Error);
+      expect(method.bind([{fizz: "buzz"}])).to.throw(Error);
     });
 
     it('should throw an error when called with an unset env var', function(){
-      expect(method.bind("THIS_IS_NOT_VALID")).to.throw(Error);
-      expect(method.bind("ABCDEFGHIJKLMNOPQRSTUVWXYZ")).to.throw(Error);
+      expect(method.bind(["THIS_IS_NOT_VALID"])).to.throw(Error);
+      expect(method.bind(["ABCDEFGHIJKLMNOPQRSTUVWXYZ"])).to.throw(Error);
+      expect(method.bind(["PWD", "INVALID_ENV_VAR"])).to.throw(Error);
     });
 
     it('should match "PWD" and return true', function(){
