@@ -9,6 +9,7 @@ var errors = require('../../../server/controllers/errors');
 var res = {
   status: function(number){},
   json: function(data){},
+  jsonp: function(data){},
   render: function(view, data){}
 };
 
@@ -23,12 +24,28 @@ describe('errors', function() {
     it("should return a 404 as json", function() {
       var mock = sinon.mock(res);
       mock.expects("status").withArgs(404);
-      mock.expects("json").withArgs({
+      mock.expects("jsonp").withArgs({
         status: 404,
         error: 'Not Found'
       });
 
       errors.apiNotFound(null, res, null);
+
+      mock.verify();
+      mock.restore();
+    });
+  });
+
+  describe('.apiNotLoggedIn()', function() {
+    it("should return a 403 as json", function() {
+      var mock = sinon.mock(res);
+      mock.expects("status").withArgs(403);
+      mock.expects("jsonp").withArgs({
+        status: 403,
+        error: 'Not Logged In'
+      });
+
+      errors.apiNotLoggedIn(null, res, null);
 
       mock.verify();
       mock.restore();
@@ -55,7 +72,7 @@ describe('errors', function() {
     it("should return a 500 with the error", function() {
       var mock = sinon.mock(res);
       mock.expects("status").withArgs(500);
-      mock.expects("json").withArgs({
+      mock.expects("jsonp").withArgs({
         name: err.name,
         error: err.message
       });

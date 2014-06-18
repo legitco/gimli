@@ -1,4 +1,5 @@
 var passport = require('passport');
+var errors = require('../controllers/errors');
 var GitHubStrategy = require('passport-github').Strategy;
 var user = require('../models/user.js');
 
@@ -60,4 +61,12 @@ module.exports.githubSuccess = function(req, res) {
   var redirect_url = req.session.redirect_url ? req.session.redirect_url : '/';
   delete req.session.redirect_url;
   res.redirect(redirect_url);
+};
+
+module.exports.ensureAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    errors.apiNotLoggedIn(req, res);
+  }
 };
