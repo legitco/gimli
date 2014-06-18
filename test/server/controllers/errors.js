@@ -36,6 +36,22 @@ describe('errors', function() {
     });
   });
 
+  describe('.apiNotLoggedIn()', function() {
+    it("should return a 403 as json", function() {
+      var mock = sinon.mock(res);
+      mock.expects("status").withArgs(403);
+      mock.expects("jsonp").withArgs({
+        status: 403,
+        error: 'Not Logged In'
+      });
+
+      errors.apiNotLoggedIn(null, res, null);
+
+      mock.verify();
+      mock.restore();
+    });
+  });
+
   describe('.log()', function() {
     it("should log the error", function() {
       var mock = sinon.mock(console);

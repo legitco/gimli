@@ -6,6 +6,7 @@ chai.use(sinonChai);
 
 describe('auth', function() {
   var auth = require('../../../server/lib/auth');
+  var errors = require('../../../server/controllers/errors');
 
   describe('.logout()', function() {
     it("should logout and redirect to '/'", function() {
@@ -94,6 +95,29 @@ describe('auth', function() {
       auth.handleAuthResponse("token", null, profile, function(err, user) {
         user.id.should.equal(7);
       });
+    });
+  });
+
+  describe('.ensureAuthenticated()', function() {
+    it("should call next() if the user is authenticated", function() {
+      var req = { isAuthenticated: function() { return true; }};
+      var next = sinon.spy();
+
+      auth.ensureAuthenticated(req, null, next);
+
+      next.should.have.been.calledOnce;
+    });
+
+    it("should return a 403 if the user is not authenticated", function() {
+      var req = { isAuthenticated: function() { return false; }};
+      var mock = sinon.mock(errors);
+
+      mock.expects("apiNotLoggedIn").once();
+
+      auth.ensureAuthenticated(req, null, null);
+
+      mock.verify();
+      mock.restore();
     });
   });
 });
