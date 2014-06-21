@@ -4,12 +4,16 @@ html(ng-app="gimli")
     title #{title} - Gimli
     link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap-theme.css')
+    link(rel='stylesheet', href='/static/vendor/highlightjs/styles/github.css')
     link(rel='stylesheet', href='/static/styles/global.css')
     script(type='text/javascript' src="/static/vendor/jquery/dist/jquery.min.js")
     script(type='text/javascript' src="/static/vendor/bootstrap/dist/js/bootstrap.js")
     script(type='text/javascript' src="/faye/client.js")
+    script(type='text/javascript' src="/static/vendor/marked/lib/marked.js")
+    script(type='text/javascript' src="/static/vendor/highlightjs/highlight.pack.js")
     script(type='text/javascript' src="/static/vendor/angular/angular.js")
     script(type='text/javascript' src="/static/vendor/angular-route/angular-route.js")
+    script(type='text/javascript' src="/static/vendor/angular-marked/angular-marked.js")
   body
     nav.collapse.navbar-collapse.bs-navbar-collapse(role="navigation")
       .container-fluid

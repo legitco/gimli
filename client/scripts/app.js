@@ -1,4 +1,4 @@
-var gimli = angular.module('gimli', ['ngRoute']);
+var gimli = angular.module('gimli', ['ngRoute', 'hc.marked']);
 
 gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
   this.getIssues = function(opts, onSuccess) {
@@ -15,19 +15,19 @@ gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
     $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id + '/comments')
       .success(onSuccess);
   }
-
-  this.getRenderedBody = function(opts, onSuccess) {
-    $http.post(
-        '/api/' + opts.owner + '/' + opts.repo + '/markdown',
-        opts.data,
-        { headers: { 'content-type': 'application/x-markdown' } }
-      )
-      .success(onSuccess);
-  }
 }]);
 
-gimli.config(function($routeProvider, $locationProvider) {
+gimli.config(function($routeProvider, $locationProvider, markedProvider) {
   $locationProvider.html5Mode(true);
+
+  markedProvider.setOptions({
+    gfm: true,
+    tables: true,
+    highlight: function (code) {
+      return hljs.highlightAuto(code).value;
+    }
+  });
+
   $routeProvider
     .when('/', {
       templateUrl: '/views/home'
@@ -49,14 +49,14 @@ gimli.config(function($routeProvider, $locationProvider) {
 });
 
 gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService',
-  function($scope, $routeParams, gimliApi) {
+  function($scope, $routeParams, GimliApiService) {
     $scope.issues = [];
     params = $routeParams;
 
     $scope.owner = $routeParams.owner;
     $scope.repo  = $routeParams.repo;
 
-    gimliApi.getIssues({
+    GimliApiService.getIssues({
         owner: params.owner,
         repo: params.repo
       },
@@ -68,11 +68,11 @@ gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService
 ]);
 
 gimli.controller('IssueController', ['$scope', '$routeParams', '$sce', 'GimliApiService',
-  function($scope, $routeParams, $sce, gimliApi){
+  function($scope, $routeParams, $sce, GimliApiService){
     $scope.issue = {};
     params = $routeParams;
 
-    gimliApi.getIssue({
+    GimliApiService.getIssue({
         owner: params.owner,
         repo: params.repo,
         id: params.id
@@ -80,8 +80,9 @@ gimli.controller('IssueController', ['$scope', '$routeParams', '$sce', 'GimliApi
       function(data, status, headers, config) {
         $scope.issue = data;
 
+        // TODO (svincent): Refactor to avoid the uneccessary callback pyramid
         if (data.comments) {
-          gimliApi.getIssueComments({
+          GimliApiService.getIssueComments({
             owner: params.owner,
             repo: params.repo,
             id: params.id
@@ -89,15 +90,6 @@ gimli.controller('IssueController', ['$scope', '$routeParams', '$sce', 'GimliApi
             $scope.comments = data;
           });
         }
-
-        // TODO (svincent): Refactor to avoid the uneccessary callback pyramid.
-        gimliApi.getRenderedBody({
-          owner: params.owner,
-          repo: params.repo,
-          data: $scope.issue.body
-        }, function(data, status, headers, config) {
-          $scope.issue.renderedBody = $sce.trustAsHtml(data);
-        });
       }
     );
   }
