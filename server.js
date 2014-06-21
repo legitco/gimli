@@ -40,6 +40,10 @@ app.set('view engine', 'jade');
 
 // Static Content
 app.use('/static', express.static(path.join(__dirname, 'dist', 'static')));
+app.use('/static', function(req, res) {
+  res.status(404);
+  res.render('404', { url: req.originalUrl });
+});
 
 // Parse cookies and sessions
 app.use(cookieParser());
