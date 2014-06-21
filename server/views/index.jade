@@ -24,7 +24,9 @@ html(ng-app="gimli")
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
             li
-              a(ng-href="/legitco/gimli/issues") Issues
+              a(ng-href="/legitco/gimli/issues")
+                span.octicon.octicon-issue-opened
+                | &nbsp;Issues
           ul.nav.navbar-nav.navbar-right
             li
               if user
