@@ -1,17 +1,27 @@
 var gimli = angular.module('gimli', ['ngRoute']);
 
 gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
-  // var opts = {
-  //   owner: 'name of the user/org that owns the repo',
-  //   repo: 'name of the repository'
-  // }
   this.getIssues = function(opts, onSuccess) {
-    $http({ method: 'GET', url: '/api/' + opts.owner + '/' + opts.repo + '/issues' })
+    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issues')
       .success(onSuccess);
   }
 
   this.getIssue = function(opts, onSuccess) {
-    $http({ method: 'GET', url: '/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id })
+    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id)
+      .success(onSuccess);
+  }
+
+  this.getIssueComments = function(opts, onSuccess) {
+    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id + '/comments')
+      .success(onSuccess);
+  }
+
+  this.getRenderedBody = function(opts, onSuccess) {
+    $http.post(
+        '/api/' + opts.owner + '/' + opts.repo + '/markdown',
+        opts.data,
+        { headers: { 'content-type': 'application/x-markdown' } }
+      )
       .success(onSuccess);
   }
 }]);
@@ -19,17 +29,19 @@ gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
 gimli.config(function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
   $routeProvider
-    .when('/', {})
+    .when('/', {
+      templateUrl: '/views/home'
+    })
     .when('/:owner/:repo/issues', {
-      templateUrl: '/static/templates/issues.html',
+      templateUrl: '/views/issues',
       controller: 'IssuesController'
     })
     .when('/:owner/:repo/issue/:id', {
-      templateUrl: '/static/templates/issue.html',
+      templateUrl: '/views/issue',
       controller: 'IssueController'
     })
     .when('/404', {
-      templateUrl: 'static/templates/404.html'
+      templateUrl: '/views/404'
     })
     .otherwise({
       redirectTo: '404'
@@ -55,8 +67,8 @@ gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService
   }
 ]);
 
-gimli.controller('IssueController', ['$scope', '$routeParams', 'GimliApiService',
-  function($scope, $routeParams, gimliApi){
+gimli.controller('IssueController', ['$scope', '$routeParams', '$sce', 'GimliApiService',
+  function($scope, $routeParams, $sce, gimliApi){
     $scope.issue = {};
     params = $routeParams;
 
@@ -67,6 +79,25 @@ gimli.controller('IssueController', ['$scope', '$routeParams', 'GimliApiService'
       },
       function(data, status, headers, config) {
         $scope.issue = data;
+
+        if (data.comments) {
+          gimliApi.getIssueComments({
+            owner: params.owner,
+            repo: params.repo,
+            id: params.id
+          }, function(data, status, headers, config) {
+            $scope.comments = data;
+          });
+        }
+
+        // TODO (svincent): Refactor to avoid the uneccessary callback pyramid.
+        gimliApi.getRenderedBody({
+          owner: params.owner,
+          repo: params.repo,
+          data: $scope.issue.body
+        }, function(data, status, headers, config) {
+          $scope.issue.renderedBody = $sce.trustAsHtml(data);
+        });
       }
     );
   }

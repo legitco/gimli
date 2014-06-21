@@ -62,17 +62,17 @@ module.exports = function(grunt) {
       },
       views: {
         files: [
-          { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist' }
-        ]
-      },
-      templates: {
-        files: [
-          { expand: true, cwd: 'client', src: ['templates/**'], dest: 'dist/static' }
+          { expand: true, cwd: 'client', src: ['views/**'], dest: 'dist/static' }
         ]
       },
       images: {
         files: [
           { expand: true, cwd: 'client', src: ['images/**'], dest: 'dist/static' }
+        ]
+      },
+      fonts: {
+        files: [
+          { expand: true, cwd: 'client', src: ['fonts/**'], dest: 'dist/static' }
         ]
       },
       clientScripts: {
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
       }
     },
     mochaTest: {
-      test: {
+      server: {
         options: {
           reporter: 'spec',
           clearRequireCache: true,
@@ -129,6 +129,12 @@ module.exports = function(grunt) {
           reporter: 'html-cov',
           quiet: true,
           captureFile: 'test/coverage/coverage.html'
+        },
+        src: ['test/server/**/*.js']
+      },
+      coverageFail: {
+        options: {
+          reporter: 'travis-cov'
         },
         src: ['test/server/**/*.js']
       }
@@ -168,8 +174,6 @@ module.exports = function(grunt) {
         NODE_ENV: 'development',
         PORT: 3000,
         COOKIE_SECRET: 'gimli-cookie',
-        GITHUB_CLIENT_ID: 'github-client-id',
-        GITHUB_CLIENT_SECRET: 'github-client-secret',
         REDISCLOUD_URL: 'redis://localhost:6379',
         GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
         src: '.env'
@@ -191,24 +195,29 @@ module.exports = function(grunt) {
       },
       test: {
         files: ['client/**', 'server/**', 'server.js', 'test/**'],
-        tasks: ['test', 'karma:test']
+        tasks: ['test']
+      },
+      server: {
+        files: ['server/**', 'server.js', 'test/server/**'],
+        tasks: ['mochaTest']
       }
     }
   });
 
   // Run tests
-  grunt.registerTask('test',    ['env:test', 'jshint', 'mochaTest', 'karma:test']);
-  grunt.registerTask('travis',  ['env:test', 'jshint', 'mochaTest', 'karma:travis', 'coveralls']);
-  grunt.registerTask('ci',      ['watch:test']);
+  grunt.registerTask('test-server',       ['env:test', 'watch:server']);
+  grunt.registerTask('test',              ['env:test', 'jshint', 'mochaTest', 'karma:test']);
+  grunt.registerTask('travis',            ['env:test', 'jshint', 'mochaTest', 'karma:travis', 'coveralls']);
+  grunt.registerTask('ci',                ['watch:test']);
 
   // How to build
-  grunt.registerTask('build',   ['jshint', 'concat', 'copy', 'stylus']);
+  grunt.registerTask('build',             ['jshint', 'concat', 'copy', 'stylus']);
   grunt.registerTask('heroku:production', ['build']);
 
   // How to run
-  grunt.registerTask('start',   ['env:dev', 'nodemon']);
+  grunt.registerTask('start',             ['env:dev', 'nodemon']);
 
   // Build and watch
-  grunt.registerTask('dev',     ['build', 'watch:dev']);
-  grunt.registerTask('default', ['dev']);
+  grunt.registerTask('dev',               ['build', 'watch:dev']);
+  grunt.registerTask('default',           ['dev']);
 };

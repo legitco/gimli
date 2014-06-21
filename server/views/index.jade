@@ -1,0 +1,43 @@
+doctype html
+html(ng-app="gimli")
+  head
+    title #{title} - Gimli
+    link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap-theme.css')
+    link(rel='stylesheet', href='/static/styles/global.css')
+    script(type='text/javascript' src="/static/vendor/jquery/dist/jquery.min.js")
+    script(type='text/javascript' src="/static/vendor/bootstrap/dist/js/bootstrap.js")
+    script(type='text/javascript' src="/faye/client.js")
+    script(type='text/javascript' src="/static/vendor/angular/angular.js")
+    script(type='text/javascript' src="/static/vendor/angular-route/angular-route.js")
+  body
+    nav.collapse.navbar-collapse.bs-navbar-collapse(role="navigation")
+      .container-fluid
+        //- Brand and toggle get grouped for better mobile display
+        button.navbar-toggle(type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/") Gimli
+        //- Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(ng-href="/legitco/gimli/issues")
+                span.octicon.octicon-issue-opened
+                | &nbsp;Issues
+          ul.nav.navbar-nav.navbar-right
+            li
+              if user
+                a(href="/logout" target="_self") Logout
+              else
+                a(href="/login" target="_self") Login
+    div(ng-view)
+
+    footer
+      .jumbotron-sm
+        .container
+          | Running on node with Express, Jade and Stylus
+
+    script(type='text/javascript' src="/static/scripts/app.js")

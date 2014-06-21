@@ -30,7 +30,7 @@ exports.subscribe = function(req, res, next) {
     if(err) {
       next(err);
     } else {
-      res.json(data);
+      res.jsonp(data);
     }
   });
 };
@@ -41,7 +41,7 @@ exports.repos = function(req, res, next) {
     if (err) {
       next(err);
     } else {
-      res.json(data);
+      res.jsonp(data);
     }
   });
 };
@@ -72,7 +72,7 @@ exports.issues = function(req, res, next) {
     if(err) {
       next(err);
     } else {
-      res.json(filter(data, ISSUES_FILTER));
+      res.jsonp(filter(data, ISSUES_FILTER));
     }
   });
 };
@@ -113,7 +113,7 @@ exports.issue = function(req, res, next) {
     if(err) {
       next(err);
     } else {
-      res.json(filter(data, ISSUE_FILTER));
+      res.jsonp(filter(data, ISSUE_FILTER));
     }
   });
 };
@@ -135,12 +135,12 @@ exports.comments = function(req, res, next) {
     if(err) {
       next(err);
     } else {
-      res.json(filter(data, COMMENT_FILTER));
+      res.jsonp(filter(data, COMMENT_FILTER));
     }
   });
 };
 
 exports.notice = function(req, res) {
   console.log("Notice: " + JSON.stringify(req.body, null, 2));
-  res.json(req.body);
+  res.jsonp(req.body);
 };

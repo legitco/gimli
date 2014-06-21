@@ -1,0 +1,11 @@
+.container
+  p {{issue.title}}
+  .body(data-ng-bind-html="issue.renderedBody")
+  ol.comments
+    li(data-ng-repeat="comment in comments")
+      p
+        a(href="{{comment.author.url}}") {{comment.author.login}}
+        | @ {{comment.created_at | date:'short'}}
+      .comment
+        | {{comment.body}}
+  pre(data-ng-bind="comments | json" style="font-size:8px;")
