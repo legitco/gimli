@@ -70,6 +70,11 @@ module.exports = function(grunt) {
           { expand: true, cwd: 'client', src: ['images/**'], dest: 'dist/static' }
         ]
       },
+      fonts: {
+        files: [
+          { expand: true, cwd: 'client', src: ['fonts/**'], dest: 'dist/static' }
+        ]
+      },
       clientScripts: {
         files: [
           { expand: true, cwd: 'client', src: ['scripts/**'], dest: 'dist/static' }
