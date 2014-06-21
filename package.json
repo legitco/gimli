@@ -23,6 +23,9 @@
     "blanket": {
       "pattern": "server",
       "data-cover-never": "node_modules"
+    },
+    "travis-cov": {
+      "threshold": 100
     }
   },
   "author": "LegitCo",
@@ -45,7 +48,8 @@
     "octonode": "^0.6.2",
     "passport": "^0.2.0",
     "passport-github": "^0.1.5",
-    "redis": "^0.10.1"
+    "redis": "^0.10.1",
+    "travis-cov": "^0.2.5"
   },
   "devDependencies": {
     "blanket": "^1.1.6",

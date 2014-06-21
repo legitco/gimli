@@ -126,6 +126,12 @@ module.exports = function(grunt) {
           captureFile: 'test/coverage/coverage.html'
         },
         src: ['test/server/**/*.js']
+      },
+      coverageFail: {
+        options: {
+          reporter: 'travis-cov'
+        },
+        src: ['test/server/**/*.js']
       }
     },
     coveralls: {
