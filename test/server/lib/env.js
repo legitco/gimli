@@ -36,12 +36,12 @@ describe('Env', function() {
     it('should throw an error when called with an unset env var', function(){
       expect(method.bind(method, ["THIS_IS_NOT_VALID"])).to.throw(Error);
       expect(method.bind(method, ["ABCDEFGHIJKLMNOPQRSTUVWXYZ"])).to.throw(Error);
-      expect(method.bind(method, ["PWD", "INVALID_ENV_VAR"])).to.throw(Error);
+      expect(method.bind(method, ["PATH", "INVALID_ENV_VAR"])).to.throw(Error);
     });
 
-    it('should match "PWD" and return true', function(){
-      expect(method.bind(method, ["PWD"])).to.not.throw(Error);
-      expect(method(["PWD"])).to.be.true;
+    it('should match "PATH" and return true', function(){
+      expect(method.bind(method, ["PATH"])).to.not.throw(Error);
+      expect(method(["PATH"])).to.be.true;
     });
   });
 
