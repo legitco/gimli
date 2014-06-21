@@ -1,3 +1,4 @@
+var envVars = require('./server/lib/env');
 var path = require('path');
 var express = require('express');
 var passport = require('passport');
@@ -9,6 +10,22 @@ var markdown = require('./server/lib/markdown');
 var fs = require('fs');
 
 var app = express();
+
+// Validate environment variables
+try {
+  envVars.validate([
+    'COOKIE_SECRET',
+    'GIMLI_REDIRECT_URL',
+    'GITHUB_CLIENT_ID',
+    'GITHUB_CLIENT_SECRET',
+    'NODE_ENV',
+    'PORT',
+    'REDISCLOUD_URL'
+  ]);
+} catch(err) {
+  console.log("Shutting down due to invalid env configuration");
+  process.exit(1);
+}
 
 // Config
 app.set('views', path.join(__dirname, 'server', 'views'));

@@ -33,6 +33,7 @@
   "homepage": "https://github.com/legitco/gimli",
   "dependencies": {
     "body-parser": "^1.2.0",
+    "colors": "^0.6.2",
     "connect-redis": "^2.0.0",
     "cookie-parser": "^1.0.1",
     "express": "^4.1.1",
