@@ -1,4 +1,8 @@
-var envVars = require('./server/lib/env');
+// Node.js Modules
+var fs = require('fs');
+
+// NPM Modules
+var colors = require('colors');
 var path = require('path');
 var express = require('express');
 var passport = require('passport');
@@ -6,14 +10,14 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var markdown = require('./server/lib/markdown');
-var fs = require('fs');
 
-var app = express();
+// Custom modules
+var env = require('./server/lib/env');
+var markdown = require('./server/lib/markdown');
 
 // Validate environment variables
 try {
-  envVars.validate([
+  env.validate([
     'COOKIE_SECRET',
     'GIMLI_REDIRECT_URL',
     'GITHUB_CLIENT_ID',
@@ -26,6 +30,9 @@ try {
   console.log("Shutting down due to invalid env configuration");
   process.exit(1);
 }
+
+// Express yoself
+var app = express();
 
 // Config
 app.set('views', path.join(__dirname, 'server', 'views'));
@@ -68,6 +75,7 @@ if (socket) {
 } else {
   server = app.listen(process.env.PORT, function() {
     console.log('Listening on port %d', server.address().port);
+    console.log('You have my sword, my shield ... and my '.blue + 'axe'.red + '!'.blue);
   });
 }
 
