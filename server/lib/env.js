@@ -1,22 +1,28 @@
+var self = this;
 var _ = require('lodash');
+var colors = require('colors');
 
+var logError = function(message) {
+  console.error(message.underline.red);
+  self.error = true;
+}
 
 var validateArray = function(varList) {
   if (varList == null || !(varList instanceof Array) || varList.length == 0) {
-    throw new Error('validateArray(): Caller must provide an Array of environment variable name strings.');
+    logError('validateArray(): Caller must provide an Array of environment variable name strings.');
   }
 }
 
 // Validate a single variable
 var validateVar = function(envVar) {
   if (typeof envVar !== 'string') { //typeof envVar.toString() !== 'string'
-    throw new Error('validateVar(): Expected a string containing an environment variable name, got ' + (typeof envVar) );
+    logError('validateVar(): Expected a string containing an environment variable name, got ' + (typeof envVar));
   }
 }
 
 var validateEnvVarExists = function(key) {
   if (!process.env[key]) {
-    throw new Error('validateEnvVarExists(): "' + key + '" is not a valid environment variable');
+    logError('validateEnvVarExists(): "' + key + '" is not a valid environment variable');
   }
 }
 
@@ -24,5 +30,11 @@ exports.validate = function(varList) {
   validateArray(varList);
   _.map(varList, validateVar);
   _.map(varList, validateEnvVarExists);
+
+  console.log(self.error);
+  if (self.error) {
+    var error = new Error('Errors were detected with the supplied environment variables.');
+    throw error;
+  }
   return true;
 }
