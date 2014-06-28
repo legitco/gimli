@@ -1,6 +1,71 @@
-.container
-  p {{issue.title}}
-  .body(marked="issue.body")
+.container-fluid
+  h4 {{issue.title}}
+  .body.row
+  
+    .chat.col-md-8
+      section.row
+        aside.col-sm-4
+          address
+            a(href="#") Brandon
+          time() 3 hours ago
+        .bubble.col-sm-8
+          p Suspe vel erat libero.
+          pre // my first program in C++
+            | #include <iostream>
+            | int main()
+            | {
+            | std::cout << "Hello World!";
+            | }
+          
+      section.row
+        aside.col-sm-4
+          address
+            a(href="#") Christopher
+          time() 45 minutes ago
+        .bubble.col-sm-8
+          p Integer vitae massa vel erat molestie aliquam. Praesent eros metus, commodo ac scelerisque non, pellentesque quis quam. Nulla at ligula ut orci fermentum fermentum. Pellentesque ac libero sodales, hendrerit purus rhoncus, egestas felis
+          p Nunc sodales, diam at tristique viverra, ante dui vehicula dolor, sed imperdiet leo justo at arcu. Suspendisse pulvinar dui non purus suscipit, id iaculis dui dictum. Nam tempor porttitor euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean et consectetur dui, in fermentum lorem.
+          p Etiam in luctus mi. Maecenas ac diam id felis molestie auctor non euismod lacus. Mauris pulvinar felis urna, quis porttitor libero cursus id. Suspendisse potenti.
+          
+      section.row
+        aside.col-sm-4
+          address
+            a(href="#") Simeon
+          time() &lsaquo;1 minute ago
+        .bubble.col-sm-8
+          p Quisque ac rhoncus augue. Pellentesque urna urna, eleifend in urna sit amet, facilisis ullamcorper lectus. Maecenas posuere, nunc id blandit aliquam, lacus augue pretium massa, a varius massa purus at tellus. Praesent eget adipiscing tortor. Integer cursus tincidunt vestibulum. Quisque ut purus aliquet, cursus turpis vehicula, ornare lacus. Maecenas vehicula cursus orci nec pulvinar. Morbi lectus risus, tincidunt fermentum fermentum sed, adipiscing sed quam. Nunc dui dui, blandit at ultrices vitae, vestibulum et libero. Quisque hendrerit luctus adipiscing sed quam. Nunc dui dui, blandit at ultrices vitae, vestibulum et libero. Quisque hendrerit luctus convallis ut, consectetur sit amet dolor. Vivamus cursus gravida lacinia.
+          
+      form.row
+        input.col-xs-10
+        button.col-xs-2 Post
+      
+    aside.col-md-4.hidden-xs.hidden-sm.panel
+      ol.users
+        li
+          img(src="/static/images/ico-1px.png")
+          h5 9
+          h3
+            a(href="#") Christopher Grioir
+          h4 @kelsin
+          div.clearfix
+        li
+          img(src="/static/images/ico-1px.png")
+          h5 12
+          h3
+            a(href="#") Simeon Vincent
+          h4 @svincent
+          div.clearfix
+        li
+          img(src="/static/images/ico-1px.png")
+          h5 2
+          h3
+            a(href="#") Brandon Rotkel
+          div.clearfix
+  
+  hr
+  
+  pre(marked="issue.body")
+  
   ol.comments
     li(data-ng-repeat="comment in comments")
       p
