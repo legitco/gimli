@@ -1,4 +1,4 @@
-var db = require('../lib/db');
+var redis = require('../lib/redis');
 
 var key = function(id, name) {
   return('gimli:user:' + id + ':' + name);
@@ -7,7 +7,7 @@ var key = function(id, name) {
 var Model = function() {};
 Model.prototype.load = function(id, callback) {
   if (id !== null && typeof id !== "undefined") {
-    db.multi()
+    redis.multi()
       .get(key(id, "name"))
       .get(key(id, "login"))
       .get(key(id, "html_url"))
@@ -34,7 +34,7 @@ Model.prototype.load = function(id, callback) {
 
 Model.prototype.save = function(user, access, done) {
   var id = user._json.id;
-  db.multi()
+  redis.multi()
     .set(key(id, 'name'), user._json.name)
     .set(key(id, 'login'), user._json.login)
     .set(key(id, 'html_url'), user._json.html_url)

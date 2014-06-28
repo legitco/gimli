@@ -1,5 +1,5 @@
 var chai = require('chai');
-var db = require('../../../server/lib/db');
+var redis = require('../../../server/lib/redis');
 chai.should();
 
 describe('user', function() {
@@ -13,9 +13,9 @@ describe('user', function() {
     }
   };
 
-  // Clear db on each run
+  // Clear redis on each run
   beforeEach(function(done) {
-    db.flushdb(done);
+    redis.flushdb(done);
   });
 
   describe('.save()', function() {
@@ -24,21 +24,21 @@ describe('user', function() {
     });
 
     it("should save name to redis", function() {
-      db.get('gimli:user:5:name', function(err, reply) {
+      redis.get('gimli:user:5:name', function(err, reply) {
         (reply === null).should.be.false;
         reply.should.equal("Test User");
       });
     });
 
     it("should save login to redis", function() {
-      db.get('gimli:user:5:login', function(err, reply) {
+      redis.get('gimli:user:5:login', function(err, reply) {
         (reply === null).should.be.false;
         reply.should.equal("testuser");
       });
     });
 
     it("should save the access token to redis", function() {
-      db.get('gimli:user:5:access', function(err, reply) {
+      redis.get('gimli:user:5:access', function(err, reply) {
         (reply === null).should.be.false;
         reply.should.equal("token");
       });

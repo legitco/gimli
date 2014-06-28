@@ -72,8 +72,8 @@ describe('auth', function() {
 
   describe('.deserialize()', function() {
     before(function(done) {
-      var db = require('../../../server/lib/db');
-      db.set('gimli:user:6:name', 'Kelsin', done);
+      var redis = require('../../../server/lib/redis');
+      redis.set('gimli:user:6:name', 'Kelsin', done);
     });
 
     it("should load the user object from the id", function() {
