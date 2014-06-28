@@ -18,6 +18,7 @@ Gimli is currently a work in progress.
 * Run `npm install -g grunt-cli` to be able to run tasks
 * Run `npm install -g bower` to be able to install client dependencies
 * Install [Redis](http://redis.io/): `brew install redis`
+* Install [MongoDB](http://www.mongodb.org/): `brew install mongodb`
 * Clone this repo
 * Run `npm install` from the project folder to install server dependencies
 * Run `bower install` from the project folder to install client dependencies
