@@ -24,7 +24,8 @@ try {
     'GITHUB_CLIENT_SECRET',
     'NODE_ENV',
     'PORT',
-    'REDIS_URL'
+    'REDIS_URL',
+    'MONGO_URL'
   ]);
 } catch(err) {
   console.log("Shutting down due to invalid env configuration");
