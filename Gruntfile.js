@@ -103,7 +103,7 @@ module.exports = function(grunt) {
           ignore: ['node_modules/'],
           verbose: true,
           ext: 'js',
-          watch: 'server/**/*.js'
+          watch: ['server/**/*.js','server.js']
         }
       }
     },
