@@ -39,13 +39,13 @@ describe('Unit: Gimli client app', function() {
         })
       }); // describe basic config
 
-      describe('RouteParams integration', function() {
+      describe('StateParams integration', function() {
         beforeEach(inject(function($controller, $rootScope) {
           scope = $rootScope.$new();
 
           ctrl = $controller('IssuesController', {
             $scope: scope,
-            $routeParams: { owner: testOwner, repo: testRepo }
+            $stateParams: { owner: testOwner, repo: testRepo }
           });
         })); // before each
 
@@ -53,7 +53,7 @@ describe('Unit: Gimli client app', function() {
           expect(scope.owner).to.equal(testOwner);
           expect(scope.repo).to.equal(testRepo);
         });
-      }); // describe routeparams
+      }); // describe stateParams
 
       describe('Gimli API service integration', function() {
         beforeEach(inject(function($controller, $rootScope) {
@@ -61,7 +61,7 @@ describe('Unit: Gimli client app', function() {
 
           ctrl = $controller('IssuesController', {
             $scope: scope,
-            $routeParams: { owner: testOwner, repo: testRepo },
+            $stateParams: { owner: testOwner, repo: testRepo },
             GimliApiService: {
               getIssues: function(opts, cb) { cb(apiData) }
             }

@@ -1,4 +1,4 @@
-var gimli = angular.module('gimli', ['ngRoute', 'hc.marked']);
+var gimli = angular.module('gimli', ['hc.marked', 'ui.router']);
 
 gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
   this.getIssues = function(opts, onSuccess) {
@@ -17,7 +17,7 @@ gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
   }
 }]);
 
-gimli.config(function($routeProvider, $locationProvider, markedProvider) {
+gimli.config(function($locationProvider, markedProvider, $stateProvider, $urlRouterProvider) {
   $locationProvider.html5Mode(true);
 
   markedProvider.setOptions({
@@ -28,33 +28,38 @@ gimli.config(function($routeProvider, $locationProvider, markedProvider) {
     }
   });
 
-  $routeProvider
-    .when('/', {
-      templateUrl: '/views/home'
+  $urlRouterProvider.otherwise("/404");
+
+  $stateProvider
+    .state('index', {
+      url: '/',
+      templateUrl: 'views/home'
     })
-    .when('/:owner/:repo/issues', {
+    .state('issues', {
+      url: '/:owner/:repo/issues',
       templateUrl: '/views/issues',
       controller: 'IssuesController'
     })
-    .when('/:owner/:repo/issue/:id', {
+    .state('issue', {
+      url: '/:owner/:repo/issue/:id',
       templateUrl: '/views/issue',
       controller: 'IssueController'
     })
-    .when('/404', {
+    .state('404', {
+      url: '/404',
       templateUrl: '/views/404'
     })
-    .otherwise({
-      redirectTo: '404'
-    })
+  ;
+
 });
 
-gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService',
-  function($scope, $routeParams, GimliApiService) {
+gimli.controller('IssuesController', ['$scope', '$stateParams', 'GimliApiService',
+  function($scope, $stateParams, GimliApiService) {
     $scope.issues = [];
-    params = $routeParams;
+    params = $stateParams;
 
-    $scope.owner = $routeParams.owner;
-    $scope.repo  = $routeParams.repo;
+    $scope.owner = $stateParams.owner;
+    $scope.repo  = $stateParams.repo;
 
     GimliApiService.getIssues({
         owner: params.owner,
@@ -67,10 +72,10 @@ gimli.controller('IssuesController', ['$scope', '$routeParams', 'GimliApiService
   }
 ]);
 
-gimli.controller('IssueController', ['$scope', '$routeParams', '$sce', 'GimliApiService',
-  function($scope, $routeParams, $sce, GimliApiService){
+gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'GimliApiService',
+  function($scope, $stateParams, $sce, GimliApiService){
     $scope.issue = {};
-    params = $routeParams;
+    params = $stateParams;
 
     GimliApiService.getIssue({
         owner: params.owner,
