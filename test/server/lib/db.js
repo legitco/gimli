@@ -13,14 +13,14 @@ describe('db', function() {
 
       before(function(done) {
         delete require.cache[require.resolve('../../../server/lib/db')];
-        origRedisCloud = process.env.REDISCLOUD_URL;
-        process.env.REDISCLOUD_URL = "redis://fake:pass@localhost:6379";
+        origRedisCloud = process.env.REDIS_URL;
+        process.env.REDIS_URL = "redis://fake:pass@localhost:6379";
         done();
       });
 
       after(function(done) {
         delete require.cache[require.resolve('../../../server/lib/db')];
-        process.env.REDISCLOUD_URL = origRedisCloud;
+        process.env.REDIS_URL = origRedisCloud;
         done();
       });
 

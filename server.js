@@ -24,7 +24,7 @@ try {
     'GITHUB_CLIENT_SECRET',
     'NODE_ENV',
     'PORT',
-    'REDISCLOUD_URL'
+    'REDIS_URL'
   ]);
 } catch(err) {
   console.log("Shutting down due to invalid env configuration");
@@ -49,7 +49,7 @@ app.use('/static', function(req, res) {
 app.use(cookieParser());
 app.use(session({
   store: new RedisStore({
-    url: process.env.REDISCLOUD_URL
+    url: process.env.REDIS_URL
   }),
   secret: process.env.COOKIE_SECRET
 }));
