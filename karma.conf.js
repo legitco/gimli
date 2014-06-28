@@ -19,7 +19,7 @@ module.exports = function(config) {
       'vendor/angular/angular.js',
       'vendor/marked/lib/marked.js',
       'vendor/highlightjs/highlight.pack.js',
-      'vendor/angular-route/angular-route.js',
+      'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/angular-mocks/angular-mocks.js',
       'vendor/angular-marked/angular-marked.js',
       'client/scripts/**/*.js',
