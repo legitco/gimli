@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "test") {
   redis = require('redis');
 }
 
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
+var redisURL = url.parse(process.env.REDIS_URL);
 var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 
 // Auth if we need to.

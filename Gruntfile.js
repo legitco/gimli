@@ -103,7 +103,7 @@ module.exports = function(grunt) {
           ignore: ['node_modules/'],
           verbose: true,
           ext: 'js',
-          watch: 'server/**/*.js'
+          watch: ['server/**/*.js','server.js']
         }
       }
     },
@@ -174,7 +174,8 @@ module.exports = function(grunt) {
         NODE_ENV: 'development',
         PORT: 3000,
         COOKIE_SECRET: 'gimli-cookie',
-        REDISCLOUD_URL: 'redis://localhost:6379',
+        REDIS_URL: 'redis://localhost:6379',
+        MONGO_URL: 'mongodb://localhost/gimli-dev',
         GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
         src: '.env'
       },
@@ -182,10 +183,11 @@ module.exports = function(grunt) {
         NODE_ENV : 'test',
         PORT: 3000,
         COOKIE_SECRET: 'gimli-cookie-test',
+        REDIS_URL: 'redis://localhost:6379',
+        MONGO_URL: 'mongodb://localhost/gimli-test',
+        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
         GITHUB_CLIENT_ID: 'github-client-id',
-        GITHUB_CLIENT_SECRET: 'github-client-secret',
-        REDISCLOUD_URL: 'redis://localhost:6379',
-        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback'
+        GITHUB_CLIENT_SECRET: 'github-client-secret'
       }
     },
     watch: {

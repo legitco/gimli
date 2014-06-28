@@ -1,3 +1,5 @@
+var mongooseMock = require('mongoose-mock');
+var proxyquire = require('proxyquire');
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
@@ -5,7 +7,9 @@ chai.should();
 chai.use(sinonChai);
 
 describe('auth', function() {
-  var auth = require('../../../server/lib/auth');
+  var User = require('../../../server/models/user');
+  var UserMock = sinon.mock(User);
+  var auth = proxyquire('../../../server/lib/auth', { '../models/user.js': UserMock });
   var errors = require('../../../server/controllers/errors');
 
   describe('.logout()', function() {
@@ -71,29 +75,29 @@ describe('auth', function() {
   });
 
   describe('.deserialize()', function() {
-    before(function(done) {
-      var db = require('../../../server/lib/db');
-      db.set('gimli:user:6:name', 'Kelsin', done);
-    });
+    it("should load the user object from the id", function(done) {
+      var user = {id: 'test'};
 
-    it("should load the user object from the id", function() {
-      auth.deserialize(6, function(err, user) {
-        user.id.should.equal(6);
-        user.name.should.equal('Kelsin');
+      UserMock.expects("findOne").once().withArgs({ id: '6' }).callsArgWith(1, null, user);
+
+      auth.deserialize('6', function(err, user) {
+        user.id.should.equal('test');
+        UserMock.verify();
+        UserMock.restore();
+        done();
       });
     });
   });
 
   describe('.handleAuthResponse()', function() {
-    var profile = {
-      _json: {
-        id: 7
-      }
-    };
-
-    it("should return the user object", function() {
-      auth.handleAuthResponse("token", null, profile, function(err, user) {
-        user.id.should.equal(7);
+    it("should return the user object", function(done) {
+      var user = {id: 'test'};
+      UserMock.expects("create").once().callsArgWith(1, null, user);
+      auth.handleAuthResponse("token", null, {'_json':{}}, function(err, user) {
+        user.id.should.equal('test');
+        UserMock.verify();
+        UserMock.restore();
+        done();
       });
     });
   });
