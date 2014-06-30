@@ -1,17 +1,18 @@
-stripe(even = #fff, odd = #eee)
+stripe(even = rgb(255,255,255), odd = rgb(252,252,252))
   .row
     background-color odd
     &.even
     &:nth-child(even)
       background-color even
-      
-.body 
+
+.body
   position relative
-          
+
   .chat
     stripe()
     .row
       padding 1em 0;
+      border-bottom: 1px solid rgb(245,245,245);
       aside
         address
           margin 0;
@@ -24,8 +25,8 @@ stripe(even = #fff, odd = #eee)
         line-height 2em
       button
         line-height 2em
-            
-          
+
+
   .panel
     background-color #f2f5fa
     position absolute
@@ -52,4 +53,4 @@ stripe(even = #fff, odd = #eee)
           color #aaa
         h5
           float right
-        
+
