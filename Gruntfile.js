@@ -13,6 +13,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-env');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-node-inspector');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -190,6 +191,9 @@ module.exports = function(grunt) {
         GITHUB_CLIENT_SECRET: 'github-client-secret'
       }
     },
+    'node-inspector': {
+      dev: {}
+    },
     watch: {
       dev: {
         files: ['client/**', 'server/**', 'server.js'],
@@ -218,6 +222,7 @@ module.exports = function(grunt) {
 
   // How to run
   grunt.registerTask('start',             ['env:dev', 'nodemon']);
+  grunt.registerTask('debug',             ['env:dev', 'node-inspector']);
 
   // Build and watch
   grunt.registerTask('dev',               ['build', 'watch:dev']);
