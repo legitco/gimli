@@ -23,15 +23,18 @@ passport.serializeUser(module.exports.serialize);
 passport.deserializeUser(module.exports.deserialize);
 
 module.exports.handleAuthResponse = function(access, refresh, profile, done) {
-  User.create({
-    id: profile._json.id,
-    name: profile._json.name,
-    login: profile._json.login,
-    html_url: profile._json.html_url,
-    avatar_url: profile._json.avatar_url,
-    email: profile._json.email,
-    location: profile._json.location,
-    access: access }, done);
+  User.findOneAndUpdate(
+    { id: profile._json.id },
+    { id: profile._json.id,
+      name: profile._json.name,
+      login: profile._json.login,
+      html_url: profile._json.html_url,
+      avatar_url: profile._json.avatar_url,
+      email: profile._json.email,
+      location: profile._json.location,
+      access: access },
+    { upsert: true },
+    done);
 };
 
 passport.use(new GitHubStrategy({

@@ -92,7 +92,7 @@ describe('auth', function() {
   describe('.handleAuthResponse()', function() {
     it("should return the user object", function(done) {
       var user = {id: 'test'};
-      UserMock.expects("create").once().callsArgWith(1, null, user);
+      UserMock.expects("findOneAndUpdate").once().callsArgWith(3, null, user);
       auth.handleAuthResponse("token", null, {'_json':{}}, function(err, user) {
         user.id.should.equal('test');
         UserMock.verify();
