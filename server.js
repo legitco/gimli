@@ -31,7 +31,8 @@ try {
     'MONGO_URL'
   ]);
 } catch(err) {
-  console.log("Shutting down due to invalid env configuration".red);
+  console.error(err.message.underline.red);
+  console.error("Shutting down due to invalid env configuration".red);
   process.exit(1);
 }
 
