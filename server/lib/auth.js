@@ -23,6 +23,7 @@ passport.serializeUser(module.exports.serialize);
 passport.deserializeUser(module.exports.deserialize);
 
 module.exports.handleAuthResponse = function(access, refresh, profile, done) {
+  console.log(profile._json);
   User.findOneAndUpdate(
     { id: profile._json.id },
     { id: profile._json.id,
@@ -31,7 +32,7 @@ module.exports.handleAuthResponse = function(access, refresh, profile, done) {
       html_url: profile._json.html_url,
       avatar_url: profile._json.avatar_url,
       email: profile._json.email,
-      location: profile._json.location,
+      location: profile._json.location || "",
       access: access },
     { upsert: true },
     done);
