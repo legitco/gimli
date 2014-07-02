@@ -21,14 +21,8 @@ var validateEnvVarExists = function(key) {
 };
 
 exports.validate = function(varList) {
-  try {
-    validateArray(varList);
-    _.map(varList, validateVar);
-    _.map(varList, validateEnvVarExists);
-  } catch(err) {
-    console.error(err.message.underline.red);
-    throw err;
-  }
-
+  validateArray(varList);
+  _.map(varList, validateVar);
+  _.map(varList, validateEnvVarExists);
   return true;
 };

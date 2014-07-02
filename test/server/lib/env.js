@@ -44,7 +44,4 @@ describe('Env', function() {
       expect(method(["PATH"])).to.be.true;
     });
   });
-
-  // it('', function(){});
-  // describe('', function(){});
 });

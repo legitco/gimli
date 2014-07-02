@@ -23,7 +23,6 @@ passport.serializeUser(module.exports.serialize);
 passport.deserializeUser(module.exports.deserialize);
 
 module.exports.handleAuthResponse = function(access, refresh, profile, done) {
-  console.log(profile._json);
   User.findOneAndUpdate(
     { id: profile._json.id },
     { id: profile._json.id,
