@@ -36,24 +36,35 @@ gimli.config(function($locationProvider, markedProvider, $stateProvider, $urlRou
       templateUrl: 'views/home'
     })
     .state('issues', {
-      url: '/:owner/:repo/issues',
+      url: '/{owner:[\\w-]+}/{repo:[\\w-]+}/issues',
       templateUrl: '/views/issues',
-      controller: 'IssuesController'
+      controller: 'IssueListController'
     })
     .state('issue', {
-      url: '/:owner/:repo/issue/:id',
+      url: '/{owner:[\\w-]+}/{repo:[\\w-]+}/issue/:id',
       templateUrl: '/views/issue',
       controller: 'IssueController'
+    })
+    .state('nested', {
+      url: '/nested',
+      templateUrl: '/views/demo-nested',
+      controller: function($scope, $state){
+        $scope.$state = $state;
+      }
+    })
+    .state('nested.child1', {
+      parent: 'nested',
+      url: '/child1',
+      templateUrl: '/views/demo-nested-child1'
     })
     .state('404', {
       url: '/404',
       templateUrl: '/views/404'
     })
   ;
-
 });
 
-gimli.controller('IssuesController', ['$scope', '$stateParams', 'GimliApiService',
+gimli.controller('IssueListController', ['$scope', '$stateParams', 'GimliApiService',
   function($scope, $stateParams, GimliApiService) {
     $scope.issues = [];
     params = $stateParams;

@@ -1,0 +1,11 @@
+section
+  p This is only a test (frame1)
+  p Child pages:
+  ul
+    li
+      a(ui-sref='.child1') Child 1
+    li
+      a(ui-sref='.child2') Child 2
+
+  div(class='child-view' ng-class='{hidden: $state.is("nested")}' ui-view='')
+  p end
