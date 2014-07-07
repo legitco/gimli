@@ -77,9 +77,6 @@ app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Normal Routes
-require('./server/routes')(app);
-
 // Serve
 var socket = process.env.GIMLI_SOCKET;
 var server;
@@ -102,4 +99,7 @@ var faye = require('faye');
 var bayeux = new faye.NodeAdapter({mount: '/faye'});
 bayeux.attach(server);
 
+
+// Normal Routes
+var router = require('./server/router')(app);
 module.exports = app;
