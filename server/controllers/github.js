@@ -169,7 +169,7 @@ exports.createComment = function(req, res, next) {
     });
 
     response.on('end', function () {
-      res.send(str);
+      res.jsonp(filter(str, COMMENT_FILTER));
     });
   };
 
