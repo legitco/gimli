@@ -20,6 +20,10 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: ';'
+      },
+      dist: {
+        src: ['client/scripts/Gimli.js', 'client/scripts/*/*.js'],
+        dest: 'dist/static/scripts/app.js'
       }
     },
     uglify: {
@@ -78,7 +82,7 @@ module.exports = function(grunt) {
       },
       clientScripts: {
         files: [
-          { expand: true, cwd: 'client', src: ['scripts/**'], dest: 'dist/static' }
+          { expand: true, cwd: 'client', src: ['scripts/app.js'], dest: 'dist/static' }
         ]
       },
       vendor: {
