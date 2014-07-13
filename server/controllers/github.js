@@ -145,11 +145,7 @@ exports.createComment = function(req, res, next) {
   var owner = req.params.owner;
   var repo = req.params.repo;
   var number = req.params.number;
-  var markdown = req.rawBody;
-
-  var body = {
-    body: markdown
-  };
+  var body = req.body;
 
   var options = {
     host: 'api.github.com',
