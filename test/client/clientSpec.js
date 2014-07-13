@@ -5,7 +5,7 @@ describe('Unit: Gimli client app', function() {
   beforeEach(module('gimli'));
 
   describe('Controllers', function() {
-    describe('IssuesController', function() {
+    describe('IssueListController', function() {
       var scope, ctrl, apiData;
       var testOwner = "username";
       var testRepo = "project";
@@ -20,7 +20,7 @@ describe('Unit: Gimli client app', function() {
         beforeEach(inject(function($controller, $rootScope) {
           scope = $rootScope.$new();
 
-          ctrl = $controller('IssuesController', {
+          ctrl = $controller('IssueListController', {
             $scope: scope
           });
         })); // beforeEach
@@ -43,7 +43,7 @@ describe('Unit: Gimli client app', function() {
         beforeEach(inject(function($controller, $rootScope) {
           scope = $rootScope.$new();
 
-          ctrl = $controller('IssuesController', {
+          ctrl = $controller('IssueListController', {
             $scope: scope,
             $stateParams: { owner: testOwner, repo: testRepo }
           });
@@ -59,7 +59,7 @@ describe('Unit: Gimli client app', function() {
         beforeEach(inject(function($controller, $rootScope) {
           scope = $rootScope.$new();
 
-          ctrl = $controller('IssuesController', {
+          ctrl = $controller('IssueListController', {
             $scope: scope,
             $stateParams: { owner: testOwner, repo: testRepo },
             GimliApiService: {
