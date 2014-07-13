@@ -156,7 +156,8 @@ exports.createComment = function(req, res, next) {
     path: '/' + owner + '/' + repo + '/issue/' + number + '/comments',
     method: 'POST',
     headers: {
-      "User-Agent": "Legitco/Gimli"
+      "User-Agent": "Legitco/Gimli",
+      "Authorization": "token " + req.user.access
     }
   };
 
