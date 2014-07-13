@@ -9,6 +9,7 @@
     "bootstrap": "^3.1.1",
     "highlightjs": "~8.0.0",
     "jquery": "^2.1.1",
-    "marked": "~0.3.2"
+    "marked": "~0.3.2",
+    "angular-faye": "~0.2.1"
   }
 }

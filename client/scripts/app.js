@@ -1,4 +1,10 @@
-var gimli = angular.module('gimli', ['hc.marked', 'ui.router']);
+var gimli = angular.module('gimli', ['hc.marked', 'ui.router', 'faye']);
+
+// TODO: FIX HARDCODED THINGS
+gimli.factory('Faye', ['$faye', function ($faye) {
+    return $faye("http://localhost:3000/faye");
+  }
+]);
 
 gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
   this.getIssues = function(opts, onSuccess) {
@@ -83,11 +89,18 @@ gimli.controller('IssueListController', ['$scope', '$stateParams', 'GimliApiServ
   }
 ]);
 
-gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'GimliApiService',
-  function($scope, $stateParams, $sce, GimliApiService){
-    $scope.issue = {};
+gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'Faye', 'GimliApiService',
+  function($scope, $stateParams, $sce, Faye, GimliApiService){
     params = $stateParams;
-
+    $scope.fayeTestMessage = "Test message";
+    var channel = '/'+params.repo+'/'+params.owner+'/issue/'+params.id;
+    $scope.fayeTestSubmit = function() {
+      console.log("submit");
+      Faye.publish(channel, $scope.fayeTestMessage);
+    };
+    Faye.subscribe(channel, function cb(comment){
+      alert(comment); // TODO:  do something with this.
+    });
     GimliApiService.getIssue({
         owner: params.owner,
         repo: params.repo,
@@ -110,9 +123,3 @@ gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'GimliApi
     );
   }
 ]);
-
-// Document ready
-var client = null;
-$(function() {
-  client = new Faye.Client('http://localhost:3000/faye');
-});
