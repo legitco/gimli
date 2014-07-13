@@ -2,7 +2,7 @@ var gimli = angular.module('gimli', ['hc.marked', 'ui.router', 'faye']);
 
 // TODO: FIX HARDCODED THINGS
 gimli.factory('Faye', ['$faye', function ($faye) {
-    return $faye("http://localhost:3000/faye");
+    return $faye("/faye");
   }
 ]);
 
@@ -125,7 +125,7 @@ gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'Faye', '
     var params = $stateParams;
     var scope = $scope;
     scope.draftIssueComment = "Test message";
-    var channel = '/'+params.repo+'/'+params.owner+'/issue/'+params.id;
+    var channel = '/'+params.owner+'/'+params.repo+'/issue/'+params.id;
     $scope.submitComment = function() {
       // TODO: post!
       GimliApiService.postComment({
@@ -142,10 +142,8 @@ gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'Faye', '
 
     };
 
-
-
     Faye.subscribe(channel, function cb(comment){
-      alert(comment); // TODO:  do something with this.
+      $scope.comments[comment.id] = comment;
     });
 
     GimliApiService.getIssue({
