@@ -36,6 +36,22 @@ gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
     $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id + '/comments')
       .success(onSuccess);
   }
+
+  /**
+   * Posts a comment
+   * @param opts
+   *    owner
+   *    repo
+   *    id
+   *    message
+   * @return promise
+   */
+  this.postComment = function(opts) {
+    return $http.post(
+        '/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id + '/comments',
+        {body: opts.message}
+    );
+  }
 }]);
 
 gimli.config(function($locationProvider, markedProvider, $stateProvider, $urlRouterProvider) {
@@ -106,12 +122,26 @@ gimli.controller('IssueListController', ['$scope', '$stateParams', 'GimliApiServ
 
 gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'Faye', 'GimliApiService',
   function($scope, $stateParams, $sce, Faye, GimliApiService){
-    params = $stateParams;
-    $scope.fayeTestMessage = "Test message";
+    var params = $stateParams;
+    var scope = $scope;
+    scope.draftIssueComment = "Test message";
     var channel = '/'+params.repo+'/'+params.owner+'/issue/'+params.id;
-    $scope.fayeTestSubmit = function() {
-      console.log("submit");
-      Faye.publish(channel, $scope.fayeTestMessage);
+    $scope.submitComment = function() {
+      console.log($scope.draftIssueComment);
+      return;
+      // TODO: post!
+      GimliApiService.postComment({
+        owner: params.owner,
+        repo: params.repo,
+        id: params.id,
+        message: $scope.draftIssueComment
+      }).success(function(){
+        console.log("Successfully posted.")
+        $scope.draftIssueComment = "";
+      }).error(function(){
+        console.log("failed to post?");
+      });
+
     };
 
 

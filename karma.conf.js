@@ -17,6 +17,7 @@ module.exports = function(config) {
       'node_modules/chai/chai.js',
       'vendor/jquery/dist/jquery.min.js',
       'vendor/angular/angular.js',
+      'vendor/angular-faye/build/angular-faye.js',
       'vendor/marked/lib/marked.js',
       'vendor/highlightjs/highlight.pack.js',
       'vendor/angular-ui-router/release/angular-ui-router.js',

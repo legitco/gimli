@@ -43,13 +43,4 @@ node_modules
 Icon?
 ehthumbs.db
 Thumbs.db.idea/
-.idea/deployment.xml
-.idea/encodings.xml
-.idea/gimli.iml
-.idea/jsLibraryMappings.xml
-.idea/libraries
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes
-.idea/vcs.xml
-.idea/workspace.xml
+.idea/

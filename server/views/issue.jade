@@ -73,6 +73,6 @@
         | @ {{comment.created_at | date:'short'}}
       .comment(marked="comment.body")
   //- pre(data-ng-bind="comments | json" style="font-size:8px;")
-  textarea(name="fayetest" id="fayetest" ng-bind="fayeTestMessage") {{fayeTestMessage}}
+  textarea(name="draftComment" id="draftComment" ng-model="draftIssueComment") {{fayeTestMessage}}
   br
-  button(ng-click="fayeTestSubmit()") Test me!
+  button(ng-click="submitComment()") Test me!
