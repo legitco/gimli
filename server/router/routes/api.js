@@ -16,6 +16,7 @@ router.post('/repos/:owner/:repo/subscribe', github.subscribe);
 router.get('/:owner/:repo/issues', github.issues);
 router.get('/:owner/:repo/issue/:number', github.issue);
 router.get('/:owner/:repo/issue/:number/comments', github.comments);
+router.post('/:owner/:repo/issue/:number/comments', github.createComment);
 router.post('/:owner/:repo/markdown', markdown.render);
 router.use('/', errors.apiNotFound);
 

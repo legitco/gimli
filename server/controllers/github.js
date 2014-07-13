@@ -1,3 +1,4 @@
+var http = require('https');
 var github = require('octonode');
 var filter = require('../lib/filter');
 
@@ -138,6 +139,44 @@ exports.comments = function(req, res, next) {
       res.jsonp(filter(data, COMMENT_FILTER));
     }
   });
+};
+
+exports.createComment = function(req, res, next) {
+  var owner = req.params.owner;
+  var repo = req.params.repo;
+  var number = req.params.number;
+  var markdown = req.rawBody;
+
+  var body = {
+    body: markdown
+  };
+
+  var options = {
+    host: 'api.github.com',
+    path: '/' + owner + '/' + repo + '/issue/' + number + '/comments',
+    method: 'POST',
+    headers: {
+      "User-Agent": "Legitco/Gimli"
+    }
+  };
+
+  var postCallback = function(response) {
+    var str = '';
+
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+
+    response.on('end', function () {
+      res.send(str);
+    });
+  };
+
+  var apiRequest = http.request(options, postCallback);
+
+  //This is the data we are posting, it needs to be a string or a buffer
+  apiRequest.write(JSON.stringify(body));
+  apiRequest.end();
 };
 
 exports.notice = function(req, res) {
