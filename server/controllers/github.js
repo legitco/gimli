@@ -149,7 +149,7 @@ exports.createComment = function(req, res, next) {
 
   var options = {
     host: 'api.github.com',
-    path: '/repos/' + owner + '/' + repo + '/issue/' + number + '/comments',
+    path: '/repos/' + owner + '/' + repo + '/issues/' + number + '/comments',
     method: 'POST',
     headers: {
       "User-Agent": "Legitco/Gimli",
