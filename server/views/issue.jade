@@ -64,10 +64,10 @@
   //
   //hr
 
-  pre(marked="issue.body")
+  //pre(marked="issue.body")
 
   ol.comments
-    li(data-ng-repeat="comment in comments")
+    li(data-ng-repeat="comment in comments | orderObjectBy:created_at")
       p
         a(href="{{comment.author.url}}") {{comment.author.login}}
         | @ {{comment.created_at | date:'short'}}

@@ -6,6 +6,21 @@ gimli.factory('Faye', ['$faye', function ($faye) {
   }
 ]);
 
+gimli.filter('orderObjectBy', function() {
+  return function(items, field, reverse) {
+    var filtered = [];
+    angular.forEach(items, function(item) {
+      filtered.push(item);
+    });
+    filtered.sort(function (a, b) {
+      return (a[field] > b[field] ? 1 : -1);
+    });
+    if(reverse) filtered.reverse();
+    return filtered;
+  };
+});
+
+
 gimli.service('GimliApiService', ['$q', '$http', function(q, $http) {
   this.getIssues = function(opts, onSuccess) {
     $http.get('/api/' + opts.owner + '/' + opts.repo + '/issues')
@@ -98,9 +113,13 @@ gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'Faye', '
       console.log("submit");
       Faye.publish(channel, $scope.fayeTestMessage);
     };
+
+
+
     Faye.subscribe(channel, function cb(comment){
       alert(comment); // TODO:  do something with this.
     });
+
     GimliApiService.getIssue({
         owner: params.owner,
         repo: params.repo,
@@ -116,7 +135,11 @@ gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'Faye', '
             repo: params.repo,
             id: params.id
           }, function(data, status, headers, config) {
-            $scope.comments = data;
+            // lodash?
+            $scope.comments = {};
+            data.forEach(function(comment) {
+              $scope.comments[comment.id] = comment;
+            });
           });
         }
       }
