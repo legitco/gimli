@@ -96,10 +96,8 @@ if (socket) {
   });
 }
 
-var faye = require('faye');
-var bayeux = new faye.NodeAdapter({mount: '/faye'});
+var bayeux = require('./server/lib/faye');
 bayeux.attach(server);
-
 
 // Normal Routes
 var router = require('./server/router')(app);

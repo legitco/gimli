@@ -1,6 +1,7 @@
 var http = require('https');
 var github = require('octonode');
 var filter = require('../lib/filter');
+var faye = require('../lib/faye');
 
 function getRepo(req) {
   return req.session.client.repo(req.params.owner + '/' + req.params.repo);
@@ -165,7 +166,9 @@ exports.createComment = function(req, res, next) {
     });
 
     response.on('end', function () {
-      res.jsonp(filter(JSON.parse(str), COMMENT_FILTER));
+      var json = filter(JSON.parse(str), COMMENT_FILTER);
+      faye.getClient().publish('/' + owner + '/' + repo + '/issue/' + number, json);
+      res.jsonp(json);
     });
   };
 
