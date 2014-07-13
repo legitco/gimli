@@ -165,7 +165,7 @@ exports.createComment = function(req, res, next) {
     });
 
     response.on('end', function () {
-      res.jsonp(filter(str, COMMENT_FILTER));
+      res.jsonp(filter(JSON.parse(str), COMMENT_FILTER));
     });
   };
 
