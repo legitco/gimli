@@ -7,17 +7,21 @@ angular.module('gimli').controller('IssueController', ['$scope', '$stateParams',
     $scope.submitComment = function() {
       // TODO: post!
       GimliApiService.postComment({
-        owner: params.owner,
-        repo: params.repo,
-        id: params.id,
-        message: $scope.draftIssueComment
-      }).success(function(){
-        console.log("Successfully posted.")
-        $scope.draftIssueComment = "";
-      }).error(function(){
-        console.log("failed to post?");
-      });
-
+          owner: params.owner,
+          repo: params.repo,
+          id: params.id,
+          message: $scope.draftIssueComment
+        })
+        .success(function(){
+          console.log("Successfully posted.")
+          $scope.draftIssueComment = "";
+        })
+        .error(function(){
+          if (console && console.log) {
+            console.log("failed to post");
+          }
+        })
+      ;
     };
 
     Faye.subscribe(channel, function cb(comment){
@@ -28,25 +32,32 @@ angular.module('gimli').controller('IssueController', ['$scope', '$stateParams',
         owner: params.owner,
         repo: params.repo,
         id: params.id
-      },
-      function(data, status, headers, config) {
-        $scope.issue = data;
+      })
+      .then(function(res) {
+        $scope.issue = res.data;
 
-        // TODO (svincent): Refactor to avoid the uneccessary callback pyramid
-        if (data.comments) {
-          GimliApiService.getIssueComments({
+        if (res.data.comments !== 0) {
+          return GimliApiService.getIssueComments({
             owner: params.owner,
             repo: params.repo,
-            id: params.id
-          }, function(data, status, headers, config) {
-            // lodash?
-            $scope.comments = {};
-            data.forEach(function(comment) {
-              $scope.comments[comment.id] = comment;
-            });
+            id: params.id}
+          );
+        }
+      })
+      .then(function(res) {
+        $scope.comments = {};
+
+        if(res.data) {
+          res.data.forEach(function(comment) {
+            $scope.comments[comment.id] = comment;
           });
         }
-      }
-    );
+      })
+      .catch(function(){
+        if (console && console.log) {
+          console.log("failed to retrieve comments");
+        }
+      })
+    ;
   }
 ]);

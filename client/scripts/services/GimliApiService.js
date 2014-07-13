@@ -1,17 +1,14 @@
 angular.module('gimli').service('GimliApiService', ['$q', '$http', function(q, $http) {
   this.getIssues = function(opts, onSuccess) {
-    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issues')
-      .success(onSuccess);
+    return $http.get('/api/' + opts.owner + '/' + opts.repo + '/issues');
   }
 
   this.getIssue = function(opts, onSuccess) {
-    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id)
-      .success(onSuccess);
+    return $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id);
   }
 
   this.getIssueComments = function(opts, onSuccess) {
-    $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id + '/comments')
-      .success(onSuccess);
+    return $http.get('/api/' + opts.owner + '/' + opts.repo + '/issue/' + opts.id + '/comments');
   }
 
   /**
