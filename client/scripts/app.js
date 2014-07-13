@@ -127,8 +127,6 @@ gimli.controller('IssueController', ['$scope', '$stateParams', '$sce', 'Faye', '
     scope.draftIssueComment = "Test message";
     var channel = '/'+params.repo+'/'+params.owner+'/issue/'+params.id;
     $scope.submitComment = function() {
-      console.log($scope.draftIssueComment);
-      return;
       // TODO: post!
       GimliApiService.postComment({
         owner: params.owner,
