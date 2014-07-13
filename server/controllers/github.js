@@ -172,8 +172,6 @@ exports.createComment = function(req, res, next) {
     });
   };
 
-  console.log(JSON.stringify(options));
-
   var apiRequest = http.request(options, postCallback);
 
   //This is the data we are posting, it needs to be a string or a buffer
