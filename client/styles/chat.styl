@@ -11,25 +11,34 @@ stripe(even = rgb(255,255,255), odd = rgb(252,252,252))
 .chat
   stripe()
 
-  .row
-    padding 1em 0;
-    border-bottom: 1px solid rgb(245,245,245);
+  .message , form
+    padding 1em 0
+    border-bottom 1px solid rgb(245,245,245)
+    
+  .issue
+    background-color #fcf8e3
+    aside
+      font-weight bold
 
-  form.row
+  form
     padding 0
 
   address
-    margin 0;
+    margin 0
 
   time
     font-size .9em
     color lighten(#000, 40)
 
   input
-    line-height 2em
+    line-height 3em
+    
+  textarea
+    height: 3em
 
   button
-    line-height 2em
+    line-height 3em
+    padding 0
 
 
 .panel
@@ -69,7 +78,7 @@ stripe(even = rgb(255,255,255), odd = rgb(252,252,252))
 // Demo styles
 
 .child-view
-  outline: 1px solid red;
+  outline: 1px solid red
 
 .hidden
   display: none
