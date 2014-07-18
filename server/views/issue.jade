@@ -1,10 +1,48 @@
-.container
-  p {{issue.title}}
-  .body(marked="issue.body")
-  ol.comments
-    li(data-ng-repeat="comment in comments")
-      p
-        a(href="{{comment.author.url}}") {{comment.author.login}}
-        | @ {{comment.created_at | date:'short'}}
-      .comment(marked="comment.body")
-  //- pre(data-ng-bind="comments | json" style="font-size:8px;")
+.container-fluid
+  h4 {{issue.title}}
+  .body.row
+
+    .chat.col-md-8
+      section.row.message.issue
+        aside.col-sm-4
+          address
+            a(href="{{issue.author.url}}") {{issue.author.login}}
+          time() {{issue.created_at | date:'short'}}
+        .bubble.col-sm-8
+          p(marked="issue.body")
+
+
+      section.row.message(data-ng-repeat="comment in comments | orderObjectBy:'created_at'")
+        aside.col-sm-4
+          address
+            a(href="{{comment.author.url}}") {{comment.author.login}}
+          time() {{comment.created_at | date:'short'}}
+        .bubble.col-sm-8
+          p(marked="comment.body")
+
+      form.row
+        textarea.col-xs-10(name="draftComment" id="draftComment" ng-model="draftIssueComment") {{draftIssueComment}}
+        button.col-xs-2(ng-click="submitComment()") Post
+
+    aside.col-md-4.hidden-xs.hidden-sm.panel
+      ol.users
+        li
+          img(src="/static/images/ico-1px.png")
+          h5 9
+          h3
+            a(href="#") Christopher Grioir
+          h4 @kelsin
+          div.clearfix
+        li
+          img(src="/static/images/ico-1px.png")
+          h5 12
+          h3
+            a(href="#") Simeon Vincent
+          h4 @svincent
+          div.clearfix
+        li
+          img(src="/static/images/ico-1px.png")
+          h5 2
+          h3
+            a(href="#") Brandon Rotkel
+          div.clearfix

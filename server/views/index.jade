@@ -14,6 +14,7 @@ html(ng-app="gimli")
     script(type='text/javascript' src="/static/vendor/angular/angular.js")
     script(type='text/javascript' src="/static/vendor/angular-marked/angular-marked.js")
     script(type='text/javascript' src="/static/vendor/angular-ui-router/release/angular-ui-router.js")
+    script(type='text/javascript' src="/static/vendor/angular-faye/build/angular-faye.js")
   body
     nav.collapse.navbar-collapse.bs-navbar-collapse(role="navigation")
       .container-fluid
@@ -23,12 +24,12 @@ html(ng-app="gimli")
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand(href="/") Gimli
+        a.navbar-brand(ui-sref="index") Gimli
         //- Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
             li
-              a(ng-href="/legitco/gimli/issues")
+              a(ui-sref="issues({owner: 'legitco', repo: 'gimli'})")
                 span.octicon.octicon-issue-opened
                 | &nbsp;Issues
           ul.nav.navbar-nav.navbar-right

@@ -1,5 +1,7 @@
+var http = require('https');
 var github = require('octonode');
 var filter = require('../lib/filter');
+var faye = require('../lib/faye');
 
 function getRepo(req) {
   return req.session.client.repo(req.params.owner + '/' + req.params.repo);
@@ -138,6 +140,43 @@ exports.comments = function(req, res, next) {
       res.jsonp(filter(data, COMMENT_FILTER));
     }
   });
+};
+
+exports.createComment = function(req, res, next) {
+  var owner = req.params.owner;
+  var repo = req.params.repo;
+  var number = req.params.number;
+  var body = req.body;
+
+  var options = {
+    host: 'api.github.com',
+    path: '/repos/' + owner + '/' + repo + '/issues/' + number + '/comments',
+    method: 'POST',
+    headers: {
+      "User-Agent": "Legitco/Gimli",
+      "Authorization": "token " + req.user.access
+    }
+  };
+
+  var postCallback = function(response) {
+    var str = '';
+
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+
+    response.on('end', function () {
+      var json = filter(JSON.parse(str), COMMENT_FILTER);
+      faye.getClient().publish('/' + owner + '/' + repo + '/issue/' + number, json);
+      res.jsonp(json);
+    });
+  };
+
+  var apiRequest = http.request(options, postCallback);
+
+  //This is the data we are posting, it needs to be a string or a buffer
+  apiRequest.write(JSON.stringify(body));
+  apiRequest.end();
 };
 
 exports.notice = function(req, res) {

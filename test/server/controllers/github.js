@@ -1,3 +1,4 @@
+var nock = require('nock');
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
@@ -224,6 +225,40 @@ describe('github', function() {
       mock.restore();
 
       nextMock.verify();
+    });
+  });
+
+  describe('.createComment()', function() {
+    it('should create a comment and publish it to faye', function(done) {
+      var options = {
+        reqHeaders: {
+          'User-Agent': 'Legitco/Gimli'
+        }
+      };
+
+      var req = {
+        params: {
+          owner: 'test',
+          repo: 'repo',
+          number: '5'
+        },
+        user: {
+          access: 'access'
+        }
+      };
+
+      var res = {
+        jsonp: function(data) {
+          data.should.deep.equal({id:"comment"});
+          done();
+        }
+      };
+
+      var createCommentNock = nock('https://api.github.com', options)
+            .post('/repos/test/repo/issues/5/comments')
+            .reply(200, "{\"id\":\"comment\"}");
+
+      github.createComment(req, res, null);
     });
   });
 
