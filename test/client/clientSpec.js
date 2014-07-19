@@ -56,21 +56,25 @@ describe('Unit: Gimli client app', function() {
       }); // describe stateParams
 
       describe('Gimli API service integration', function() {
-        beforeEach(inject(function($controller, $rootScope) {
-          scope = $rootScope.$new();
+        var promise, deferred, ctrl, fakeApiService, scope, resolvedValue;
 
+        it('IssueController should set "scope.issues" using data from the Gimli API service', inject(function($q, $rootScope, $controller) {
+          deferred = $q.defer();
+          var promise = deferred.promise;
+          deferred.resolve({data: apiData});
+
+          scope = $rootScope.$new();
           ctrl = $controller('IssueListController', {
             $scope: scope,
             $stateParams: { owner: testOwner, repo: testRepo },
             GimliApiService: {
-              getIssues: function(opts, cb) { cb(apiData) }
+              getIssues: function() { return promise; }
             }
           });
-        })); // before each
-
-        it('IssueController should set "scope.issues" using data from the Gimli API service', function() {
+          // apply the scope to make the promise stick
+          scope.$apply();
           expect(scope.issues).to.deep.equal(apiData);
-        });
+        }));
 
       }); // describe gimli api
 
