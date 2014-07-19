@@ -9,10 +9,8 @@ angular.module('gimli').controller('IssueListController', ['$scope', '$statePara
     GimliApiService.getIssues({
         owner: params.owner,
         repo: params.repo
-      },
-      function(data, status, headers, config) {
-        $scope.issues = data;
-      }
-    );
+      }).then(function(res) {
+        $scope.issues = res.data;
+    });
   }
 ]);
