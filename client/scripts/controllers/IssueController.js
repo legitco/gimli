@@ -3,9 +3,13 @@ angular.module('gimli').controller('IssueController', ['$scope', '$stateParams',
     var params = $stateParams;
     var scope = $scope;
     scope.draftIssueComment = "Test message";
+    scope.disableInput = false;
+    scope.errorMessage = "";
+
     var channel = '/'+params.owner+'/'+params.repo+'/issue/'+params.id;
     $scope.submitComment = function() {
-      // TODO: post!
+      scope.disableInput = true;
+      return;
       GimliApiService.postComment({
           owner: params.owner,
           repo: params.repo,
@@ -13,10 +17,11 @@ angular.module('gimli').controller('IssueController', ['$scope', '$stateParams',
           message: $scope.draftIssueComment
         })
         .success(function(){
-          console.log("Successfully posted.")
+          scope.disableInput = false;
           $scope.draftIssueComment = "";
         })
         .error(function(){
+          scope.disableInput = false;
           if (console && console.log) {
             console.log("failed to post");
           }

@@ -21,8 +21,8 @@
           p(marked="comment.body")
 
       form.row
-        textarea.col-xs-10(name="draftComment" id="draftComment" ng-model="draftIssueComment") {{draftIssueComment}}
-        button.col-xs-2(ng-click="submitComment()") Post
+        textarea.col-xs-10(name="draftComment" id="draftComment" ng-model="draftIssueComment" ng-disabled="disableInput") {{draftIssueComment}}
+        button.col-xs-2(ng-click="submitComment()" ng-disabled="disableInput") Post
 
     aside.col-md-4.hidden-xs.hidden-sm.panel
       ol.users
