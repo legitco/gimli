@@ -1,48 +1,27 @@
-.container-fluid
-  h4 {{issue.title}}
-  .body.row
-
-    .chat.col-md-8
-      section.row.message.issue
-        aside.col-sm-4
-          address
-            a(href="{{issue.author.url}}") {{issue.author.login}}
-          time() {{issue.created_at | date:'short'}}
-        .bubble.col-sm-8
-          p(marked="issue.body")
-
-
-      section.row.message(data-ng-repeat="comment in comments | orderObjectBy:'created_at'")
-        aside.col-sm-4
-          address
-            a(href="{{comment.author.url}}") {{comment.author.login}}
-          time() {{comment.created_at | date:'short'}}
-        .bubble.col-sm-8
-          p(marked="comment.body")
-
-      form.row
-        textarea.col-xs-10(name="draftComment" id="draftComment" ng-model="draftIssueComment" ng-disabled="disableInput") {{draftIssueComment}}
-        button.col-xs-2(ng-click="submitComment()" ng-disabled="disableInput") Post
-
-    aside.col-md-4.hidden-xs.hidden-sm.panel
-      ol.users
-        li
-          img(src="/static/images/ico-1px.png")
-          h5 9
-          h3
-            a(href="#") Christopher Grioir
-          h4 @kelsin
-          div.clearfix
-        li
-          img(src="/static/images/ico-1px.png")
-          h5 12
-          h3
-            a(href="#") Simeon Vincent
-          h4 @svincent
-          div.clearfix
-        li
-          img(src="/static/images/ico-1px.png")
-          h5 2
-          h3
-            a(href="#") Brandon Rotkel
-          div.clearfix
+.container-fluid.chat-view
+  .col.left
+    .user-icon
+  .col.middle.chat
+    .input
+      textarea(name="foo", id="")
+      button Send
+    .message-container
+      .message-frame
+        .message-list
+          .message
+            | {{issue.title}}
+            address
+              a(href="{{issue.author.url}}") {{issue.author.login}}
+            time() {{issue.created_at | date:'short'}}
+            p(marked="issue.body")
+          .message(data-ng-repeat="comment in comments | orderObjectBy:'created_at'")
+            address
+              a(href="{{comment.author.url}}") {{comment.author.login}}
+            time() {{comment.created_at | date:'short'}}
+            p(marked="comment.body")
+  .col.right.user-list
+    .user
+      .icon
+      .name Foo Bar
+      .username foobar
+      .clear-both

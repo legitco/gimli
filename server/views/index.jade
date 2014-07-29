@@ -5,7 +5,7 @@ html(ng-app="gimli")
     link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='/static/vendor/bootstrap/dist/css/bootstrap-theme.css')
     link(rel='stylesheet', href='/static/vendor/highlightjs/styles/github.css')
-    link(rel='stylesheet', href='/static/styles/global.css')
+    link(rel='stylesheet', href='/static/styles/main.css')
     script(type='text/javascript' src="/static/vendor/jquery/dist/jquery.min.js")
     script(type='text/javascript' src="/static/vendor/bootstrap/dist/js/bootstrap.js")
     script(type='text/javascript' src="/faye/client.js")
@@ -39,11 +39,5 @@ html(ng-app="gimli")
               else
                 a(href="/login" target="_self") Login
     div(ui-view)
-
-
-    footer
-      .jumbotron-sm
-        .container
-          | Running on node with Express, Jade and Stylus
 
     script(type='text/javascript' src="/static/scripts/app.js")

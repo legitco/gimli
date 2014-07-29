@@ -97,7 +97,7 @@ module.exports = function(grunt) {
       },
       compile: {
         files: {
-          'dist/static/styles/global.css': 'client/styles/global.styl'
+          'dist/static/styles/main.css': 'client/styles/main.styl'
         }
       }
     },
