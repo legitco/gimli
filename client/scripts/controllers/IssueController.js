@@ -62,7 +62,6 @@ angular.module('gimli').controller('IssueController', ['$scope', '$stateParams',
         if (console && console.log) {
           console.log("failed to retrieve comments");
         }
-      })
-    ;
+      });
   }
 ]);

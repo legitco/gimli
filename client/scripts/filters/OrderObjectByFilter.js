@@ -1,5 +1,5 @@
-angular.module('gimli').filter('orderObjectBy', function() {
-  return function(items, field, reverse) {
+(function(){
+  function orderObjectBy(items, field, reverse) {
     var filtered = [];
     angular.forEach(items, function(item) {
       filtered.push(item);
@@ -10,4 +10,8 @@ angular.module('gimli').filter('orderObjectBy', function() {
     if(reverse) filtered.reverse();
     return filtered;
   };
-});
+
+  angular.module('gimli').filter('orderObjectBy', function() {
+    return orderObjectBy;
+  });
+})()

@@ -1,4 +1,5 @@
-gimli.factory(
-  'Faye',
-  ['$faye', function ($faye) { return $faye("/faye"); } ]
-);
+gimli.factory('Faye', ['$faye',
+  function ($faye) {
+    return $faye("/faye");
+  }
+]);
