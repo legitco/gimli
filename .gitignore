@@ -11,6 +11,7 @@ pids
 *.seed
 
 # Project files
+/.c9
 *.sublime-project
 *.sublime-workspace
 
