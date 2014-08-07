@@ -26,7 +26,6 @@ try {
     'GITHUB_CLIENT_ID',
     'GITHUB_CLIENT_SECRET',
     'NODE_ENV',
-    'PORT',
     'REDIS_URL',
     'MONGO_URL'
   ]);
@@ -79,8 +78,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Serve
-var socket = process.env.GIMLI_SOCKET;
-var server;
+var socket = process.env.GIMLI_SOCKET
+  , port   = process.env.GIMLI_PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000
+  , server = null
+
 if (socket) {
   // Make sure the socket is gone before trying to create another
   fs.unlink(socket, function (err) {
@@ -90,7 +91,7 @@ if (socket) {
     fs.chmod(socket, '0660');
   });
 } else {
-  server = app.listen(process.env.PORT, function() {
+  server = app.listen(port, function() {
     console.log('Listening on port '.yellow +  server.address().port.toString().magenta);
     console.log('You have my sword, my shield ... and my '.blue + 'axe'.red + '!'.blue);
   });
