@@ -36,7 +36,7 @@ try {
 }
 
 // Connect to the DB
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL);
 var mongo = mongoose.connection;
 mongo.on('error', function(err) {
   console.error('Error connecting to mongodb'.red + ': ' + err.message);
