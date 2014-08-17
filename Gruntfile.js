@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-concat-sourcemap');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.loadNpmTasks('grunt-karma');
@@ -13,12 +13,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-env');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-node-inspector');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
+    concat_sourcemap: {
       options: {
         separator: ';'
+      },
+      dist: {
+        src: ['client/scripts/Gimli.js', 'client/scripts/*/*.js'],
+        dest: 'dist/static/scripts/app.js'
       }
     },
     uglify: {
@@ -77,7 +82,7 @@ module.exports = function(grunt) {
       },
       clientScripts: {
         files: [
-          { expand: true, cwd: 'client', src: ['scripts/**'], dest: 'dist/static' }
+          { expand: true, cwd: 'client', src: ['scripts/app.js'], dest: 'dist/static' }
         ]
       },
       vendor: {
@@ -103,7 +108,7 @@ module.exports = function(grunt) {
           ignore: ['node_modules/'],
           verbose: true,
           ext: 'js',
-          watch: 'server/**/*.js'
+          watch: ['server/**/*.js','server.js']
         }
       }
     },
@@ -174,7 +179,8 @@ module.exports = function(grunt) {
         NODE_ENV: 'development',
         PORT: 3000,
         COOKIE_SECRET: 'gimli-cookie',
-        REDISCLOUD_URL: 'redis://localhost:6379',
+        REDIS_URL: 'redis://localhost:6379',
+        MONGO_URL: 'mongodb://localhost/gimli-dev',
         GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
         src: '.env'
       },
@@ -182,11 +188,15 @@ module.exports = function(grunt) {
         NODE_ENV : 'test',
         PORT: 3000,
         COOKIE_SECRET: 'gimli-cookie-test',
+        REDIS_URL: 'redis://localhost:6379',
+        MONGO_URL: 'mongodb://localhost/gimli-test',
+        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback',
         GITHUB_CLIENT_ID: 'github-client-id',
-        GITHUB_CLIENT_SECRET: 'github-client-secret',
-        REDISCLOUD_URL: 'redis://localhost:6379',
-        GIMLI_REDIRECT_URL: 'http://localhost:3000/auth/github/callback'
+        GITHUB_CLIENT_SECRET: 'github-client-secret'
       }
+    },
+    'node-inspector': {
+      dev: {}
     },
     watch: {
       dev: {
@@ -211,11 +221,12 @@ module.exports = function(grunt) {
   grunt.registerTask('ci',                ['watch:test']);
 
   // How to build
-  grunt.registerTask('build',             ['jshint', 'concat', 'copy', 'stylus']);
+  grunt.registerTask('build',             ['jshint', 'concat_sourcemap', 'copy', 'stylus']);
   grunt.registerTask('heroku:production', ['build']);
 
   // How to run
   grunt.registerTask('start',             ['env:dev', 'nodemon']);
+  grunt.registerTask('debug',             ['env:dev', 'node-inspector']);
 
   // Build and watch
   grunt.registerTask('dev',               ['build', 'watch:dev']);

@@ -1,7 +1,7 @@
 var passport = require('passport');
 var errors = require('../controllers/errors');
 var GitHubStrategy = require('passport-github').Strategy;
-var user = require('../models/user.js');
+var User = require('../models/user.js');
 
 // Github Config
 var github = {
@@ -16,20 +16,25 @@ module.exports.serialize = function(user, done) {
 };
 
 module.exports.deserialize = function(id, done) {
-  user.load(id, function(user) {
-    done(null, user);
-  });
+  User.findOne({ id: id }, done);
 };
 
 passport.serializeUser(module.exports.serialize);
 passport.deserializeUser(module.exports.deserialize);
 
 module.exports.handleAuthResponse = function(access, refresh, profile, done) {
-  user.save(profile, access, function() {
-    user.load(profile._json.id, function(user) {
-      done(null, user);
-    });
-  });
+  User.findOneAndUpdate(
+    { id: profile._json.id },
+    { id: profile._json.id,
+      name: profile._json.name,
+      login: profile._json.login,
+      html_url: profile._json.html_url,
+      avatar_url: profile._json.avatar_url,
+      email: profile._json.email,
+      location: profile._json.location || "",
+      access: access },
+    { upsert: true },
+    done);
 };
 
 passport.use(new GitHubStrategy({

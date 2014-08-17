@@ -5,7 +5,7 @@ describe('Unit: Gimli client app', function() {
   beforeEach(module('gimli'));
 
   describe('Controllers', function() {
-    describe('IssuesController', function() {
+    describe('IssueListController', function() {
       var scope, ctrl, apiData;
       var testOwner = "username";
       var testRepo = "project";
@@ -20,7 +20,7 @@ describe('Unit: Gimli client app', function() {
         beforeEach(inject(function($controller, $rootScope) {
           scope = $rootScope.$new();
 
-          ctrl = $controller('IssuesController', {
+          ctrl = $controller('IssueListController', {
             $scope: scope
           });
         })); // beforeEach
@@ -39,13 +39,13 @@ describe('Unit: Gimli client app', function() {
         })
       }); // describe basic config
 
-      describe('RouteParams integration', function() {
+      describe('StateParams integration', function() {
         beforeEach(inject(function($controller, $rootScope) {
           scope = $rootScope.$new();
 
-          ctrl = $controller('IssuesController', {
+          ctrl = $controller('IssueListController', {
             $scope: scope,
-            $routeParams: { owner: testOwner, repo: testRepo }
+            $stateParams: { owner: testOwner, repo: testRepo }
           });
         })); // before each
 
@@ -53,24 +53,28 @@ describe('Unit: Gimli client app', function() {
           expect(scope.owner).to.equal(testOwner);
           expect(scope.repo).to.equal(testRepo);
         });
-      }); // describe routeparams
+      }); // describe stateParams
 
       describe('Gimli API service integration', function() {
-        beforeEach(inject(function($controller, $rootScope) {
-          scope = $rootScope.$new();
+        var promise, deferred, ctrl, fakeApiService, scope, resolvedValue;
 
-          ctrl = $controller('IssuesController', {
+        it('IssueController should set "scope.issues" using data from the Gimli API service', inject(function($q, $rootScope, $controller) {
+          deferred = $q.defer();
+          var promise = deferred.promise;
+          deferred.resolve({data: apiData});
+
+          scope = $rootScope.$new();
+          ctrl = $controller('IssueListController', {
             $scope: scope,
-            $routeParams: { owner: testOwner, repo: testRepo },
+            $stateParams: { owner: testOwner, repo: testRepo },
             GimliApiService: {
-              getIssues: function(opts, cb) { cb(apiData) }
+              getIssues: function() { return promise; }
             }
           });
-        })); // before each
-
-        it('IssueController should set "scope.issues" using data from the Gimli API service', function() {
+          // apply the scope to make the promise stick
+          scope.$apply();
           expect(scope.issues).to.deep.equal(apiData);
-        });
+        }));
 
       }); // describe gimli api
 
