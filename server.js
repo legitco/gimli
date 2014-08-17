@@ -79,8 +79,7 @@ app.use(passport.session());
 
 // Serve
 var socket = process.env.GIMLI_SOCKET;
-var port   = process.env.OPENSHIFT_NODEJS_PORT || process.env.GIMLI_PORT || 3000;
-var ip     = process.env.OPENSHIFT_NODEJS_IP || process.env.GIMLI_IP || "127.0.0.1";
+var port   = process.env.PORT || process.env.GIMLI_PORT || 3000;
 var server = null;
 
 if (socket) {
@@ -92,8 +91,8 @@ if (socket) {
     fs.chmod(socket, '0660');
   });
 } else {
-  server = app.listen(port, ip, function() {
-    console.log('Listening on port '.yellow +  port.toString().magenta + ' and ip '.yellow + ip.magenta);
+  server = app.listen(port, function() {
+    console.log('Listening on port '.yellow +  port.toString().magenta);
     console.log('You have my sword, my shield ... and my '.blue + 'axe'.red + '!'.blue);
   });
 }
