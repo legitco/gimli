@@ -78,9 +78,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Serve
-var socket = process.env.GIMLI_SOCKET
-  , port   = process.env.GIMLI_PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000
-  , server = null
+var socket = process.env.GIMLI_SOCKET;
+var port   = process.env.GIMLI_PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var server = null;
 
 if (socket) {
   // Make sure the socket is gone before trying to create another
