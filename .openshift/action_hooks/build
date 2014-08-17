@@ -1,5 +1,9 @@
+echo Installing Bower and Grunt
+npm install -g bower
+npm install -g grunt
+
 echo Installing Bower dependencies
-./node_modules/bower/bin/bower install
+bower install
 
 echo Running Grunt
-./node_modules/.bin/grunt build
+grunt build
