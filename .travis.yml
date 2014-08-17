@@ -20,7 +20,9 @@ deploy:
   user: kelsin@valefor.com
   password:
     secure: XCWJAtsRi9vAFqgbS6LHg8KTy0YoJfBaPE7B+04rHECFvxTcAU8OTNbMc31wJNtoE8lb2nqtOIVQAzH5frYcRUr7rCBenlDIFFAIFAiD5aOJqVSrjzKwZWY4SZ2Rs4ODS/QbvHo+jgcCBZDpC+kF2EEinOpYqbL4rqjFQ+X8QO0=
-  app: gimli
+  app:
+    name: gimli
+    deployment_branch: master
   domain: dotproto
   on:
     branch: rhc-develop
