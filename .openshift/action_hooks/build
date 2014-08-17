@@ -1,0 +1,5 @@
+echo Installing Bower dependencies
+./node_modules/bower/bin/bower install
+
+echo Running Grunt
+./node_modules/.bin/grunt build
