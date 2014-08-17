@@ -15,3 +15,13 @@ services:
   - redis-server
 notifications:
   webhooks: http://legitbot.herokuapp.com/hubot/travis?room=#legitco
+deploy:
+  provider: openshift
+  user: kelsin@valefor.com
+  password:
+    secure: XCWJAtsRi9vAFqgbS6LHg8KTy0YoJfBaPE7B+04rHECFvxTcAU8OTNbMc31wJNtoE8lb2nqtOIVQAzH5frYcRUr7rCBenlDIFFAIFAiD5aOJqVSrjzKwZWY4SZ2Rs4ODS/QbvHo+jgcCBZDpC+kF2EEinOpYqbL4rqjFQ+X8QO0=
+  app: gimli
+  domain: dotproto
+  on:
+    branch: master
+    repo: legitco/gimli
