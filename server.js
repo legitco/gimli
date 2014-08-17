@@ -79,8 +79,8 @@ app.use(passport.session());
 
 // Serve
 var socket = process.env.GIMLI_SOCKET;
-var port   = process.env.GIMLI_PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
-var ip     = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+var port   = process.env.OPENSHIFT_NODEJS_PORT || process.env.GIMLI_PORT || 3000;
+var ip     = process.env.OPENSHIFT_NODEJS_IP || process.env.GIMLI_IP || "127.0.0.1";
 var server = null;
 
 if (socket) {
