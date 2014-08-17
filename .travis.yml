@@ -23,5 +23,5 @@ deploy:
   app: gimli
   domain: dotproto
   on:
-    branch: master
+    branch: rhc-develop
     repo: legitco/gimli
