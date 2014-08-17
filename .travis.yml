@@ -20,7 +20,7 @@ deploy:
   api_key:
     secure: D36htTe+i+3kk8/XaMMSFdkgLCDlionO9AiyW0F/TalD78Cz1hF4GlSJ7jXF0UqIxWEa6Ifh33iOy9S7CKCs1VrYgZpvsHZCWzNLhkvZiB4LFYL42jbcJOUE+AgAoBVSytH4J9K2IIZeK+Kcd59FkajC3e2MqQ7IZyqeber7ylo=
   app: gimli-io
-  buildpack: https://github.com/legitco/heroku-buildpack-nodejs#legitco
+  strategy: git
   on:
     branch: master
     repo: legitco/gimli
