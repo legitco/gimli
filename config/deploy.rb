@@ -3,6 +3,8 @@ lock '3.2.1'
 
 set :application, 'gimli'
 set :repo_url, 'git@github.com:legitco/gimli.git'
+set :grunt_tasks, 'build'
+set :grunt_file, -> { release_path.join('Gruntfile.js') }
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -34,3 +36,5 @@ set :deploy_to, '/home/app/www/gimli'
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+before 'deploy:updated', 'grunt'
