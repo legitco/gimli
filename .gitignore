@@ -5,6 +5,9 @@ logs
 # Dist
 dist
 
+# Bundler (for deployment)
+.bundle
+
 # Runtime data
 pids
 *.pid
