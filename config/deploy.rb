@@ -10,10 +10,9 @@ set :grunt_tasks, 'build'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 # set :branch 'develop'
 
-# Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/app/www/gimli'
-
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
 before 'deploy:updated', 'grunt'
+
+set :ssh_options, keys: ["config/deploy_id_rsa"], forward_agent: true if File.exist?("config/deploy_id_rsa")

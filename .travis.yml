@@ -13,14 +13,12 @@ before_script:
 script: grunt travis
 services:
   - redis-server
-notifications:
-  webhooks: http://legitbot.herokuapp.com/hubot/travis?room=#legitco
-deploy:
-  provider: heroku
-  api_key:
-    secure: D36htTe+i+3kk8/XaMMSFdkgLCDlionO9AiyW0F/TalD78Cz1hF4GlSJ7jXF0UqIxWEa6Ifh33iOy9S7CKCs1VrYgZpvsHZCWzNLhkvZiB4LFYL42jbcJOUE+AgAoBVSytH4J9K2IIZeK+Kcd59FkajC3e2MqQ7IZyqeber7ylo=
-  app: gimli-io
-  strategy: git
-  on:
-    branch: master
-    repo: legitco/gimli
+after_success:
+  - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc -d -a -out config/deploy_id_rsa"
+  - "chmod 0600 config/deploy_id_rsa"
+  - eval "$(ssh-agent)"
+  - ssh-add config/deploy_id_rsa
+  - "[[ $TRAVIS_BRANCH = 'master' ]] && bundle exec cap production deploy"
+  - "[[ $TRAVIS_BRANCH = 'develop' ]] && bundle exec cap staging deploy"
+env:
+  secure: "KBXCh5DQO4VYgqiJgdRp5cbXYlp5k4fr518fAw+wUijXEjZ1vjiCt60KjZ1qyHT/Ci3EAIm9U7CVBt8ihAgPesiWqAVv8Z4XwfAgMOsjId+8NJ9LtNdfcXW3w1hyOw9iSrJcOhMwM4KrSiQNlIuqqj3Hx047NpKFsinsOGK/ZmY="
