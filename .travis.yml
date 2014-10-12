@@ -6,6 +6,7 @@ before_install:
   - npm install -g karma-cli
   - npm install -g bower
 before_script:
+  - bundle install --deployment
   - bower install
   - grunt build
   - export DISPLAY=:99.0
